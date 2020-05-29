@@ -1,0 +1,21 @@
+name: ${name}
+version: ${version}
+description: ${description}
+author: ${author}
+website: ${url}
+main: ${mainClass}
+api-version: "1.15"
+commands:
+  yase:
+    description: Various commands for YetAnotherSignEditor.
+    usage: /<command>
+permissions:
+  yase.edit:
+    description: Permission to edit sign text.
+    default: true
+  yase.color:
+    description: Permission to color sign text.
+    default: true
+  yase.reload:
+    description: Permission to reload the plugin.
+    default: op
