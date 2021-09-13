@@ -1,50 +1,40 @@
 # YetAnotherSignEditor
-Easily edit signs with support for colors.
+Easily edit signs, with support for both MiniMessage and legacy color codes.
 
-## .. Another one?
-Yeah yeah, I know. We didn't need another sign editing plugin floating around.
-I have good reason for creating this one, though! All the available sign editing
-plugins were either outdated, ugly, or they didn't work how I wanted them to.
-This plugin is not outdated, not ugly, and it works just how I want it to!
+* [Downloads](https://github.com/TehBrian/YetAnotherSignEditor/releases)
+* [Discord](https://chat.tehbrian.xyz)
 
-## What makes this plugin better?
-Try it out for yourself and see if you like it, but I'll list off the reasons
-that I would personally use this plugin over others:
+## Features
 
-* The interface is clean, intuitive, and easy on the eyes.
-* Each player can individually toggle plugin features on and off.
-* Sign coloring and sign editing can be toggled separately. Want to edit signs
-but need to use "&5" without it being turned into a color? Go ahead.
-* Editing a sign reverts text colors back into color codes for easy editing.
-* **All** plugin messages are easily configurable in the config.
-* There are separate permissions for sign coloring and sign editing.
+- Edit signs with a command or directly in the sign interface.
+- Individually toggle plugin features on and off.
+- Use either legacy color codes or [MiniMessage][MiniMessage] to format text.
+- All plugin messages are easily configurable.
+- Separate permissions for sign coloring and sign editing.
 
-Above all, though, it just feels good to use! No bloat, no extra features. Just
-install the plugin and you're good to go!
+Above all, it just feels good to use! No bloat, no extra features.
 
-## Cool! How do I get it?
-First and foremost, you'll need to use Paper. Sorry to anyone who uses Spigot,
-but Paper has an API feature that this plugin requires in order to work. If
-there's enough demand, I'll see about porting it to Spigot. ~~or boycotting
-them till they add that freakin API method~~
+[MiniMessage]: https://docs.adventure.kyori.net/minimessage.html
 
-Once you're using Paper, just drag and drop the plugin jar into your plugins
-folder! The jar can be found [here](https://github.com/ItsTehBrian/YetAnotherSignEditor/releases).
+## Screenshots
+![Help Menu](https://raw.githubusercontent.com/TehBrian/YetAnotherSignEditor/master/images/help-menu.png)
+![Commands](https://raw.githubusercontent.com/TehBrian/YetAnotherSignEditor/master/images/commands.png)
 
-If you'd like to build the jar yourself, it's quite easy. I'm a bit too lazy
-to write it up again, so just follow the tutorial from my other plugin's
-README, found [here](https://github.com/ItsTehBrian/BuildersUtilities#how-do-i-build-it-myself).
-You don't need BuildTools for this plugin, though, so just start at step 3.
+## Permissions
+The permissions can be found [here][plugin.yml].
 
-## What are the permissions and commands?
-You can do /yase in-game to find a list of all commands. The permissions
-can be found [here](https://github.com/ItsTehBrian/YetAnotherSignEditor/blob/master/src/main/resources/plugin.yml).
+[plugin.yml]: https://github.com/TehBrian/YetAnotherSignEditor/blob/master/src/main/resources/plugin.yml
 
-## Screenshots?
-![Help Menu](https://raw.githubusercontent.com/ItsTehBrian/YetAnotherSignEditor/master/images/help-menu.png)
-![Commands](https://raw.githubusercontent.com/ItsTehBrian/YetAnotherSignEditor/master/images/commands.png)
+## Building
+This project uses Gradle. To build, run `./gradlew shadowJar` in the main
+project directory. The built jar can be found in `build/libs`.
 
-## Can I help at all?
-Sure! If you find an issue or have a suggestion, feel free to file an issue. If
-you prefer to contribute code, go ahead and submit a pull-request! Make sure to
-follow the code style.
+## Contributing
+Feel free to submit a pull-request or file an issue! All changes are welcome. If
+you're contributing code, please follow the project's code style.
+
+### Alternate README.md
+Do you prefer READMEs that talk to you directly (at the expense of being easy to
+read)? Would you like to hear the "witty" comments of my 15-year-old self? Then,
+oh *boy* have I got something for you! Head on over
+to [OLD_README.md](OLD_README.md) and experience true enlightenment.
