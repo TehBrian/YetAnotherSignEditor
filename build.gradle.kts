@@ -41,6 +41,17 @@ dependencies {
     implementation("dev.tehbrian:tehlib-paper:0.1.0-SNAPSHOT")
 }
 
-tasks.processResources {
-    expand("version" to project.version)
+tasks {
+    processResources {
+        expand("version" to project.version)
+    }
+
+    shadowJar {
+        relocate("xyz.tehbrian.restrictionhelper", "xyz.tehbrian.buildersutilities.restrictionhelper")
+        archiveBaseName.set("BuildersUtilities")
+    }
+
+    runServer {
+        minecraftVersion("1.17.1")
+    }
 }
