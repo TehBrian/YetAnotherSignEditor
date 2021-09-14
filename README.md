@@ -33,7 +33,7 @@ project directory. The built jar can be found in `build/libs`.
 Feel free to submit a pull-request or file an issue! All changes are welcome. If
 you're contributing code, please follow the project's code style.
 
-### Alternate README.md
+## Alternate README.md
 Do you prefer READMEs that talk to you directly (at the expense of being easy to
 read)? Would you like to hear the "witty" comments of my 15-year-old self? Then,
 oh *boy* have I got something for you! Head on over

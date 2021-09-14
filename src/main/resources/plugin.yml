@@ -7,7 +7,15 @@ version: ${version}
 main: xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor
 api-version: 1.17
 
+commands:
+  yase:
+    description: Various commands for YetAnotherSignEditor.
+    usage: /<command>
+
 permissions:
+  yase.set:
+    description: Permission to run /yase set.
+    default: true
   yase.edit:
     description: Permission to edit sign text.
     default: true
