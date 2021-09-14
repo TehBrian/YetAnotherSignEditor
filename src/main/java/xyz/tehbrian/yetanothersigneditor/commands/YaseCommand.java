@@ -1,116 +1,222 @@
 package xyz.tehbrian.yetanothersigneditor.commands;
 
+import com.google.inject.Inject;
+import net.kyori.adventure.text.Component;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
+import org.spongepowered.configurate.NodePath;
+import xyz.tehbrian.yetanothersigneditor.ColorUtil;
+import xyz.tehbrian.yetanothersigneditor.Constants;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
-import xyz.tehbrian.yetanothersigneditor.player.PlayerDataManager;
-import xyz.tehbrian.yetanothersigneditor.util.MessageUtils;
+import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
+import xyz.tehbrian.yetanothersigneditor.user.User;
+import xyz.tehbrian.yetanothersigneditor.user.UserService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-/*
-    TODO: Cleanup this incoherent mess.
-    It's spaghetti, redundant, and unreadable.
-    Bukkit's command system is awful, but that's
-    no excuse for this pile of garbage.
- */
-public class YaseCommand implements CommandExecutor, TabCompleter {
+public final class YaseCommand implements CommandExecutor, TabCompleter {
 
-    private final YetAnotherSignEditor main;
+    private final YetAnotherSignEditor yetAnotherSignEditor;
+    private final UserService userService;
+    private final LangConfig langConfig;
 
-    public YaseCommand(YetAnotherSignEditor main) {
-        this.main = main;
+    /**
+     * @param yetAnotherSignEditor injected
+     * @param userService          injected
+     * @param langConfig           injected
+     */
+    @Inject
+    public YaseCommand(
+            final @NonNull YetAnotherSignEditor yetAnotherSignEditor,
+            final @NonNull UserService userService,
+            final @NonNull LangConfig langConfig
+    ) {
+        this.yetAnotherSignEditor = yetAnotherSignEditor;
+        this.userService = userService;
+        this.langConfig = langConfig;
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        PlayerDataManager playerDataManager = main.getPlayerDataManager();
-
-        if (args.length == 1) {
+    @Override
+    public boolean onCommand(
+            @NotNull final CommandSender sender,
+            @NotNull final Command command,
+            @NotNull final String label,
+            final @NotNull String[] args
+    ) {
+        if (args.length >= 1) {
             switch (args[0].toLowerCase()) {
-                case "edit": {
-                    if (!sender.hasPermission("yase.edit")) {
-                        sender.sendMessage(MessageUtils.getMessage("messages.no_permission"));
+                case "set" -> {
+                    if (!sender.hasPermission(Constants.Permissions.SET)) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("no_permission")));
+                        return true;
+                    }
+                    if (!(sender instanceof final Player player)) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("player_only")));
+                        return true;
+                    }
+                    if (args.length < 2) {
                         break;
                     }
-                    if (!(sender instanceof Player)) {
-                        sender.sendMessage(MessageUtils.getMessage("messages.player_only"));
-                        break;
-                    }
-                    Player player = (Player) sender;
 
-                    if (playerDataManager.getPlayerData(player).toggleEditEnabled()) {
-                        sender.sendMessage(MessageUtils.getMessage("messages.edit.enabled"));
-                    } else {
-                        sender.sendMessage(MessageUtils.getMessage("messages.edit.disabled"));
+                    final int line;
+                    try {
+                        line = Integer.parseInt(args[1]);
+                    } catch (final NumberFormatException e) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("set", "not_a_line")));
+                        return true;
                     }
 
-                    break;
+                    final String text = String.join(" ", Arrays.asList(args).subList(2, args.length));
+
+                    final Block block = player.getTargetBlock(6);
+                    if (block == null) {
+                        return true;
+                    }
+                    if (!(block.getState() instanceof final Sign sign)) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("set", "not_a_sign")));
+                        return true;
+                    }
+
+                    final User user = this.userService.getUser(player);
+
+                    if (user.formatting() == User.Formatting.LEGACY) {
+                        sign.line(line, ColorUtil.legacy(text));
+                    } else if (user.formatting() == User.Formatting.MINI_MESSAGE) {
+                        sign.line(line, ColorUtil.miniMessage(text));
+                    }
+                    sign.update();
+                    return true;
                 }
-                case "color": {
-                    if (!sender.hasPermission("yase.color")) {
-                        sender.sendMessage(MessageUtils.getMessage("messages.no_permission"));
-                        break;
+                case "edit" -> {
+                    if (!sender.hasPermission(Constants.Permissions.EDIT)) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("no_permission")));
+                        return true;
                     }
-                    if (!(sender instanceof Player)) {
-                        sender.sendMessage(MessageUtils.getMessage("messages.player_only"));
-                        break;
+                    if (!(sender instanceof final Player player)) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("player_only")));
+                        return true;
                     }
-                    Player player = (Player) sender;
 
-                    if (playerDataManager.getPlayerData(player).toggleColorEnabled()) {
-                        sender.sendMessage(MessageUtils.getMessage("messages.color.enabled"));
+                    if (this.userService.getUser(player).toggleEditEnabled()) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("edit", "enabled")));
                     } else {
-                        sender.sendMessage(MessageUtils.getMessage("messages.color.disabled"));
+                        sender.sendMessage(this.langConfig.c(NodePath.path("edit", "disabled")));
                     }
-
-                    break;
+                    return true;
                 }
-                case "reload":
-                    if (!sender.hasPermission("yase.reload")) {
-                        sender.sendMessage(MessageUtils.getMessage("messages.no_permission"));
-                        break;
+                case "color" -> {
+                    if (!sender.hasPermission(Constants.Permissions.COLOR)) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("no_permission")));
+                        return true;
+                    }
+                    if (!(sender instanceof final Player player)) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("player_only")));
+                        return true;
                     }
 
-                    main.reloadConfig();
-                    sender.sendMessage(MessageUtils.getMessage("messages.reload"));
+                    final User user = this.userService.getUser(player);
 
-                    break;
-                default:
-                    MessageUtils.sendMessageList(sender, "messages.help");
+                    if (args.length >= 2) {
+                        final User.Formatting formatting;
+                        try {
+                            formatting = User.Formatting.valueOf(args[1]);
+                        } catch (final IllegalArgumentException e) {
+                            sender.sendMessage(this.langConfig.c(NodePath.path("color", "invalid")));
+                            return true;
+                        }
+
+                        user.formatting(formatting);
+                        sender.sendMessage(this.langConfig.c(
+                                NodePath.path("color", "set"),
+                                Map.of("formatting", formatting.toString())
+                        ));
+                    }
+
+                    if (user.toggleColorEnabled()) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("color", "enabled")));
+                    } else {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("color", "disabled")));
+                    }
+                    return true;
+                }
+                case "reload" -> {
+                    if (!sender.hasPermission(Constants.Permissions.RELOAD)) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("no_permission")));
+                        return true;
+                    }
+
+                    this.yetAnotherSignEditor.loadConfigs();
+                    sender.sendMessage(this.langConfig.c(NodePath.path("reload")));
+                    return true;
+                }
+                default -> {
+                }
             }
-        } else {
-            MessageUtils.sendMessageList(sender, "messages.help");
+        }
+
+        for (final Component component : this.langConfig.cl(NodePath.path("help"))) {
+            sender.sendMessage(component);
         }
         return true;
     }
 
+
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
-        List<String> completions = new ArrayList<>();
+    public @NotNull List<String> onTabComplete(
+            @NotNull final CommandSender sender,
+            @NotNull final Command command,
+            @NotNull final String label,
+            final @NotNull String[] args
+    ) {
+        final List<String> completions = new ArrayList<>();
+        final List<String> possibilities = new ArrayList<>();
 
         if (args.length == 1) {
-            List<String> commands = new ArrayList<>();
+            if (sender.hasPermission(Constants.Permissions.SET)) {
+                possibilities.add("set");
+            }
+            if (sender.hasPermission(Constants.Permissions.EDIT)) {
+                possibilities.add("edit");
+            }
+            if (sender.hasPermission(Constants.Permissions.COLOR)) {
+                possibilities.add("color");
+            }
+            if (sender.hasPermission(Constants.Permissions.RELOAD)) {
+                possibilities.add("reload");
+            }
 
-            if (sender.hasPermission("yase.edit")) {
-                commands.add("edit");
-            }
-            if (sender.hasPermission("yase.color")) {
-                commands.add("color");
-            }
-            if (sender.hasPermission("yase.reload")) {
-                commands.add("reload");
-            }
+            StringUtil.copyPartialMatches(args[0], possibilities, completions);
+        } else if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("set") && sender.hasPermission(Constants.Permissions.SET)) {
+                possibilities.add("1");
+                possibilities.add("2");
+                possibilities.add("4");
+                possibilities.add("3");
 
-            StringUtil.copyPartialMatches(args[0], commands, completions);
+                StringUtil.copyPartialMatches(args[1], possibilities, completions);
+            } else if (args[0].equalsIgnoreCase("color") && sender.hasPermission(Constants.Permissions.COLOR)) {
+                for (final User.Formatting value : User.Formatting.values()) {
+                    possibilities.add(value.toString());
+                }
+
+                StringUtil.copyPartialMatches(args[1], possibilities, completions);
+            }
         }
 
         Collections.sort(completions);
         return completions;
     }
+
 }

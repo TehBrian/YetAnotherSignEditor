@@ -54,7 +54,7 @@ be found [here][plugin.yml].
 ![Commands](https://raw.githubusercontent.com/TehBrian/YetAnotherSignEditor/master/images/commands.png)
 
 ## Can I contribute?
-Sure! If you find an problem or have a suggestion, feel free to file
+Sure! If you find a problem or have a suggestion, feel free to file
 an [issue](https://github.com/TehBrian/YetAnotherSignEditor/issues). If you
 prefer to contribute code, go ahead and submit a pull-request! Please make sure
 to follow the `.checkstyle`.

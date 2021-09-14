@@ -1,7 +1,10 @@
 package xyz.tehbrian.yetanothersigneditor.listeners;
 
+import com.google.inject.Inject;
+import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Tag;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -11,39 +14,78 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
-import xyz.tehbrian.yetanothersigneditor.util.MessageUtils;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import xyz.tehbrian.restrictionhelper.core.ActionType;
+import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
+import xyz.tehbrian.yetanothersigneditor.ColorUtil;
+import xyz.tehbrian.yetanothersigneditor.Constants;
+import xyz.tehbrian.yetanothersigneditor.user.User;
+import xyz.tehbrian.yetanothersigneditor.user.UserService;
 
-import java.util.Objects;
+import java.util.List;
 
-public class SignListener implements Listener {
+/**
+ * Listens for sign-related events.
+ */
+public final class SignListener implements Listener {
 
-    private final YetAnotherSignEditor main;
+    private final UserService userService;
+    private final SpigotRestrictionHelper restrictionHelper;
 
-    public SignListener(YetAnotherSignEditor main) {
-        this.main = main;
+    /**
+     * @param userService       injected
+     * @param restrictionHelper injected
+     */
+    @Inject
+    public SignListener(
+            final @NonNull UserService userService,
+            final @NonNull SpigotRestrictionHelper restrictionHelper
+    ) {
+        this.userService = userService;
+        this.restrictionHelper = restrictionHelper;
     }
 
     @EventHandler(ignoreCancelled = true)
-    public void onSignInteract(PlayerInteractEvent event) {
-        Player player = event.getPlayer();
+    public void onSignInteract(final PlayerInteractEvent event) {
+        final Player player = event.getPlayer();
 
-        if (!event.getPlayer().hasPermission("yase.edit")) return;
-        if (!main.getPlayerDataManager().getPlayerData(player).hasEditEnabled()) return;
+        if (!event.getPlayer().hasPermission(Constants.Permissions.EDIT)
+                || !this.userService.getUser(player).editEnabled()) {
+            return;
+        }
 
-        if (!(Tag.SIGNS.isTagged(player.getInventory().getItemInMainHand().getType()))) return;
-        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        if (event.getHand() != EquipmentSlot.HAND) return;
-        if (player.getGameMode() == GameMode.ADVENTURE) return;
-        if (player.isSneaking()) return;
+        if (!(Tag.SIGNS.isTagged(player.getInventory().getItemInMainHand().getType()))
+                || event.getAction() != Action.RIGHT_CLICK_BLOCK
+                || event.getHand() != EquipmentSlot.HAND
+                || player.getGameMode() == GameMode.ADVENTURE
+                || player.isSneaking()) {
+            return;
+        }
 
-        BlockState blockState = Objects.requireNonNull(event.getClickedBlock()).getState();
-        if (!(blockState instanceof Sign)) return;
-        Sign sign = (Sign) blockState;
+        final @Nullable Block clickedBlock = event.getClickedBlock();
+        if (clickedBlock == null) {
+            return;
+        }
+        final BlockState blockState = clickedBlock.getState();
 
-        String[] lines = sign.getLines();
-        for (int l = 0; l < lines.length; l++) {
-            sign.setLine(l, lines[l].replace('§', '&'));
+        if (!this.restrictionHelper.checkRestrictions(player, clickedBlock.getLocation(), ActionType.ALL)) {
+            return;
+        }
+
+        if (!(blockState instanceof final Sign sign)) {
+            return;
+        }
+
+        final User user = this.userService.getUser(player);
+
+        final List<Component> lines = sign.lines();
+        for (int i = 0; i < lines.size(); i++) {
+            if (user.formatting() == User.Formatting.LEGACY) {
+                sign.line(i, ColorUtil.reverseLegacy(lines.get(i)));
+            } else if (user.formatting() == User.Formatting.MINI_MESSAGE) {
+                sign.line(i, ColorUtil.reverseMiniMessage(lines.get(i)));
+            }
         }
 
         sign.update();
@@ -53,15 +95,23 @@ public class SignListener implements Listener {
     }
 
     @EventHandler
-    public void onSignChange(SignChangeEvent event) {
-        Player player = event.getPlayer();
+    public void onSignChange(final SignChangeEvent event) {
+        final Player player = event.getPlayer();
+        final User user = this.userService.getUser(player);
 
-        if (!event.getPlayer().hasPermission("yase.color")) return;
-        if (!main.getPlayerDataManager().getPlayerData(player).hasColorEnabled()) return;
+        if (!event.getPlayer().hasPermission(Constants.Permissions.COLOR)
+                || !user.colorEnabled()) {
+            return;
+        }
 
-        String[] lines = event.getLines();
-        for (int l = 0; l < lines.length; l++) {
-            event.setLine(l, MessageUtils.color(lines[l]));
+        final List<Component> lines = event.lines();
+        for (int i = 0; i < lines.size(); i++) {
+            if (user.formatting() == User.Formatting.LEGACY) {
+                event.line(i, ColorUtil.legacy(lines.get(i)));
+            } else if (user.formatting() == User.Formatting.MINI_MESSAGE) {
+                event.line(i, ColorUtil.miniMessage(lines.get(i)));
+            }
         }
     }
+
 }
