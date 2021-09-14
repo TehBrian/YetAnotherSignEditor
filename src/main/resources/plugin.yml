@@ -1,14 +1,12 @@
-name: ${name}
+name: YetAnotherSignEditor
+description: Easily edit signs, with support for both MiniMessage and legacy color codes.
+authors: [ TehBrian ]
+website: https://github.com/TehBrian/YetAnotherSignEditor
+
 version: ${version}
-description: ${description}
-author: ${author}
-website: ${url}
-main: ${mainClass}
-api-version: "1.16"
-commands:
-  yase:
-    description: Various commands for YetAnotherSignEditor.
-    usage: /<command>
+main: xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor
+api-version: 1.17
+
 permissions:
   yase.edit:
     description: Permission to edit sign text.
@@ -17,5 +15,5 @@ permissions:
     description: Permission to color sign text.
     default: true
   yase.reload:
-    description: Permission to reload the plugin.
+    description: Permission to run /yase reload.
     default: op
