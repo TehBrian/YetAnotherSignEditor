@@ -1,0 +1,38 @@
+# |----------------------|
+# | YetAnotherSignEditor |
+# |     by TehBrian      |
+# |   hope u enjoy! <3   |
+# |----------------------|
+# |
+# | Source Code: https://github.com/TehBrian/YetAnotherSignEditor
+# | Feedback and Support: https://chat.tehbrian.xyz
+# |
+
+player_only: "<red>Only players can perform this command."
+reload: "<red> Successfully reloaded the config!"
+
+set:
+  not_a_sign: "<yellow>That's not a sign!"
+  not_a_line: "<yellow>Please specify a line number <orange>1-4</orange><yellow>."
+  set: "<yellow>Set line <orange><line></orange> to <pre><text></pre>!"
+
+edit:
+  enabled: "<aqua> Enabled sign editing. <gray>(Click on a sign while holding a sign.)"
+  disabled: "<dark_aqua> Disabled sign editing."
+
+color:
+  enabled: "<purple> Enabled sign coloring. <gray>(Insert color codes into sign text.)"
+  disabled: "<dark_purple> Disabled sign coloring."
+
+help:
+  - "<gray>--- <white>YetAnotherSignEditor <gray>---",
+  - "<green>/yase",
+  - "<gray>   Display this help message.",
+  - "<yellow>/yase set <line> <text>",
+  - "<gray>   Set the text of the sign you're looking at.",
+  - "<aqua>/yase edit",
+  - "<gray>   Toggle your ability to edit sign text.",
+  - "<purple>/yase color",
+  - "<gray>   Toggle your ability to color sign text.",
+  - "<red>/yase reload",
+  - "<gray>   Reload the plugin's config."
