@@ -8,13 +8,12 @@
 # | Feedback and Support: https://chat.tehbrian.xyz
 # |
 
-no_permission: "<red>No permission."
-player_only: "<red>Only players can perform this command."
+no_permission: "<red> No permission."
+player_only: "<red> Only players can perform this command."
 
 set:
-  not_a_sign: "<yellow>That's not a sign!"
-  not_a_line: "<yellow>Please specify a line number <gold>1-4</gold>."
-  set: "<yellow>Set line <gold><line></gold> to <pre><text></pre>!"
+  not_a_sign: "<yellow> That's not a sign!"
+  not_a_line: "<yellow> Please specify a line number <gold>1-4</gold>."
 
 edit:
   enabled: "<aqua> Enabled sign editing. <gray>(Click on a sign while holding a sign.)"
@@ -24,7 +23,7 @@ color:
   enabled: "<light_purple> Enabled sign coloring. <gray>(Insert color codes into sign text.)"
   disabled: "<dark_purple> Disabled sign coloring."
   invalid: "<light_purple> Invalid formatting type."
-  set: "<light_purple> Set your formatting to <blue><formatting></blue>!"
+  set: "<light_purple> Set your formatting type to <blue><formatting_type></blue>!"
 
 reload: "<red> Successfully reloaded the config!"
 
@@ -36,7 +35,7 @@ help:
   - "<gray>   Set the text of the sign you're looking at."
   - "<aqua>/yase edit"
   - "<gray>   Toggle your ability to edit sign text."
-  - "<light_purple>/yase color [formatting]"
+  - "<light_purple>/yase color [formatting_type]"
   - "<gray>   Toggle your ability to color sign text."
   - "<red>/yase reload"
   - "<gray>   Reload the plugin's config."

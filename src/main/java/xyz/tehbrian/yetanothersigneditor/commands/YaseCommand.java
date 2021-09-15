@@ -96,9 +96,9 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
 
                     final User user = this.userService.getUser(player);
 
-                    if (user.formatting() == User.Formatting.LEGACY) {
+                    if (user.formattingType() == User.FormattingType.LEGACY) {
                         sign.line(line, ColorUtil.legacy(text));
-                    } else if (user.formatting() == User.Formatting.MINI_MESSAGE) {
+                    } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE) {
                         sign.line(line, ColorUtil.miniMessage(text));
                     }
                     sign.update();
@@ -134,18 +134,18 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
                     final User user = this.userService.getUser(player);
 
                     if (args.length >= 2) {
-                        final User.Formatting formatting;
+                        final User.FormattingType formattingType;
                         try {
-                            formatting = User.Formatting.valueOf(args[1]);
+                            formattingType = User.FormattingType.valueOf(args[1]);
                         } catch (final IllegalArgumentException e) {
                             sender.sendMessage(this.langConfig.c(NodePath.path("color", "invalid")));
                             return true;
                         }
 
-                        user.formatting(formatting);
+                        user.formattingType(formattingType);
                         sender.sendMessage(this.langConfig.c(
                                 NodePath.path("color", "set"),
-                                Map.of("formatting", formatting.toString())
+                                Map.of("formatting_type", formattingType.toString())
                         ));
                         return true;
                     }
@@ -213,7 +213,7 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
 
                 StringUtil.copyPartialMatches(args[1], possibilities, completions);
             } else if (args[0].equalsIgnoreCase("color") && sender.hasPermission(Constants.Permissions.COLOR)) {
-                for (final User.Formatting value : User.Formatting.values()) {
+                for (final User.FormattingType value : User.FormattingType.values()) {
                     possibilities.add(value.toString());
                 }
 

@@ -88,9 +88,9 @@ public final class SignListener implements Listener {
         final List<Component> lines = sign.lines();
         for (int i = 0; i < lines.size(); i++) {
             player.sendMessage(sign.line(i));
-            if (user.formatting() == User.Formatting.LEGACY) {
+            if (user.formattingType() == User.FormattingType.LEGACY) {
                 player.sendMessage(ColorUtil.reverseLegacy(lines.get(i)));
-            } else if (user.formatting() == User.Formatting.MINI_MESSAGE) {
+            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE) {
                 player.sendMessage(ColorUtil.reverseMiniMessage(lines.get(i)));
             }
         }
@@ -118,9 +118,9 @@ public final class SignListener implements Listener {
 
         final List<Component> lines = event.lines();
         for (int i = 0; i < lines.size(); i++) {
-            if (user.formatting() == User.Formatting.LEGACY) {
+            if (user.formattingType() == User.FormattingType.LEGACY) {
                 event.line(i, ColorUtil.legacy(lines.get(i)));
-            } else if (user.formatting() == User.Formatting.MINI_MESSAGE) {
+            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE) {
                 event.line(i, ColorUtil.miniMessage(lines.get(i)));
             }
         }

@@ -14,7 +14,7 @@ public final class User extends PaperUser {
 
     private boolean editEnabled;
     private boolean colorEnabled;
-    private @NonNull Formatting formatting = Formatting.LEGACY;
+    private User.@NonNull FormattingType formattingType = FormattingType.LEGACY;
 
     public User(final @NonNull UUID uuid) {
         super(uuid);
@@ -54,15 +54,15 @@ public final class User extends PaperUser {
         return this.colorEnabled();
     }
 
-    public @NonNull Formatting formatting() {
-        return this.formatting;
+    public User.@NonNull FormattingType formattingType() {
+        return this.formattingType;
     }
 
-    public void formatting(final @NonNull Formatting formatting) {
-        this.formatting = formatting;
+    public void formattingType(final User.@NonNull FormattingType formattingType) {
+        this.formattingType = formattingType;
     }
 
-    public enum Formatting {
+    public enum FormattingType {
         LEGACY,
         MINI_MESSAGE
     }
