@@ -18,7 +18,6 @@ import xyz.tehbrian.yetanothersigneditor.listeners.SignListener;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * The main class for the YetAnotherSignEditor plugin.
@@ -43,10 +42,10 @@ public final class YetAnotherSignEditor extends TehPlugin {
                     new UserModule()
             );
         } catch (final Exception e) {
-            this.getLogger().severe("Something went wrong while creating the Guice injector.");
-            this.getLogger().severe("Disabling plugin.");
-            this.getLogger().log(Level.SEVERE, "Printing stack trace, please send this to the developers:", e);
-            this.setEnabled(false);
+            this.getLog4JLogger().error("Something went wrong while creating the Guice injector.");
+            this.getLog4JLogger().error("Disabling plugin.");
+            this.disableSelf();
+            this.getLog4JLogger().error("Printing stack trace, please send this to the developers:", e);
             return;
         }
 
@@ -65,7 +64,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
      * Loads the various plugin config files.
      */
     public void loadConfigs() {
-        this.saveResource("lang.yml", false);
+        this.saveResourceSilently("lang.yml");
 
         this.injector.getInstance(LangConfig.class).load();
     }
