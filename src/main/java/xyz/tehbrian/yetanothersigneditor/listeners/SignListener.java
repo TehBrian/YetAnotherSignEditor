@@ -87,11 +87,10 @@ public final class SignListener implements Listener {
 
         final List<Component> lines = sign.lines();
         for (int i = 0; i < lines.size(); i++) {
-            player.sendMessage(sign.line(i));
             if (user.formattingType() == User.FormattingType.LEGACY) {
-                player.sendMessage(ColorUtil.reverseLegacy(lines.get(i)));
+                sign.line(i, ColorUtil.reverseLegacy(lines.get(i)));
             } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE) {
-                player.sendMessage(ColorUtil.reverseMiniMessage(lines.get(i)));
+                sign.line(i, ColorUtil.reverseMiniMessage(lines.get(i)));
             }
         }
 
