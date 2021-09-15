@@ -70,16 +70,6 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
                         break;
                     }
 
-                    final int line;
-                    try {
-                        line = Integer.parseInt(args[1]);
-                    } catch (final NumberFormatException e) {
-                        sender.sendMessage(this.langConfig.c(NodePath.path("set", "not_a_line")));
-                        return true;
-                    }
-
-                    final String text = String.join(" ", Arrays.asList(args).subList(2, args.length));
-
                     final Block block = player.getTargetBlock(6);
                     if (block == null) {
                         return true;
@@ -88,6 +78,21 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(this.langConfig.c(NodePath.path("set", "not_a_sign")));
                         return true;
                     }
+
+                    final int line;
+                    try {
+                        line = Integer.parseInt(args[1]) - 1; // arrays are 0-indexed
+                    } catch (final NumberFormatException e) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("set", "not_a_line")));
+                        return true;
+                    }
+
+                    if (line > 3 || line < 0) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("set", "not_a_line")));
+                        return true;
+                    }
+
+                    final String text = String.join(" ", Arrays.asList(args).subList(2, args.length));
 
                     final User user = this.userService.getUser(player);
 
@@ -142,6 +147,7 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
                                 NodePath.path("color", "set"),
                                 Map.of("formatting", formatting.toString())
                         ));
+                        return true;
                     }
 
                     if (user.toggleColorEnabled()) {
