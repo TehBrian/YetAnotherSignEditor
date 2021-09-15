@@ -47,8 +47,8 @@ tasks {
     }
 
     shadowJar {
-        relocate("xyz.tehbrian.restrictionhelper", "xyz.tehbrian.buildersutilities.restrictionhelper")
-        archiveBaseName.set("BuildersUtilities")
+        relocate("xyz.tehbrian.restrictionhelper", "xyz.tehbrian.yetanothersigneditor.restrictionhelper")
+        archiveBaseName.set("YetAnotherSignEditor")
     }
 
     runServer {
