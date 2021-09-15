@@ -13,8 +13,8 @@ import org.bukkit.util.StringUtil;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.NodePath;
-import xyz.tehbrian.yetanothersigneditor.ColorUtil;
 import xyz.tehbrian.yetanothersigneditor.Constants;
+import xyz.tehbrian.yetanothersigneditor.FormatUtil;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
 import xyz.tehbrian.yetanothersigneditor.user.User;
@@ -96,11 +96,17 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
 
                     final User user = this.userService.getUser(player);
 
-                    if (user.formattingType() == User.FormattingType.LEGACY) {
-                        sign.line(line, ColorUtil.legacy(text));
-                    } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE) {
-                        sign.line(line, ColorUtil.miniMessage(text));
+                    Component formattedText = FormatUtil.plain(text);
+                    if (player.hasPermission(Constants.Permissions.COLOR) && user.colorEnabled()) {
+                        if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Constants.Permissions.LEGACY)) {
+                            formattedText = FormatUtil.legacy(text);
+                        } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Constants.Permissions.MINI_MESSAGE)) {
+                            formattedText = FormatUtil.miniMessage(text);
+                        }
                     }
+
+                    sign.line(line, formattedText);
+
                     sign.update();
                     return true;
                 }
@@ -213,8 +219,11 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
 
                 StringUtil.copyPartialMatches(args[1], possibilities, completions);
             } else if (args[0].equalsIgnoreCase("color") && sender.hasPermission(Constants.Permissions.COLOR)) {
-                for (final User.FormattingType value : User.FormattingType.values()) {
-                    possibilities.add(value.toString());
+                if (sender.hasPermission(Constants.Permissions.MINI_MESSAGE)) {
+                    possibilities.add("MINI_MESSAGE");
+                }
+                if (sender.hasPermission(Constants.Permissions.LEGACY)) {
+                    possibilities.add("LEGACY");
                 }
 
                 StringUtil.copyPartialMatches(args[1], possibilities, completions);

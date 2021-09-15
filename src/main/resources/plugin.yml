@@ -22,6 +22,12 @@ permissions:
   yase.color:
     description: Permission to color sign text.
     default: true
+  yase.color.minimessage:
+    description: Permission to use the MiniMessage format type.
+    default: op
+  yase.color.legacy:
+    description: Permission to use the Legacy format type.
+    default: true
   yase.reload:
     description: Permission to run /yase reload.
     default: op

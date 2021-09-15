@@ -6,9 +6,9 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class ColorUtil {
+public final class FormatUtil {
 
-    private ColorUtil() {
+    private FormatUtil() {
     }
 
     public static @NonNull Component reverseLegacy(final @NonNull Component component) {
@@ -33,6 +33,10 @@ public final class ColorUtil {
 
     public static @NonNull Component miniMessage(final @NonNull String string) {
         return MiniMessage.get().parse(string);
+    }
+
+    public static @NonNull Component plain(final @NonNull String string) {
+        return PlainTextComponentSerializer.plainText().deserialize(string);
     }
 
 }

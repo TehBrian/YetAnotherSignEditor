@@ -19,7 +19,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.yetanothersigneditor.ColorUtil;
+import xyz.tehbrian.yetanothersigneditor.FormatUtil;
 import xyz.tehbrian.yetanothersigneditor.Constants;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.user.User;
@@ -87,10 +87,10 @@ public final class SignListener implements Listener {
 
         final List<Component> lines = sign.lines();
         for (int i = 0; i < lines.size(); i++) {
-            if (user.formattingType() == User.FormattingType.LEGACY) {
-                sign.line(i, ColorUtil.reverseLegacy(lines.get(i)));
-            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE) {
-                sign.line(i, ColorUtil.reverseMiniMessage(lines.get(i)));
+            if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Constants.Permissions.LEGACY)) {
+                sign.line(i, FormatUtil.reverseLegacy(lines.get(i)));
+            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Constants.Permissions.MINI_MESSAGE)) {
+                sign.line(i, FormatUtil.reverseMiniMessage(lines.get(i)));
             }
         }
 
@@ -117,10 +117,10 @@ public final class SignListener implements Listener {
 
         final List<Component> lines = event.lines();
         for (int i = 0; i < lines.size(); i++) {
-            if (user.formattingType() == User.FormattingType.LEGACY) {
-                event.line(i, ColorUtil.legacy(lines.get(i)));
-            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE) {
-                event.line(i, ColorUtil.miniMessage(lines.get(i)));
+            if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Constants.Permissions.LEGACY)) {
+                event.line(i, FormatUtil.legacy(lines.get(i)));
+            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Constants.Permissions.MINI_MESSAGE)) {
+                event.line(i, FormatUtil.miniMessage(lines.get(i)));
             }
         }
     }
