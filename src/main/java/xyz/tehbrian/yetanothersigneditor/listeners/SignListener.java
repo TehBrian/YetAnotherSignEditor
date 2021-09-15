@@ -2,6 +2,7 @@ package xyz.tehbrian.yetanothersigneditor.listeners;
 
 import com.google.inject.Inject;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
@@ -20,6 +21,7 @@ import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 import xyz.tehbrian.yetanothersigneditor.ColorUtil;
 import xyz.tehbrian.yetanothersigneditor.Constants;
+import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.user.User;
 import xyz.tehbrian.yetanothersigneditor.user.UserService;
 
@@ -30,18 +32,22 @@ import java.util.List;
  */
 public final class SignListener implements Listener {
 
+    private final YetAnotherSignEditor yetAnotherSignEditor;
     private final UserService userService;
     private final SpigotRestrictionHelper restrictionHelper;
 
     /**
-     * @param userService       injected
-     * @param restrictionHelper injected
+     * @param yetAnotherSignEditor injected
+     * @param userService          injected
+     * @param restrictionHelper    injected
      */
     @Inject
     public SignListener(
+            final @NonNull YetAnotherSignEditor yetAnotherSignEditor,
             final @NonNull UserService userService,
             final @NonNull SpigotRestrictionHelper restrictionHelper
     ) {
+        this.yetAnotherSignEditor = yetAnotherSignEditor;
         this.userService = userService;
         this.restrictionHelper = restrictionHelper;
     }
@@ -81,15 +87,21 @@ public final class SignListener implements Listener {
 
         final List<Component> lines = sign.lines();
         for (int i = 0; i < lines.size(); i++) {
+            player.sendMessage(sign.line(i));
             if (user.formatting() == User.Formatting.LEGACY) {
-                sign.line(i, ColorUtil.reverseLegacy(lines.get(i)));
+                player.sendMessage(ColorUtil.reverseLegacy(lines.get(i)));
             } else if (user.formatting() == User.Formatting.MINI_MESSAGE) {
-                sign.line(i, ColorUtil.reverseMiniMessage(lines.get(i)));
+                player.sendMessage(ColorUtil.reverseMiniMessage(lines.get(i)));
             }
         }
 
         sign.update();
-        player.openSign(sign);
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(
+                this.yetAnotherSignEditor,
+                () -> player.openSign(sign),
+                2 // magic number so that bukkit loads the updated sign
+        );
 
         event.setCancelled(true);
     }
