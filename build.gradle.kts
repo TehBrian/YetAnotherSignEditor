@@ -17,7 +17,7 @@ repositories {
     mavenLocal()
 
     maven("https://papermc.io/repo/repository/maven-public/") {
-        name = "papermc-repo"
+        name = "papermc"
     }
     maven("https://s01.oss.sonatype.org/content/groups/public/") {
         name = "sonatype-s01"
@@ -47,8 +47,9 @@ tasks {
     }
 
     shadowJar {
-        relocate("xyz.tehbrian.restrictionhelper", "xyz.tehbrian.yetanothersigneditor.restrictionhelper")
         archiveBaseName.set("YetAnotherSignEditor")
+
+        relocate("xyz.tehbrian.restrictionhelper", "xyz.tehbrian.yetanothersigneditor.restrictionhelper")
     }
 
     runServer {

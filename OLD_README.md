@@ -41,7 +41,7 @@ folder! The jar can be found [here][releases].
 
 If you'd like to build the jar yourself, it's quite easy. Just clone the
 repository onto your computer, navigate to the project directory, and
-run `./gradlew build`. The built jar should be in `build/libs`!
+run `./gradlew shadowJar`. The built jar should be in `build/libs`!
 
 ## What are the permissions and commands?
 You can do `/yase` in-game to find a list of all commands. The permissions can
