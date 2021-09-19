@@ -23,7 +23,7 @@ color:
   enabled: "<light_purple> Enabled sign coloring. <gray>(Insert color codes into sign text.)"
   disabled: "<dark_purple> Disabled sign coloring."
   invalid: "<light_purple> Invalid formatting type."
-  set: "<light_purple> Set your formatting type to <blue><formatting_type></blue>!"
+  set: "<light_purple> Set your formatting type to <dark_purple><formatting_type></dark_purple>!"
 
 reload: "<red> Successfully reloaded the config!"
 
