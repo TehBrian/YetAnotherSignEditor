@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Tag;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -52,16 +51,22 @@ public final class SignListener implements Listener {
         this.restrictionHelper = restrictionHelper;
     }
 
+    /**
+     * Opens the sign editor on sign interact.
+     *
+     * @param event the event
+     */
     @EventHandler(ignoreCancelled = true)
     public void onSignInteract(final PlayerInteractEvent event) {
         final Player player = event.getPlayer();
+        final User user = this.userService.getUser(player);
 
-        if (!event.getPlayer().hasPermission(Constants.Permissions.EDIT)
-                || !this.userService.getUser(player).editEnabled()) {
+        if (!player.hasPermission(Constants.Permissions.EDIT)
+                || !user.editEnabled()) {
             return;
         }
 
-        if (!(Tag.SIGNS.isTagged(player.getInventory().getItemInMainHand().getType()))
+        if (!Tag.SIGNS.isTagged(player.getInventory().getItemInMainHand().getType())
                 || event.getAction() != Action.RIGHT_CLICK_BLOCK
                 || event.getHand() != EquipmentSlot.HAND
                 || player.getGameMode() == GameMode.ADVENTURE
@@ -70,20 +75,11 @@ public final class SignListener implements Listener {
         }
 
         final @Nullable Block clickedBlock = event.getClickedBlock();
-        if (clickedBlock == null) {
+        if (clickedBlock == null
+                || !(clickedBlock.getState() instanceof final Sign sign)
+                || !this.restrictionHelper.checkRestrictions(player, clickedBlock.getLocation(), ActionType.ALL)) {
             return;
         }
-        final BlockState blockState = clickedBlock.getState();
-
-        if (!this.restrictionHelper.checkRestrictions(player, clickedBlock.getLocation(), ActionType.ALL)) {
-            return;
-        }
-
-        if (!(blockState instanceof final Sign sign)) {
-            return;
-        }
-
-        final User user = this.userService.getUser(player);
 
         final List<Component> lines = sign.lines();
         for (int i = 0; i < lines.size(); i++) {
@@ -105,12 +101,17 @@ public final class SignListener implements Listener {
         event.setCancelled(true);
     }
 
+    /**
+     * Colors sign text on sign change.
+     *
+     * @param event the event
+     */
     @EventHandler
     public void onSignChange(final SignChangeEvent event) {
         final Player player = event.getPlayer();
         final User user = this.userService.getUser(player);
 
-        if (!event.getPlayer().hasPermission(Constants.Permissions.COLOR)
+        if (!player.hasPermission(Constants.Permissions.COLOR)
                 || !user.colorEnabled()) {
             return;
         }

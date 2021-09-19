@@ -11,8 +11,11 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.NodePath;
+import xyz.tehbrian.restrictionhelper.core.ActionType;
+import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 import xyz.tehbrian.yetanothersigneditor.Constants;
 import xyz.tehbrian.yetanothersigneditor.FormatUtil;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
@@ -31,21 +34,25 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
     private final YetAnotherSignEditor yetAnotherSignEditor;
     private final UserService userService;
     private final LangConfig langConfig;
+    private final SpigotRestrictionHelper restrictionHelper;
 
     /**
      * @param yetAnotherSignEditor injected
      * @param userService          injected
      * @param langConfig           injected
+     * @param restrictionHelper    injected
      */
     @Inject
     public YaseCommand(
             final @NonNull YetAnotherSignEditor yetAnotherSignEditor,
             final @NonNull UserService userService,
-            final @NonNull LangConfig langConfig
+            final @NonNull LangConfig langConfig,
+            final @NonNull SpigotRestrictionHelper restrictionHelper
     ) {
         this.yetAnotherSignEditor = yetAnotherSignEditor;
         this.userService = userService;
         this.langConfig = langConfig;
+        this.restrictionHelper = restrictionHelper;
     }
 
     @Override
@@ -70,12 +77,16 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
                         break;
                     }
 
-                    final Block block = player.getTargetBlock(6);
-                    if (block == null) {
+                    final @Nullable Block targetedBlock = player.getTargetBlock(6);
+                    if (targetedBlock == null) {
                         return true;
                     }
-                    if (!(block.getState() instanceof final Sign sign)) {
+                    if (!(targetedBlock.getState() instanceof final Sign sign)) {
                         sender.sendMessage(this.langConfig.c(NodePath.path("set", "not_a_sign")));
+                        return true;
+                    }
+                    if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
+                        sender.sendMessage(this.langConfig.c(NodePath.path("no_permission")));
                         return true;
                     }
 
