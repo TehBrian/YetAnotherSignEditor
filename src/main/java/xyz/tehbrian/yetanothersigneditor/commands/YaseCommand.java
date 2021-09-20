@@ -57,9 +57,9 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(
-            @NotNull final CommandSender sender,
-            @NotNull final Command command,
-            @NotNull final String label,
+            final @NotNull CommandSender sender,
+            final @NotNull Command command,
+            final @NotNull String label,
             final @NotNull String[] args
     ) {
         if (args.length >= 1) {
@@ -198,9 +198,9 @@ public final class YaseCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public @NotNull List<String> onTabComplete(
-            @NotNull final CommandSender sender,
-            @NotNull final Command command,
-            @NotNull final String label,
+            final @NotNull CommandSender sender,
+            final @NotNull Command command,
+            final @NotNull String label,
             final @NotNull String[] args
     ) {
         final List<String> completions = new ArrayList<>();
