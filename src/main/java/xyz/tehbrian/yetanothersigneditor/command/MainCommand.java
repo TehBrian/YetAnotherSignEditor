@@ -73,7 +73,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     c.getSender().sendMessage(this.langConfig.c(NodePath.path("reload")));
                 });
 
-        final var edit = main.literal("edit", ArgumentDescription.of("Toggle your ability to edit signs."))
+        final var edit = main.literal("edit", ArgumentDescription.of("Toggle your ability to edit sign text."))
                 .permission(Constants.Permissions.EDIT)
                 .senderType(Player.class)
                 .handler(c -> {
@@ -85,7 +85,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     }
                 });
 
-        final var color = main.literal("color", ArgumentDescription.of("Toggle your ability to color signs."))
+        final var color = main.literal("color", ArgumentDescription.of("Toggle your ability to color sign text."))
                 .permission(Constants.Permissions.COLOR)
                 .senderType(Player.class)
                 .handler(c -> {
@@ -111,7 +111,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     ));
                 });
 
-        final var set = main.literal("set", ArgumentDescription.of("Set the text of the sign that you're looking at."))
+        final var set = main.literal("set", ArgumentDescription.of("Set the text of the sign you're looking at."))
                 .permission(Constants.Permissions.SET)
                 .senderType(Player.class)
                 .argument(IntegerArgument
