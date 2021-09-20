@@ -1,15 +1,22 @@
 package xyz.tehbrian.yetanothersigneditor;
 
+import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
+import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import dev.tehbrian.tehlib.paper.TehPlugin;
+import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionLoader;
 import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6_1;
 import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7_0;
-import xyz.tehbrian.yetanothersigneditor.commands.YaseCommand;
+import xyz.tehbrian.yetanothersigneditor.command.CommandService;
+import xyz.tehbrian.yetanothersigneditor.command.MainCommand;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
+import xyz.tehbrian.yetanothersigneditor.inject.CommandModule;
 import xyz.tehbrian.yetanothersigneditor.inject.ConfigModule;
 import xyz.tehbrian.yetanothersigneditor.inject.PluginModule;
 import xyz.tehbrian.yetanothersigneditor.inject.RestrictionHelperModule;
@@ -36,6 +43,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
     public void onEnable() {
         try {
             this.injector = Guice.createInjector(
+                    new CommandModule(),
                     new ConfigModule(),
                     new PluginModule(this),
                     new RestrictionHelperModule(),
@@ -50,14 +58,12 @@ public final class YetAnotherSignEditor extends TehPlugin {
         }
 
         this.loadConfigs();
+        this.setupCommands();
         this.setupRestrictions();
 
         registerListeners(
                 this.injector.getInstance(SignListener.class)
         );
-
-        final var yaseCommand = this.injector.getInstance(YaseCommand.class);
-        this.registerCommand("yase", yaseCommand, yaseCommand);
     }
 
     /**
@@ -67,6 +73,29 @@ public final class YetAnotherSignEditor extends TehPlugin {
         this.saveResourceSilently("lang.yml");
 
         this.injector.getInstance(LangConfig.class).load();
+    }
+
+    private void setupCommands() {
+        final @NonNull CommandService commandService = this.injector.getInstance(CommandService.class);
+        commandService.init();
+
+        final @Nullable PaperCommandManager<CommandSender> commandManager = commandService.get();
+        if (commandManager == null) {
+            this.getLog4JLogger().error("The CommandService was null after initialization!");
+            this.getLog4JLogger().error("Disabling plugin.");
+            this.disableSelf();
+            return;
+        }
+
+        new MinecraftExceptionHandler<CommandSender>()
+                .withArgumentParsingHandler()
+                .withInvalidSenderHandler()
+                .withInvalidSyntaxHandler()
+                .withNoPermissionHandler()
+                .withCommandExecutionHandler()
+                .apply(commandManager, s -> s);
+
+        this.injector.getInstance(MainCommand.class).register(commandManager);
     }
 
     private void setupRestrictions() {
