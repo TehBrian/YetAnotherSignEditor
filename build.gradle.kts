@@ -14,7 +14,6 @@ java {
 
 repositories {
     mavenCentral()
-    mavenLocal()
 
     maven("https://papermc.io/repo/repository/maven-public/") {
         name = "papermc"
@@ -24,6 +23,9 @@ repositories {
     }
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") {
         name = "sonatype-s01-snapshots"
+    }
+    maven("https://repo.thbn.me/snapshots/") {
+        name = "thbn-snapshots"
     }
 }
 
