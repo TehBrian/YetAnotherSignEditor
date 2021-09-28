@@ -24,7 +24,7 @@ public final class FormatUtil {
     }
 
     public static @NonNull Component reverseMiniMessage(final @NonNull Component component) {
-        return PlainTextComponentSerializer.plainText().deserialize(MiniMessage.get().serialize(component));
+        return PlainTextComponentSerializer.plainText().deserialize(MiniMessage.miniMessage().serialize(component));
     }
 
     public static @NonNull Component miniMessage(final @NonNull Component component) {
@@ -32,7 +32,7 @@ public final class FormatUtil {
     }
 
     public static @NonNull Component miniMessage(final @NonNull String string) {
-        return MiniMessage.get().parse(string);
+        return MiniMessage.miniMessage().parse(string);
     }
 
     public static @NonNull Component plain(final @NonNull String string) {
