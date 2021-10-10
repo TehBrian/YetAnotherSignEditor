@@ -8,10 +8,8 @@
 # | Feedback and Support: https://chat.tehbrian.xyz
 # |
 
-no_permission: "<red> No permission."
-player_only: "<red> Only players can perform this command."
-
 set:
+  no_permission: "<red> No permission."
   not_a_sign: "<yellow> That's not a sign!"
   not_a_line: "<yellow> Please specify a line number <gold>1-4</gold>."
 

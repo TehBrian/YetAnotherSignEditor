@@ -138,7 +138,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                         return;
                     }
                     if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
-                        player.sendMessage(this.langConfig.c(NodePath.path("no_permission"))); // TODO: throw NoPermissionException somehow
+                        player.sendMessage(this.langConfig.c(NodePath.path("set", "no_permission")));
                         return;
                     }
 
