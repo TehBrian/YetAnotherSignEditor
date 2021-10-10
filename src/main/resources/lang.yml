@@ -25,7 +25,9 @@ color:
   invalid: "<light_purple> Invalid formatting type."
   set: "<light_purple> Set your formatting type to <dark_purple><formatting_type></dark_purple>!"
 
-reload: "<red> Successfully reloaded the config!"
+reload:
+  successful: "<red> The configuration has been successfully reloaded."
+  unsuccessful: "<red> Failed to load configuration, please check the console."
 
 help:
   - "<gray>--- <white>YetAnotherSignEditor</white> ---"

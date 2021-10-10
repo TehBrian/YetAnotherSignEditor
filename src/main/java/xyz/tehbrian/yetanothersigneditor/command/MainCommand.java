@@ -41,10 +41,10 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
      */
     @Inject
     public MainCommand(
-            @NonNull final YetAnotherSignEditor yetAnotherSignEditor,
-            @NonNull final SpigotRestrictionHelper restrictionHelper,
-            @NonNull final UserService userService,
-            @NonNull final LangConfig langConfig
+            final @NonNull YetAnotherSignEditor yetAnotherSignEditor,
+            final @NonNull SpigotRestrictionHelper restrictionHelper,
+            final @NonNull UserService userService,
+            final @NonNull LangConfig langConfig
     ) {
         this.yetAnotherSignEditor = yetAnotherSignEditor;
         this.restrictionHelper = restrictionHelper;
@@ -69,8 +69,11 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
         final var reload = main.literal("reload", ArgumentDescription.of("Reloads the plugin's config."))
                 .permission(Constants.Permissions.RELOAD)
                 .handler(c -> {
-                    this.yetAnotherSignEditor.loadConfigs();
-                    c.getSender().sendMessage(this.langConfig.c(NodePath.path("reload")));
+                    if (this.yetAnotherSignEditor.loadConfiguration()) {
+                        c.getSender().sendMessage(this.langConfig.c(NodePath.path("reload", "successful")));
+                    } else {
+                        c.getSender().sendMessage(this.langConfig.c(NodePath.path("reload", "unsuccessful")));
+                    }
                 });
 
         final var edit = main.literal("edit", ArgumentDescription.of("Toggle your ability to edit sign text."))

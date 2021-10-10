@@ -4,11 +4,13 @@ import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import dev.tehbrian.tehlib.core.configurate.Config;
 import dev.tehbrian.tehlib.paper.TehPlugin;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.spongepowered.configurate.ConfigurateException;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionLoader;
 import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6_1;
@@ -57,7 +59,9 @@ public final class YetAnotherSignEditor extends TehPlugin {
             return;
         }
 
-        this.loadConfigs();
+        if (!this.loadConfiguration()) {
+            return;
+        }
         this.setupCommands();
         this.setupRestrictions();
 
@@ -67,12 +71,32 @@ public final class YetAnotherSignEditor extends TehPlugin {
     }
 
     /**
-     * Loads the various plugin config files.
+     * Loads the plugin's configuration. If an exception is caught, logs the
+     * error and returns false.
+     *
+     * @return whether or not the loading was successful
      */
-    public void loadConfigs() {
+    public boolean loadConfiguration() {
         this.saveResourceSilently("lang.yml");
 
-        this.injector.getInstance(LangConfig.class).load();
+        final List<Config> configsToLoad = List.of(
+                this.injector.getInstance(LangConfig.class)
+        );
+
+        for (final Config config : configsToLoad) {
+            try {
+                config.load();
+            } catch (final ConfigurateException e) {
+                this.getLog4JLogger().error("Exception caught during config load for {}", config.configurateWrapper().filePath());
+                this.getLog4JLogger().error("Disabling plugin. Please check your config.");
+                this.disableSelf();
+                this.getLog4JLogger().error("Printing stack trace:", e);
+                return false;
+            }
+        }
+
+        this.getLog4JLogger().info("Successfully loaded configuration.");
+        return true;
     }
 
     private void setupCommands() {
