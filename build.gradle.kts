@@ -52,6 +52,7 @@ tasks {
 
     shadowJar {
         archiveBaseName.set("YetAnotherSignEditor")
+        archiveClassifier.set("")
 
         relocate("xyz.tehbrian.restrictionhelper", "xyz.tehbrian.yetanothersigneditor.restrictionhelper")
     }
