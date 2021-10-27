@@ -7,7 +7,7 @@ Easily edit signs, with support for both MiniMessage and legacy color codes.
 ## Features
 
 - Edit signs with a command or directly in the sign interface.
-- Individually toggle plugin features on and off.
+- Toggle plugin features per-player.
 - Use either legacy color codes or [MiniMessage][MiniMessage] to format text.
 - All plugin messages are easily configurable.
 - Separate permissions for sign coloring and sign editing.
