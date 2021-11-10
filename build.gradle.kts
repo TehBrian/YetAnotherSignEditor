@@ -54,7 +54,13 @@ tasks {
         archiveBaseName.set("YetAnotherSignEditor")
         archiveClassifier.set("")
 
-        relocate("xyz.tehbrian.restrictionhelper", "xyz.tehbrian.yetanothersigneditor.restrictionhelper")
+        val libsPackage = "xyz.tehbrian.yetanothersigneditor.libs"
+        relocate("com.google.inject", "$libsPackage.guice")
+        relocate("net.kyori.adventure.text.minimessage", "$libsPackage.minimessage")
+        relocate("org.spongepowered.configurate.yaml", "$libsPackage.configurate.yaml")
+        relocate("xyz.tehbrian.restrictionhelper", "$libsPackage.restrictionhelper")
+        relocate("dev.tehbrian.tehlib", "$libsPackage.tehlib")
+        relocate("cloud.commandframework", "$libsPackage.cloud")
     }
 
     runServer {

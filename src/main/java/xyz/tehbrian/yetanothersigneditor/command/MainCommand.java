@@ -8,6 +8,7 @@ import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
 import dev.tehbrian.tehlib.paper.cloud.PaperCloudCommand;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.template.TemplateResolver;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
@@ -110,7 +111,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     this.userService.getUser(player).formattingType(formattingType);
                     player.sendMessage(this.langConfig.c(
                             NodePath.path("color", "set"),
-                            Map.of("formatting_type", formattingType.toString())
+                            TemplateResolver.pairs(Map.of("formatting_type", formattingType.toString()))
                     ));
                 });
 
