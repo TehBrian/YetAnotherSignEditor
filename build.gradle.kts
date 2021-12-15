@@ -39,7 +39,7 @@ dependencies {
     implementation("org.spongepowered:configurate-yaml:4.1.2")
 
     implementation("cloud.commandframework:cloud-paper:1.6.0")
-    implementation("cloud.commandframework:cloud-minecraft-extras:1.5.0")
+    implementation("cloud.commandframework:cloud-minecraft-extras:1.6.0")
 
     implementation("xyz.tehbrian.restrictionhelper:restrictionhelper-spigot:0.2.0-SNAPSHOT")
     implementation("dev.tehbrian:tehlib-paper:0.1.0-SNAPSHOT")
