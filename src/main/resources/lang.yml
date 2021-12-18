@@ -26,15 +26,15 @@ reload:
   successful: "<red> The configuration has been successfully reloaded."
   unsuccessful: "<red> Failed to load configuration, please check the console."
 
-help:
-  - "<gray>--- <white>YetAnotherSignEditor</white> ---"
-  - "<green>/yase"
-  - "<gray>   Display this help message."
-  - "<yellow>/yase set <line> [text]"
-  - "<gray>   Set the text of the sign you're looking at."
-  - "<aqua>/yase edit"
-  - "<gray>   Toggle your ability to edit sign text."
-  - "<light_purple>/yase color [formatting_type]"
-  - "<gray>   Toggle your ability to color sign text."
-  - "<red>/yase reload"
-  - "<gray>   Reload the plugin's config."
+help: |-
+  <gray>--- <white>YetAnotherSignEditor</white> ---
+  <green>/yase
+  <gray>   Display this help message.
+  <yellow>/yase set <line> [text]
+  <gray>   Set the text of the sign you're looking at.
+  <aqua>/yase edit
+  <gray>   Toggle your ability to edit sign text.
+  <light_purple>/yase color [formatting_type]
+  <gray>   Toggle your ability to color sign text.
+  <red>/yase reload
+  <gray>   Reload the plugin's config.

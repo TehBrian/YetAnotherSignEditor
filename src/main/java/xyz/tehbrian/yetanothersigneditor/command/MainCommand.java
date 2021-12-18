@@ -61,11 +61,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
     @Override
     public void register(final @NonNull PaperCommandManager<CommandSender> commandManager) {
         final var main = commandManager.commandBuilder("yase", ArgumentDescription.of("Various commands for YetAnotherSignEditor."))
-                .handler(c -> {
-                    for (final Component component : this.langConfig.cl(NodePath.path("help"))) {
-                        c.getSender().sendMessage(component);
-                    }
-                });
+                .handler(c -> c.getSender().sendMessage(this.langConfig.c(NodePath.path("help"))));
 
         final var reload = main.literal("reload", ArgumentDescription.of("Reloads the plugin's config."))
                 .permission(Constants.Permissions.RELOAD)
@@ -102,8 +98,8 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                 });
 
         final var colorFormattingType = color.argument(EnumArgument
-                .<CommandSender, User.FormattingType>newBuilder(User.FormattingType.class, "formatting_type")
-                .build())
+                        .<CommandSender, User.FormattingType>newBuilder(User.FormattingType.class, "formatting_type")
+                        .build())
                 .handler(c -> {
                     final @NonNull Player player = (Player) c.getSender();
                     final User.@NonNull FormattingType formattingType = c.get("formatting_type");
