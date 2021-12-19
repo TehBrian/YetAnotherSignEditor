@@ -17,8 +17,8 @@ Above all, it just feels good to use! No bloat, no extra features.
 [MiniMessage]: https://docs.adventure.kyori.net/minimessage.html
 
 ## Screenshots
-![Help Menu](https://raw.githubusercontent.com/TehBrian/YetAnotherSignEditor/master/images/help-menu.png)
-![Commands](https://raw.githubusercontent.com/TehBrian/YetAnotherSignEditor/master/images/commands.png)
+![Help Menu](images/help-menu.png)
+![Commands](images/commands.png)
 
 ## Permissions
 The permissions can be found [here][plugin.yml].
