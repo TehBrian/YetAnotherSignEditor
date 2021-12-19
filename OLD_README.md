@@ -50,8 +50,8 @@ be found [here][plugin.yml].
 [plugin.yml]: https://github.com/TehBrian/YetAnotherSignEditor/blob/master/src/main/resources/plugin.yml
 
 ## Screenshots?
-![Help Menu](https://raw.githubusercontent.com/TehBrian/YetAnotherSignEditor/master/images/help-menu.png)
-![Commands](https://raw.githubusercontent.com/TehBrian/YetAnotherSignEditor/master/images/commands.png)
+![help menu](images/help-menu.png)
+![commands](images/commands.png)
 
 ## Can I contribute?
 Sure! If you find a problem or have a suggestion, feel free to file

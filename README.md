@@ -17,8 +17,8 @@ Above all, it just feels good to use! No bloat, no extra features.
 [MiniMessage]: https://docs.adventure.kyori.net/minimessage.html
 
 ## Screenshots
-![Help Menu](images/help-menu.png)
-![Commands](images/commands.png)
+![help menu](images/help-menu.png)
+![commands](images/commands.png)
 
 ## Permissions
 The permissions can be found [here][plugin.yml].
