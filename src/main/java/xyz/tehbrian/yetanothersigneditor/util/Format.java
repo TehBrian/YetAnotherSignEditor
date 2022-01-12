@@ -1,4 +1,4 @@
-package xyz.tehbrian.yetanothersigneditor;
+package xyz.tehbrian.yetanothersigneditor.util;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -6,9 +6,9 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public final class FormatUtil {
+public final class Format {
 
-    private FormatUtil() {
+    private Format() {
     }
 
     public static @NonNull Component reverseLegacy(final @NonNull Component component) {

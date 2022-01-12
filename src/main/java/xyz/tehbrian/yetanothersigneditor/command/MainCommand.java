@@ -19,8 +19,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.NodePath;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.yetanothersigneditor.FormatUtil;
-import xyz.tehbrian.yetanothersigneditor.Permissions;
+import xyz.tehbrian.yetanothersigneditor.util.Format;
+import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
 import xyz.tehbrian.yetanothersigneditor.user.User;
@@ -140,12 +140,12 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
 
                     final User user = this.userService.getUser(player);
 
-                    Component formattedText = FormatUtil.plain(text);
+                    Component formattedText = Format.plain(text);
                     if (player.hasPermission(Permissions.COLOR) && user.colorEnabled()) {
                         if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
-                            formattedText = FormatUtil.legacy(text);
+                            formattedText = Format.legacy(text);
                         } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
-                            formattedText = FormatUtil.miniMessage(text);
+                            formattedText = Format.miniMessage(text);
                         }
                     }
 

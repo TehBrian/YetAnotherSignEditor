@@ -18,8 +18,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.yetanothersigneditor.FormatUtil;
-import xyz.tehbrian.yetanothersigneditor.Permissions;
+import xyz.tehbrian.yetanothersigneditor.util.Format;
+import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.user.User;
 import xyz.tehbrian.yetanothersigneditor.user.UserService;
@@ -84,9 +84,9 @@ public final class SignListener implements Listener {
         final List<Component> lines = sign.lines();
         for (int i = 0; i < lines.size(); i++) {
             if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
-                sign.line(i, FormatUtil.reverseLegacy(lines.get(i)));
+                sign.line(i, Format.reverseLegacy(lines.get(i)));
             } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
-                sign.line(i, FormatUtil.reverseMiniMessage(lines.get(i)));
+                sign.line(i, Format.reverseMiniMessage(lines.get(i)));
             }
         }
 
@@ -119,9 +119,9 @@ public final class SignListener implements Listener {
         final List<Component> lines = event.lines();
         for (int i = 0; i < lines.size(); i++) {
             if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
-                event.line(i, FormatUtil.legacy(lines.get(i)));
+                event.line(i, Format.legacy(lines.get(i)));
             } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
-                event.line(i, FormatUtil.miniMessage(lines.get(i)));
+                event.line(i, Format.miniMessage(lines.get(i)));
             }
         }
     }

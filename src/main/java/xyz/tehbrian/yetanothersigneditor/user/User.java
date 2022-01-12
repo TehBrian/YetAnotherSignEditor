@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import xyz.tehbrian.yetanothersigneditor.Permissions;
+import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 
 import java.util.Objects;
 import java.util.UUID;
