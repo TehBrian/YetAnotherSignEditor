@@ -18,8 +18,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.yetanothersigneditor.Constants;
 import xyz.tehbrian.yetanothersigneditor.FormatUtil;
+import xyz.tehbrian.yetanothersigneditor.Permissions;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.user.User;
 import xyz.tehbrian.yetanothersigneditor.user.UserService;
@@ -61,7 +61,7 @@ public final class SignListener implements Listener {
         final Player player = event.getPlayer();
         final User user = this.userService.getUser(player);
 
-        if (!player.hasPermission(Constants.Permissions.EDIT)
+        if (!player.hasPermission(Permissions.EDIT)
                 || !user.editEnabled()) {
             return;
         }
@@ -83,9 +83,9 @@ public final class SignListener implements Listener {
 
         final List<Component> lines = sign.lines();
         for (int i = 0; i < lines.size(); i++) {
-            if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Constants.Permissions.LEGACY)) {
+            if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
                 sign.line(i, FormatUtil.reverseLegacy(lines.get(i)));
-            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Constants.Permissions.MINI_MESSAGE)) {
+            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
                 sign.line(i, FormatUtil.reverseMiniMessage(lines.get(i)));
             }
         }
@@ -111,16 +111,16 @@ public final class SignListener implements Listener {
         final Player player = event.getPlayer();
         final User user = this.userService.getUser(player);
 
-        if (!player.hasPermission(Constants.Permissions.COLOR)
+        if (!player.hasPermission(Permissions.COLOR)
                 || !user.colorEnabled()) {
             return;
         }
 
         final List<Component> lines = event.lines();
         for (int i = 0; i < lines.size(); i++) {
-            if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Constants.Permissions.LEGACY)) {
+            if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
                 event.line(i, FormatUtil.legacy(lines.get(i)));
-            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Constants.Permissions.MINI_MESSAGE)) {
+            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
                 event.line(i, FormatUtil.miniMessage(lines.get(i)));
             }
         }

@@ -19,8 +19,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.NodePath;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.yetanothersigneditor.Constants;
 import xyz.tehbrian.yetanothersigneditor.FormatUtil;
+import xyz.tehbrian.yetanothersigneditor.Permissions;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
 import xyz.tehbrian.yetanothersigneditor.user.User;
@@ -63,7 +63,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                 .handler(c -> c.getSender().sendMessage(this.langConfig.c(NodePath.path("help"))));
 
         final var reload = main.literal("reload", ArgumentDescription.of("Reloads the plugin's config."))
-                .permission(Constants.Permissions.RELOAD)
+                .permission(Permissions.RELOAD)
                 .handler(c -> {
                     if (this.yetAnotherSignEditor.loadConfiguration()) {
                         c.getSender().sendMessage(this.langConfig.c(NodePath.path("reload", "successful")));
@@ -73,7 +73,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                 });
 
         final var edit = main.literal("edit", ArgumentDescription.of("Toggle your ability to edit sign text."))
-                .permission(Constants.Permissions.EDIT)
+                .permission(Permissions.EDIT)
                 .senderType(Player.class)
                 .handler(c -> {
                     final Player player = (Player) c.getSender();
@@ -85,7 +85,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                 });
 
         final var color = main.literal("color", ArgumentDescription.of("Toggle your ability to color sign text."))
-                .permission(Constants.Permissions.COLOR)
+                .permission(Permissions.COLOR)
                 .senderType(Player.class)
                 .handler(c -> {
                     final Player sender = (Player) c.getSender();
@@ -111,7 +111,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                 });
 
         final var set = main.literal("set", ArgumentDescription.of("Set the text of the sign you're looking at."))
-                .permission(Constants.Permissions.SET)
+                .permission(Permissions.SET)
                 .senderType(Player.class)
                 .argument(IntegerArgument
                         .<CommandSender>newBuilder("line")
@@ -141,10 +141,10 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     final User user = this.userService.getUser(player);
 
                     Component formattedText = FormatUtil.plain(text);
-                    if (player.hasPermission(Constants.Permissions.COLOR) && user.colorEnabled()) {
-                        if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Constants.Permissions.LEGACY)) {
+                    if (player.hasPermission(Permissions.COLOR) && user.colorEnabled()) {
+                        if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
                             formattedText = FormatUtil.legacy(text);
-                        } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Constants.Permissions.MINI_MESSAGE)) {
+                        } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
                             formattedText = FormatUtil.miniMessage(text);
                         }
                     }

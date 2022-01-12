@@ -75,7 +75,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
      * Loads the plugin's configuration. If an exception is caught, logs the
      * error and returns false.
      *
-     * @return whether or not the loading was successful
+     * @return whether the loading was successful
      */
     public boolean loadConfiguration() {
         this.saveResourceSilently("lang.yml");

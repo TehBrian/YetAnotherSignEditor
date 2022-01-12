@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-import xyz.tehbrian.yetanothersigneditor.Constants;
+import xyz.tehbrian.yetanothersigneditor.Permissions;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -20,8 +20,8 @@ public final class User extends PaperUser {
         super(uuid);
 
         final @NonNull Player player = Objects.requireNonNull(this.getPlayer());
-        this.editEnabled = player.hasPermission(Constants.Permissions.EDIT);
-        this.colorEnabled = player.hasPermission(Constants.Permissions.COLOR);
+        this.editEnabled = player.hasPermission(Permissions.EDIT);
+        this.colorEnabled = player.hasPermission(Permissions.COLOR);
     }
 
     public @Nullable Player getPlayer() {
