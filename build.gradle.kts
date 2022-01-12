@@ -18,12 +18,6 @@ repositories {
     maven("https://papermc.io/repo/repository/maven-public/") {
         name = "papermc"
     }
-    maven("https://s01.oss.sonatype.org/content/groups/public/") {
-        name = "sonatype-s01"
-    }
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-        name = "sonatype-s01-snapshots"
-    }
     maven("https://repo.thbn.me/snapshots/") {
         name = "thbn-snapshots"
     }
@@ -33,12 +27,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 
     implementation("com.google.inject:guice:5.0.1")
-
-    implementation("net.kyori:adventure-text-minimessage:4.2.0-SNAPSHOT")
-
     implementation("org.spongepowered:configurate-yaml:4.1.2")
-
-    implementation("cloud.commandframework:cloud-paper:1.6.1")
     implementation("cloud.commandframework:cloud-minecraft-extras:1.6.1")
 
     implementation("xyz.tehbrian.restrictionhelper:restrictionhelper-spigot:0.2.0-SNAPSHOT")
