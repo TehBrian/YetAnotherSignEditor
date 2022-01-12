@@ -8,7 +8,8 @@ import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
 import dev.tehbrian.tehlib.paper.cloud.PaperCloudCommand;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.template.TemplateResolver;
+import net.kyori.adventure.text.minimessage.placeholder.Placeholder;
+import net.kyori.adventure.text.minimessage.placeholder.PlaceholderResolver;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
@@ -24,8 +25,6 @@ import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
 import xyz.tehbrian.yetanothersigneditor.user.User;
 import xyz.tehbrian.yetanothersigneditor.user.UserService;
-
-import java.util.Map;
 
 public final class MainCommand extends PaperCloudCommand<CommandSender> {
 
@@ -107,7 +106,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     this.userService.getUser(player).formattingType(formattingType);
                     player.sendMessage(this.langConfig.c(
                             NodePath.path("color", "set"),
-                            TemplateResolver.pairs(Map.of("formatting_type", formattingType.toString()))
+                            PlaceholderResolver.placeholders(Placeholder.miniMessage("formatting_type", formattingType.toString()))
                     ));
                 });
 
