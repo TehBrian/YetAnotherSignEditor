@@ -10,9 +10,7 @@ import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 
 import java.nio.file.Path;
 
-/**
- * Guice module which provides bindings for the plugin's instances.
- */
+@SuppressWarnings("unused")
 public final class PluginModule extends AbstractModule {
 
     private final YetAnotherSignEditor yetAnotherSignEditor;
@@ -31,8 +29,6 @@ public final class PluginModule extends AbstractModule {
     }
 
     /**
-     * Provides the plugin's Log4J logger.
-     *
      * @return the plugin's Log4J logger
      */
     @Provides
@@ -41,8 +37,6 @@ public final class PluginModule extends AbstractModule {
     }
 
     /**
-     * Provides the plugin's data folder.
-     *
      * @return the data folder
      */
     @Provides

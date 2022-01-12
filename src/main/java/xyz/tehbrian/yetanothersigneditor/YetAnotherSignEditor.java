@@ -18,11 +18,8 @@ import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7_0;
 import xyz.tehbrian.yetanothersigneditor.command.CommandService;
 import xyz.tehbrian.yetanothersigneditor.command.MainCommand;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
-import xyz.tehbrian.yetanothersigneditor.inject.CommandModule;
-import xyz.tehbrian.yetanothersigneditor.inject.ConfigModule;
 import xyz.tehbrian.yetanothersigneditor.inject.PluginModule;
-import xyz.tehbrian.yetanothersigneditor.inject.RestrictionHelperModule;
-import xyz.tehbrian.yetanothersigneditor.inject.UserModule;
+import xyz.tehbrian.yetanothersigneditor.inject.SingletonModule;
 import xyz.tehbrian.yetanothersigneditor.listeners.SignListener;
 
 import java.util.Arrays;
@@ -45,11 +42,8 @@ public final class YetAnotherSignEditor extends TehPlugin {
     public void onEnable() {
         try {
             this.injector = Guice.createInjector(
-                    new CommandModule(),
-                    new ConfigModule(),
                     new PluginModule(this),
-                    new RestrictionHelperModule(),
-                    new UserModule()
+                    new SingletonModule()
             );
         } catch (final Exception e) {
             this.getLog4JLogger().error("Something went wrong while creating the Guice injector.");
