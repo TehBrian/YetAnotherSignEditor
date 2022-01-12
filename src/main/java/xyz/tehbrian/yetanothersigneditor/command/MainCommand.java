@@ -19,12 +19,12 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.NodePath;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.yetanothersigneditor.util.Format;
-import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
 import xyz.tehbrian.yetanothersigneditor.user.User;
 import xyz.tehbrian.yetanothersigneditor.user.UserService;
+import xyz.tehbrian.yetanothersigneditor.util.Format;
+import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 
 public final class MainCommand extends PaperCloudCommand<CommandSender> {
 

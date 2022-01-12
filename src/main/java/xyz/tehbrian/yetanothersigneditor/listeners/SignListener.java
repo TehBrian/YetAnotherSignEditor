@@ -18,11 +18,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.yetanothersigneditor.util.Format;
-import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import xyz.tehbrian.yetanothersigneditor.user.User;
 import xyz.tehbrian.yetanothersigneditor.user.UserService;
+import xyz.tehbrian.yetanothersigneditor.util.Format;
+import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 
 import java.util.List;
 

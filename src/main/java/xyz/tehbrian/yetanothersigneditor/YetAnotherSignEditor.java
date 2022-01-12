@@ -1,5 +1,6 @@
 package xyz.tehbrian.yetanothersigneditor;
 
+import cloud.commandframework.minecraft.extras.AudienceProvider;
 import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
@@ -57,7 +58,11 @@ public final class YetAnotherSignEditor extends TehPlugin {
             this.disableSelf();
             return;
         }
-        this.setupCommands();
+        if (!this.setupCommands()) {
+            this.disableSelf();
+            return;
+        }
+
         this.setupRestrictions();
 
         registerListeners(
@@ -69,7 +74,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
      * Loads the plugin's configuration. If an exception is caught, logs the
      * error and returns false.
      *
-     * @return whether the loading was successful
+     * @return whether it was successful
      */
     public boolean loadConfiguration() {
         this.saveResourceSilently("lang.yml");
@@ -93,16 +98,23 @@ public final class YetAnotherSignEditor extends TehPlugin {
         return true;
     }
 
-    private void setupCommands() {
+    /**
+     * @return whether it was successful
+     */
+    private boolean setupCommands() {
         final @NonNull CommandService commandService = this.injector.getInstance(CommandService.class);
-        commandService.init();
+        try {
+            commandService.init();
+        } catch (final Exception e) {
+            this.getLog4JLogger().error("Failed to create the CommandManager.");
+            this.getLog4JLogger().error("Printing stack trace, please send this to the developers:", e);
+            return false;
+        }
 
         final @Nullable PaperCommandManager<CommandSender> commandManager = commandService.get();
         if (commandManager == null) {
             this.getLog4JLogger().error("The CommandService was null after initialization!");
-            this.getLog4JLogger().error("Disabling plugin.");
-            this.disableSelf();
-            return;
+            return false;
         }
 
         new MinecraftExceptionHandler<CommandSender>()
@@ -111,9 +123,11 @@ public final class YetAnotherSignEditor extends TehPlugin {
                 .withInvalidSyntaxHandler()
                 .withNoPermissionHandler()
                 .withCommandExecutionHandler()
-                .apply(commandManager, s -> s);
+                .apply(commandManager, AudienceProvider.nativeAudience());
 
         this.injector.getInstance(MainCommand.class).register(commandManager);
+
+        return true;
     }
 
     private void setupRestrictions() {
