@@ -9,8 +9,7 @@ version = "2.0.0"
 description = "Easily edit signs, with support for both MiniMessage and legacy color codes."
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 repositories {
