@@ -6,6 +6,7 @@ plugins {
 
 group = "xyz.tehbrian"
 version = "2.0.0"
+description = "Easily edit signs, with support for both MiniMessage and legacy color codes."
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -36,7 +37,7 @@ dependencies {
 
 tasks {
     processResources {
-        expand("version" to project.version)
+        expand("version" to project.version, "description" to project.description)
     }
 
     shadowJar {

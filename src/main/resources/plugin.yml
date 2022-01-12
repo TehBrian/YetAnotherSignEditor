@@ -1,5 +1,5 @@
 name: YetAnotherSignEditor
-description: Easily edit signs, with support for both MiniMessage and legacy color codes.
+description: ${description}
 authors: [ TehBrian ]
 website: https://github.com/TehBrian/YetAnotherSignEditor
 
