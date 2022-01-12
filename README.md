@@ -3,6 +3,7 @@ Easily edit signs, with support for both MiniMessage and legacy color codes.
 
 * [Downloads](https://github.com/TehBrian/YetAnotherSignEditor/releases/latest)
 * [Discord](https://chat.tehbrian.xyz)
+* [Donate](https://github.com/sponsors/TehBrian) <3
 
 ## Features
 
