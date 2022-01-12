@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
 
     implementation("com.google.inject:guice:5.0.1")
     implementation("org.spongepowered:configurate-yaml:4.1.2")
@@ -53,6 +53,6 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.17.1")
+        minecraftVersion("1.18.1")
     }
 }
