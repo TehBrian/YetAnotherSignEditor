@@ -85,7 +85,7 @@ public final class SignListener implements Listener {
         for (int i = 0; i < lines.size(); i++) {
             if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
                 sign.line(i, FormatUtil.reverseLegacy(lines.get(i)));
-            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
+            } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
                 sign.line(i, FormatUtil.reverseMiniMessage(lines.get(i)));
             }
         }
@@ -120,7 +120,7 @@ public final class SignListener implements Listener {
         for (int i = 0; i < lines.size(); i++) {
             if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
                 event.line(i, FormatUtil.legacy(lines.get(i)));
-            } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
+            } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
                 event.line(i, FormatUtil.miniMessage(lines.get(i)));
             }
         }

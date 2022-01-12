@@ -64,7 +64,7 @@ public final class User extends PaperUser {
 
     public enum FormattingType {
         LEGACY,
-        MINI_MESSAGE
+        MINIMESSAGE
     }
 
 }

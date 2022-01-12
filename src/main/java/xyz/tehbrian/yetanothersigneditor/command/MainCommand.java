@@ -144,7 +144,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     if (player.hasPermission(Permissions.COLOR) && user.colorEnabled()) {
                         if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
                             formattedText = FormatUtil.legacy(text);
-                        } else if (user.formattingType() == User.FormattingType.MINI_MESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
+                        } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
                             formattedText = FormatUtil.miniMessage(text);
                         }
                     }
