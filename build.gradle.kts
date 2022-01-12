@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "xyz.tehbrian"
-version = "2.0.0"
+version = "2.1.0"
 description = "Easily edit signs, with support for both MiniMessage and legacy color codes."
 
 java {
