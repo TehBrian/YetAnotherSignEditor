@@ -32,7 +32,7 @@ public final class Format {
     }
 
     public static @NonNull Component miniMessage(final @NonNull String string) {
-        return MiniMessage.miniMessage().parse(string);
+        return MiniMessage.miniMessage().deserialize(string);
     }
 
     public static @NonNull Component plain(final @NonNull String string) {
