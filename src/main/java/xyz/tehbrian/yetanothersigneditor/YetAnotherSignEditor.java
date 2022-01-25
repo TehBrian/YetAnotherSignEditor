@@ -14,8 +14,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.ConfigurateException;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionLoader;
-import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6_1;
-import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7_0;
+import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6;
+import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7;
 import xyz.tehbrian.yetanothersigneditor.command.CommandService;
 import xyz.tehbrian.yetanothersigneditor.command.MainCommand;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
@@ -134,7 +134,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
         final var loader = new SpigotRestrictionLoader(
                 this.getLog4JLogger(),
                 Arrays.asList(this.getServer().getPluginManager().getPlugins()),
-                List.of(R_PlotSquared_6_1.class, R_WorldGuard_7_0.class)
+                List.of(R_PlotSquared_6.class, R_WorldGuard_7.class)
         );
 
         loader.load(this.injector.getInstance(SpigotRestrictionHelper.class));
