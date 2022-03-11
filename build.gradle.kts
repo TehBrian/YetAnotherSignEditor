@@ -14,7 +14,6 @@ java {
 
 repositories {
     mavenCentral()
-
     maven("https://papermc.io/repo/repository/maven-public/") {
         name = "papermc"
     }
@@ -24,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
 
     implementation("com.google.inject:guice:5.1.0")
     implementation("org.spongepowered:configurate-yaml:4.1.2")
@@ -45,7 +44,6 @@ tasks {
 
         val libsPackage = "xyz.tehbrian.yetanothersigneditor.libs"
         relocate("com.google.inject", "$libsPackage.guice")
-        relocate("net.kyori.adventure.text.minimessage", "$libsPackage.minimessage")
         relocate("org.spongepowered.configurate.yaml", "$libsPackage.configurate.yaml")
         relocate("xyz.tehbrian.restrictionhelper", "$libsPackage.restrictionhelper")
         relocate("dev.tehbrian.tehlib", "$libsPackage.tehlib")
@@ -53,6 +51,6 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.18.1")
+        minecraftVersion("1.18.2")
     }
 }
