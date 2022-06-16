@@ -6,7 +6,7 @@ plugins {
 
 group = "xyz.tehbrian"
 version = "2.1.0"
-description = "Easily edit signs, with support for both MiniMessage and legacy color codes."
+description = "Easily edit signs, with support for both MiniMessage and legacy formatting."
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
