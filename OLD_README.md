@@ -1,7 +1,7 @@
 # YetAnotherSignEditor
 Easily edit signs, with support for both MiniMessage and legacy formatting.
 
-* [Downloads](https://github.com/TehBrian/YetAnotherSignEditor/releases)
+* [Downloads](https://github.com/TehBrian/YetAnotherSignEditor/releases/latest)
 * [Discord](https://chat.tehbrian.xyz)
 
 ## .. Another one?
@@ -17,10 +17,9 @@ would personally use this plugin over others:
 * You can either edit signs with a command or directly in the sign interface.
 * Each player can individually toggle plugin features on and off.
 * Sign coloring and sign editing can be toggled separately.
-* You can either use legacy color codes or [MiniMessage][MiniMessage] to format
+* You can use either [MiniMessage][MiniMessage] or legacy formatting to format
   sign text.
-* Editing a sign reverts text formatting back into legacy color codes for easy
-  editing.
+* Editing a sign reverts text formatting back into plain text for easy editing.
 * **All** plugin messages are easily configurable.
 * There are separate permissions for sign coloring and sign editing.
 
