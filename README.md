@@ -1,7 +1,7 @@
 # YetAnotherSignEditor
 Easily edit signs, with support for both MiniMessage and legacy formatting.
 
-* [Downloads](https://github.com/TehBrian/YetAnotherSignEditor/releases/latest)
+* [Download](https://github.com/TehBrian/YetAnotherSignEditor/releases/latest)
 * [Discord](https://thbn.me/discord)
 * [Donate](https://github.com/sponsors/TehBrian) <3
 
