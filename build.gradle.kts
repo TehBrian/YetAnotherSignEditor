@@ -34,6 +34,10 @@ dependencies {
 }
 
 tasks {
+    assemble {
+        dependsOn(shadowJar)
+    }
+
     processResources {
         expand("version" to project.version, "description" to project.description)
     }
