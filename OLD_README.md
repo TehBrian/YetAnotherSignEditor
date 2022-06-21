@@ -1,8 +1,9 @@
-# YetAnotherSignEditor
+`# YetAnotherSignEditor
 Easily edit signs, with support for both MiniMessage and legacy formatting.
 
 * [Downloads](https://github.com/TehBrian/YetAnotherSignEditor/releases/latest)
-* [Discord](https://chat.tehbrian.xyz)
+* [Discord](https://thbn.me/discord)
+* [Donate](https://github.com/sponsors/TehBrian) <3
 
 ## .. Another one?
 Yeah yeah, I know. We didn't need another sign editing plugin floating around. I
