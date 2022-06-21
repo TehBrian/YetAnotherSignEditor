@@ -21,11 +21,6 @@ Above all, it just feels good to use! No bloat, no extra features.
 ![help menu](images/help-menu.png)
 ![commands](images/commands.png)
 
-## Permissions
-The permissions can be found [here][plugin.yml].
-
-[plugin.yml]: https://github.com/TehBrian/YetAnotherSignEditor/blob/master/src/main/resources/plugin.yml
-
 ## Building
 This project uses Gradle. To build, run `./gradlew build` in the project's root
 directory. The built jar can be found in `build/libs`.
