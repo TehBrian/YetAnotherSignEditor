@@ -35,11 +35,6 @@ public final class SignListener implements Listener {
     private final UserService userService;
     private final SpigotRestrictionHelper restrictionHelper;
 
-    /**
-     * @param yetAnotherSignEditor injected
-     * @param userService          injected
-     * @param restrictionHelper    injected
-     */
     @Inject
     public SignListener(
             final @NonNull YetAnotherSignEditor yetAnotherSignEditor,

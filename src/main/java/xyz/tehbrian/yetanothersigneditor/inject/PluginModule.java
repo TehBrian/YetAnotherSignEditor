@@ -3,9 +3,9 @@ package xyz.tehbrian.yetanothersigneditor.inject;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import org.apache.logging.log4j.Logger;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.slf4j.Logger;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 
 import java.nio.file.Path;
@@ -15,9 +15,6 @@ public final class PluginModule extends AbstractModule {
 
     private final YetAnotherSignEditor yetAnotherSignEditor;
 
-    /**
-     * @param yetAnotherSignEditor YetAnotherSignEditor reference
-     */
     public PluginModule(final @NonNull YetAnotherSignEditor yetAnotherSignEditor) {
         this.yetAnotherSignEditor = yetAnotherSignEditor;
     }
@@ -29,15 +26,15 @@ public final class PluginModule extends AbstractModule {
     }
 
     /**
-     * @return the plugin's Log4J logger
+     * @return the plugin's SLF4J logger
      */
     @Provides
-    public @NonNull Logger provideLog4JLogger() {
-        return this.yetAnotherSignEditor.getLog4JLogger();
+    public @NonNull Logger provideSLF4JLogger() {
+        return this.yetAnotherSignEditor.getSLF4JLogger();
     }
 
     /**
-     * @return the data folder
+     * @return the plugin's data folder
      */
     @Provides
     @Named("dataFolder")

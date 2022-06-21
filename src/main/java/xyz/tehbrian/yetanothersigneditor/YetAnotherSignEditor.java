@@ -36,9 +36,6 @@ public final class YetAnotherSignEditor extends TehPlugin {
      */
     private @MonotonicNonNull Injector injector;
 
-    /**
-     * Called when the plugin is enabled.
-     */
     @Override
     public void onEnable() {
         try {
@@ -47,10 +44,10 @@ public final class YetAnotherSignEditor extends TehPlugin {
                     new SingletonModule()
             );
         } catch (final Exception e) {
-            this.getLog4JLogger().error("Something went wrong while creating the Guice injector.");
-            this.getLog4JLogger().error("Disabling plugin.");
+            this.getSLF4JLogger().error("Something went wrong while creating the Guice injector.");
+            this.getSLF4JLogger().error("Disabling plugin.");
             this.disableSelf();
-            this.getLog4JLogger().error("Printing stack trace, please send this to the developers:", e);
+            this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
             return;
         }
 
@@ -87,14 +84,14 @@ public final class YetAnotherSignEditor extends TehPlugin {
             try {
                 config.load();
             } catch (final ConfigurateException e) {
-                this.getLog4JLogger().error("Exception caught during config load for {}", config.configurateWrapper().filePath());
-                this.getLog4JLogger().error("Please check your config.");
-                this.getLog4JLogger().error("Printing stack trace:", e);
+                this.getSLF4JLogger().error("Exception caught during config load for {}", config.configurateWrapper().filePath());
+                this.getSLF4JLogger().error("Please check your config.");
+                this.getSLF4JLogger().error("Printing stack trace:", e);
                 return false;
             }
         }
 
-        this.getLog4JLogger().info("Successfully loaded configuration.");
+        this.getSLF4JLogger().info("Successfully loaded configuration.");
         return true;
     }
 
@@ -106,14 +103,14 @@ public final class YetAnotherSignEditor extends TehPlugin {
         try {
             commandService.init();
         } catch (final Exception e) {
-            this.getLog4JLogger().error("Failed to create the CommandManager.");
-            this.getLog4JLogger().error("Printing stack trace, please send this to the developers:", e);
+            this.getSLF4JLogger().error("Failed to create the CommandManager.");
+            this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
             return false;
         }
 
         final @Nullable PaperCommandManager<CommandSender> commandManager = commandService.get();
         if (commandManager == null) {
-            this.getLog4JLogger().error("The CommandService was null after initialization!");
+            this.getSLF4JLogger().error("The CommandService was null after initialization!");
             return false;
         }
 
@@ -132,7 +129,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
 
     private void setupRestrictions() {
         final var loader = new SpigotRestrictionLoader(
-                this.getLog4JLogger(),
+                this.getSLF4JLogger(),
                 Arrays.asList(this.getServer().getPluginManager().getPlugins()),
                 List.of(R_PlotSquared_6.class, R_WorldGuard_7.class)
         );

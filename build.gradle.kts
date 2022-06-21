@@ -17,8 +17,8 @@ repositories {
     maven("https://papermc.io/repo/repository/maven-public/") {
         name = "papermc"
     }
-    maven("https://repo.thbn.me/snapshots/") {
-        name = "thbn-snapshots"
+    maven("https://repo.thbn.me/releases/") {
+        name = "thbn"
     }
 }
 
@@ -29,8 +29,8 @@ dependencies {
     implementation("org.spongepowered:configurate-yaml:4.1.2")
     implementation("cloud.commandframework:cloud-minecraft-extras:1.7.0")
 
-    implementation("xyz.tehbrian.restrictionhelper:restrictionhelper-spigot:0.2.0-SNAPSHOT")
-    implementation("dev.tehbrian:tehlib-paper:0.1.0-SNAPSHOT")
+    implementation("xyz.tehbrian.restrictionhelper:restrictionhelper-spigot:0.3.0")
+    implementation("dev.tehbrian:tehlib-paper:0.3.0")
 }
 
 tasks {

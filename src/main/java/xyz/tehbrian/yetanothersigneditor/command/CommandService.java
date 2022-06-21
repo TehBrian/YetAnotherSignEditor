@@ -14,9 +14,6 @@ public class CommandService extends PaperCloudService<CommandSender> {
 
     private final YetAnotherSignEditor yetAnotherSignEditor;
 
-    /**
-     * @param yetAnotherSignEditor injected
-     */
     @Inject
     public CommandService(
             final @NonNull YetAnotherSignEditor yetAnotherSignEditor

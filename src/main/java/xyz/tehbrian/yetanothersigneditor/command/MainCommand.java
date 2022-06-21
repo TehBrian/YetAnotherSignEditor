@@ -32,12 +32,6 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
     private final UserService userService;
     private final LangConfig langConfig;
 
-    /**
-     * @param yetAnotherSignEditor injected
-     * @param restrictionHelper    injected
-     * @param userService          injected
-     * @param langConfig           injected
-     */
     @Inject
     public MainCommand(
             final @NonNull YetAnotherSignEditor yetAnotherSignEditor,
