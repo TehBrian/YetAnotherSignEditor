@@ -45,14 +45,10 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
         this.langConfig = langConfig;
     }
 
-    /**
-     * Register the command.
-     *
-     * @param commandManager the command manager
-     */
     @Override
     public void register(final @NonNull PaperCommandManager<CommandSender> commandManager) {
-        final var main = commandManager.commandBuilder("yase", ArgumentDescription.of("Various commands for YetAnotherSignEditor."))
+        final var main = commandManager.commandBuilder(
+                        "yase", ArgumentDescription.of("Various commands for YetAnotherSignEditor."))
                 .handler(c -> c.getSender().sendMessage(this.langConfig.c(NodePath.path("help"))));
 
         final var reload = main.literal("reload", ArgumentDescription.of("Reloads the plugin's config."))
@@ -135,9 +131,11 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
 
                     Component formattedText = Format.plain(text);
                     if (player.hasPermission(Permissions.COLOR) && user.colorEnabled()) {
-                        if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
+                        if (user.formattingType() == User.FormattingType.LEGACY
+                                && player.hasPermission(Permissions.LEGACY)) {
                             formattedText = Format.legacy(text);
-                        } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
+                        } else if (user.formattingType() == User.FormattingType.MINIMESSAGE
+                                && player.hasPermission(Permissions.MINIMESSAGE)) {
                             formattedText = Format.miniMessage(text);
                         }
                     }
