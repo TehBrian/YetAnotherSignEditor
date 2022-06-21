@@ -27,8 +27,8 @@ The permissions can be found [here][plugin.yml].
 [plugin.yml]: https://github.com/TehBrian/YetAnotherSignEditor/blob/master/src/main/resources/plugin.yml
 
 ## Building
-This project uses Gradle. To build, run `./gradlew shadowJar` in the main
-project directory. The built jar can be found in `build/libs`.
+This project uses Gradle. To build, run `./gradlew build` in the project's root
+directory. The built jar can be found in `build/libs`.
 
 ## Contributing
 Feel free to submit a pull-request or file an issue! All changes are welcome. If
