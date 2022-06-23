@@ -31,7 +31,7 @@ dependencies {
     implementation("cloud.commandframework:cloud-minecraft-extras:1.7.0")
 
     implementation("xyz.tehbrian.restrictionhelper:restrictionhelper-spigot:0.3.0")
-    implementation("dev.tehbrian:tehlib-paper:0.3.0")
+    implementation("dev.tehbrian:tehlib-paper:0.3.1")
 }
 
 tasks {
