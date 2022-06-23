@@ -47,7 +47,7 @@ tasks {
         archiveBaseName.set("YetAnotherSignEditor")
         archiveClassifier.set("")
 
-        val libsPackage = "xyz.tehbrian.yetanothersigneditor.libs"
+        val libsPackage = "${project.group}.${project.name}.libs"
         relocate("com.google.inject", "$libsPackage.guice")
         relocate("org.spongepowered.configurate", "$libsPackage.configurate")
         relocate("xyz.tehbrian.restrictionhelper", "$libsPackage.restrictionhelper")
