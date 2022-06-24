@@ -26,12 +26,11 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
 
-    implementation("com.google.inject:guice:5.1.0")
-    implementation("org.spongepowered:configurate-yaml:4.1.2")
     implementation("cloud.commandframework:cloud-minecraft-extras:1.7.0")
-
-    implementation("xyz.tehbrian.restrictionhelper:restrictionhelper-spigot:0.3.0")
+    implementation("com.google.inject:guice:5.1.0")
     implementation("dev.tehbrian:tehlib-paper:0.3.1")
+    implementation("org.spongepowered:configurate-yaml:4.1.2")
+    implementation("xyz.tehbrian.restrictionhelper:restrictionhelper-spigot:0.3.0")
 }
 
 tasks {
@@ -48,11 +47,11 @@ tasks {
         archiveClassifier.set("")
 
         val libsPackage = "${project.group}.${project.name}.libs"
+        relocate("cloud.commandframework", "$libsPackage.cloud")
         relocate("com.google.inject", "$libsPackage.guice")
+        relocate("dev.tehbrian.tehlib", "$libsPackage.tehlib")
         relocate("org.spongepowered.configurate", "$libsPackage.configurate")
         relocate("xyz.tehbrian.restrictionhelper", "$libsPackage.restrictionhelper")
-        relocate("dev.tehbrian.tehlib", "$libsPackage.tehlib")
-        relocate("cloud.commandframework", "$libsPackage.cloud")
     }
 
     runServer {
