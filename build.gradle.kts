@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "xyz.tehbrian"
-version = "2.2.1"
+version = "2.2.2"
 description = "Easily edit signs, with support for both MiniMessage and legacy formatting."
 
 java {
