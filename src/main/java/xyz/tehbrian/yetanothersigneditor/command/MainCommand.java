@@ -130,7 +130,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     final User user = this.userService.getUser(player);
 
                     Component formattedText = Format.plain(text);
-                    if (player.hasPermission(Permissions.COLOR) && user.colorEnabled()) {
+                    if (user.colorEnabled() && player.hasPermission(Permissions.COLOR)) {
                         if (user.formattingType() == User.FormattingType.LEGACY
                                 && player.hasPermission(Permissions.LEGACY)) {
                             formattedText = Format.legacy(text);

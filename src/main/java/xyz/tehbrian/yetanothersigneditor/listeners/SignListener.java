@@ -56,8 +56,7 @@ public final class SignListener implements Listener {
         final Player player = event.getPlayer();
         final User user = this.userService.getUser(player);
 
-        if (!player.hasPermission(Permissions.EDIT)
-                || !user.editEnabled()) {
+        if (!user.editEnabled() || !player.hasPermission(Permissions.EDIT)) {
             return;
         }
 
@@ -78,11 +77,20 @@ public final class SignListener implements Listener {
 
         final List<Component> lines = sign.lines();
         for (int i = 0; i < lines.size(); i++) {
-            if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
-                sign.line(i, Format.reverseLegacy(lines.get(i)));
-            } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
-                sign.line(i, Format.reverseMiniMessage(lines.get(i)));
+            final Component text = lines.get(i);
+
+            Component plainText = Format.plain(text);
+            if (user.colorEnabled() && player.hasPermission(Permissions.COLOR)) {
+                if (user.formattingType() == User.FormattingType.LEGACY
+                        && player.hasPermission(Permissions.LEGACY)) {
+                    plainText = Format.reverseLegacy(text);
+                } else if (user.formattingType() == User.FormattingType.MINIMESSAGE
+                        && player.hasPermission(Permissions.MINIMESSAGE)) {
+                    plainText = Format.reverseMiniMessage(text);
+                }
             }
+
+            sign.line(i, plainText);
         }
 
         sign.update();
@@ -106,8 +114,7 @@ public final class SignListener implements Listener {
         final Player player = event.getPlayer();
         final User user = this.userService.getUser(player);
 
-        if (!player.hasPermission(Permissions.COLOR)
-                || !user.colorEnabled()) {
+        if (!user.colorEnabled() || !player.hasPermission(Permissions.COLOR)) {
             return;
         }
 
