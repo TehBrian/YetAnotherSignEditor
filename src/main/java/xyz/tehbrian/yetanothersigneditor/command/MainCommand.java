@@ -46,12 +46,15 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
     }
 
     @Override
-    public void register(final @NonNull PaperCommandManager<CommandSender> commandManager) {
-        final var main = commandManager.commandBuilder(
-                        "yase", ArgumentDescription.of("Various commands for YetAnotherSignEditor."))
+    public void register(final PaperCommandManager<CommandSender> commandManager) {
+        final var main = commandManager.commandBuilder("yase")
+                .meta(CommandMeta.DESCRIPTION, "Various commands for YetAnotherSignEditor.");
+
+        final var help = main
                 .handler(c -> c.getSender().sendMessage(this.langConfig.c(NodePath.path("help"))));
 
-        final var reload = main.literal("reload", ArgumentDescription.of("Reloads the plugin's config."))
+        final var reload = main
+                .literal("reload", ArgumentDescription.of("Reload the plugin's config."))
                 .permission(Permissions.RELOAD)
                 .handler(c -> {
                     if (this.yetAnotherSignEditor.loadConfiguration()) {
@@ -61,7 +64,8 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     }
                 });
 
-        final var edit = main.literal("edit", ArgumentDescription.of("Toggle your ability to edit sign text."))
+        final var edit = main
+                .literal("edit", ArgumentDescription.of("Toggle your ability to edit sign text."))
                 .permission(Permissions.EDIT)
                 .senderType(Player.class)
                 .handler(c -> {
@@ -73,7 +77,8 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     }
                 });
 
-        final var color = main.literal("color", ArgumentDescription.of("Toggle your ability to color sign text."))
+        final var color = main
+                .literal("color", ArgumentDescription.of("Toggle your ability to color sign text."))
                 .permission(Permissions.COLOR)
                 .senderType(Player.class)
                 .handler(c -> {
@@ -85,9 +90,8 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     }
                 });
 
-        final var colorFormattingType = color.argument(EnumArgument
-                        .<CommandSender, User.FormattingType>newBuilder(User.FormattingType.class, "formatting_type")
-                        .build())
+        final var colorFormattingType = color
+                .argument(EnumArgument.<CommandSender, User.FormattingType>newBuilder(User.FormattingType.class, "formatting_type").build())
                 .handler(c -> {
                     final @NonNull Player player = (Player) c.getSender();
                     final User.@NonNull FormattingType formattingType = c.get("formatting_type");
@@ -99,19 +103,12 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     ));
                 });
 
-        final var set = main.literal("set", ArgumentDescription.of("Set the text of the sign you're looking at."))
+        final var set = main
+                .literal("set", ArgumentDescription.of("Set the text of the sign you're looking at."))
                 .permission(Permissions.SET)
                 .senderType(Player.class)
-                .argument(IntegerArgument
-                        .<CommandSender>newBuilder("line")
-                        .withMin(1)
-                        .withMax(4)
-                        .build())
-                .argument(StringArgument
-                        .<CommandSender>newBuilder("text")
-                        .greedy()
-                        .asOptional()
-                        .build())
+                .argument(IntegerArgument.<CommandSender>newBuilder("line").withMin(1).withMax(4).build())
+                .argument(StringArgument.<CommandSender>newBuilder("text").greedy().asOptional().build())
                 .handler(c -> {
                     final @NonNull Player player = (Player) c.getSender();
                     final int line = c.<Integer>get("line") - 1; // arrays are 0-indexed
@@ -145,7 +142,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                     sign.update();
                 });
 
-        commandManager.command(main)
+        commandManager.command(help)
                 .command(reload)
                 .command(edit)
                 .command(color)
