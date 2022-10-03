@@ -22,7 +22,7 @@ repositories {
 dependencies {
   compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
 
-  implementation("cloud.commandframework:cloud-minecraft-extras:1.7.0")
+  implementation("cloud.commandframework:cloud-minecraft-extras:1.7.1")
   implementation("com.google.inject:guice:5.1.0")
   implementation("dev.tehbrian:tehlib-paper:0.3.1")
   implementation("org.spongepowered:configurate-yaml:4.1.2")
