@@ -15,12 +15,8 @@ java {
 
 repositories {
     mavenCentral()
-    maven("https://papermc.io/repo/repository/maven-public/") {
-        name = "papermc"
-    }
-    maven("https://repo.thbn.me/releases/") {
-        name = "thbn"
-    }
+    maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://repo.thbn.me/releases/")
 }
 
 dependencies {
