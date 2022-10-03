@@ -4,7 +4,6 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.slf4j.Logger;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 
@@ -15,7 +14,7 @@ public final class PluginModule extends AbstractModule {
 
     private final YetAnotherSignEditor yetAnotherSignEditor;
 
-    public PluginModule(final @NonNull YetAnotherSignEditor yetAnotherSignEditor) {
+    public PluginModule(final YetAnotherSignEditor yetAnotherSignEditor) {
         this.yetAnotherSignEditor = yetAnotherSignEditor;
     }
 
@@ -29,7 +28,7 @@ public final class PluginModule extends AbstractModule {
      * @return the plugin's SLF4J logger
      */
     @Provides
-    public @NonNull Logger provideSLF4JLogger() {
+    public Logger provideSLF4JLogger() {
         return this.yetAnotherSignEditor.getSLF4JLogger();
     }
 
@@ -38,7 +37,7 @@ public final class PluginModule extends AbstractModule {
      */
     @Provides
     @Named("dataFolder")
-    public @NonNull Path provideDataFolder() {
+    public Path provideDataFolder() {
         return this.yetAnotherSignEditor.getDataFolder().toPath();
     }
 

@@ -14,7 +14,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
@@ -37,9 +36,9 @@ public final class SignListener implements Listener {
 
     @Inject
     public SignListener(
-            final @NonNull YetAnotherSignEditor yetAnotherSignEditor,
-            final @NonNull UserService userService,
-            final @NonNull SpigotRestrictionHelper restrictionHelper
+            final YetAnotherSignEditor yetAnotherSignEditor,
+            final UserService userService,
+            final SpigotRestrictionHelper restrictionHelper
     ) {
         this.yetAnotherSignEditor = yetAnotherSignEditor;
         this.userService = userService;

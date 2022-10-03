@@ -9,7 +9,6 @@ import dev.tehbrian.tehlib.core.configurate.Config;
 import dev.tehbrian.tehlib.paper.TehPlugin;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.ConfigurateException;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
@@ -31,9 +30,6 @@ import java.util.List;
  */
 public final class YetAnotherSignEditor extends TehPlugin {
 
-    /**
-     * The Guice injector.
-     */
     private @MonotonicNonNull Injector injector;
 
     @Override
@@ -99,7 +95,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
      * @return whether it was successful
      */
     private boolean setupCommands() {
-        final @NonNull CommandService commandService = this.injector.getInstance(CommandService.class);
+        final CommandService commandService = this.injector.getInstance(CommandService.class);
         try {
             commandService.init();
         } catch (final Exception e) {

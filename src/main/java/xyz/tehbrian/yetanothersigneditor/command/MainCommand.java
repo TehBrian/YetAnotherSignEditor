@@ -4,6 +4,7 @@ import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.arguments.standard.EnumArgument;
 import cloud.commandframework.arguments.standard.IntegerArgument;
 import cloud.commandframework.arguments.standard.StringArgument;
+import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
 import dev.tehbrian.tehlib.paper.cloud.PaperCloudCommand;
@@ -13,7 +14,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.NodePath;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
@@ -34,10 +34,10 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
 
     @Inject
     public MainCommand(
-            final @NonNull YetAnotherSignEditor yetAnotherSignEditor,
-            final @NonNull SpigotRestrictionHelper restrictionHelper,
-            final @NonNull UserService userService,
-            final @NonNull LangConfig langConfig
+            final YetAnotherSignEditor yetAnotherSignEditor,
+            final SpigotRestrictionHelper restrictionHelper,
+            final UserService userService,
+            final LangConfig langConfig
     ) {
         this.yetAnotherSignEditor = yetAnotherSignEditor;
         this.restrictionHelper = restrictionHelper;
@@ -93,8 +93,8 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
         final var colorFormattingType = color
                 .argument(EnumArgument.<CommandSender, User.FormattingType>newBuilder(User.FormattingType.class, "formatting_type").build())
                 .handler(c -> {
-                    final @NonNull Player player = (Player) c.getSender();
-                    final User.@NonNull FormattingType formattingType = c.get("formatting_type");
+                    final Player player = (Player) c.getSender();
+                    final User.FormattingType formattingType = c.get("formatting_type");
 
                     this.userService.getUser(player).formattingType(formattingType);
                     player.sendMessage(this.langConfig.c(
@@ -110,9 +110,9 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
                 .argument(IntegerArgument.<CommandSender>newBuilder("line").withMin(1).withMax(4).build())
                 .argument(StringArgument.<CommandSender>newBuilder("text").greedy().asOptional().build())
                 .handler(c -> {
-                    final @NonNull Player player = (Player) c.getSender();
+                    final Player player = (Player) c.getSender();
                     final int line = c.<Integer>get("line") - 1; // arrays are 0-indexed
-                    final @NonNull String text = c.<String>getOptional("text").orElse("");
+                    final String text = c.<String>getOptional("text").orElse("");
 
                     final @Nullable Block targetedBlock = player.getTargetBlock(6);
                     if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {

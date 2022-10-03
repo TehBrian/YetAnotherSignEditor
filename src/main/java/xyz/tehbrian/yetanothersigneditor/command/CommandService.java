@@ -5,7 +5,6 @@ import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
 import dev.tehbrian.tehlib.paper.cloud.PaperCloudService;
 import org.bukkit.command.CommandSender;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 
 import java.util.function.Function;
@@ -16,7 +15,7 @@ public class CommandService extends PaperCloudService<CommandSender> {
 
     @Inject
     public CommandService(
-            final @NonNull YetAnotherSignEditor yetAnotherSignEditor
+            final YetAnotherSignEditor yetAnotherSignEditor
     ) {
         this.yetAnotherSignEditor = yetAnotherSignEditor;
     }

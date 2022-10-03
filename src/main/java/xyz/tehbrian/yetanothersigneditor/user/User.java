@@ -3,7 +3,6 @@ package xyz.tehbrian.yetanothersigneditor.user;
 import dev.tehbrian.tehlib.paper.user.PaperUser;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 
@@ -14,15 +13,15 @@ public final class User extends PaperUser {
 
     private boolean editEnabled;
     private boolean colorEnabled;
-    private User.@NonNull FormattingType formattingType = FormattingType.LEGACY;
+    private User.FormattingType formattingType = FormattingType.LEGACY;
 
     /**
      * @param uuid the unique identifier of the user
      */
-    public User(final @NonNull UUID uuid) {
+    public User(final UUID uuid) {
         super(uuid);
 
-        final @NonNull Player player = Objects.requireNonNull(this.getPlayer());
+        final Player player = Objects.requireNonNull(this.getPlayer());
         this.editEnabled = player.hasPermission(Permissions.EDIT);
         this.colorEnabled = player.hasPermission(Permissions.COLOR);
     }
@@ -57,11 +56,11 @@ public final class User extends PaperUser {
         return this.colorEnabled();
     }
 
-    public User.@NonNull FormattingType formattingType() {
+    public User.FormattingType formattingType() {
         return this.formattingType;
     }
 
-    public void formattingType(final User.@NonNull FormattingType formattingType) {
+    public void formattingType(final User.FormattingType formattingType) {
         this.formattingType = formattingType;
     }
 
