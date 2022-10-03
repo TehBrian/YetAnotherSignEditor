@@ -11,62 +11,62 @@ import java.util.UUID;
 
 public final class User extends PaperUser {
 
-    private boolean editEnabled;
-    private boolean colorEnabled;
-    private User.FormattingType formattingType = FormattingType.LEGACY;
+  private boolean editEnabled;
+  private boolean colorEnabled;
+  private User.FormattingType formattingType = FormattingType.LEGACY;
 
-    /**
-     * @param uuid the unique identifier of the user
-     */
-    public User(final UUID uuid) {
-        super(uuid);
+  /**
+   * @param uuid the unique identifier of the user
+   */
+  public User(final UUID uuid) {
+    super(uuid);
 
-        final Player player = Objects.requireNonNull(this.getPlayer());
-        this.editEnabled = player.hasPermission(Permissions.EDIT);
-        this.colorEnabled = player.hasPermission(Permissions.COLOR);
-    }
+    final Player player = Objects.requireNonNull(this.getPlayer());
+    this.editEnabled = player.hasPermission(Permissions.EDIT);
+    this.colorEnabled = player.hasPermission(Permissions.COLOR);
+  }
 
-    public @Nullable Player getPlayer() {
-        return Bukkit.getPlayer(this.uuid);
-    }
+  public @Nullable Player getPlayer() {
+    return Bukkit.getPlayer(this.uuid);
+  }
 
-    public boolean editEnabled() {
-        return this.editEnabled;
-    }
+  public boolean editEnabled() {
+    return this.editEnabled;
+  }
 
-    public void editEnabled(final boolean editEnabled) {
-        this.editEnabled = editEnabled;
-    }
+  public void editEnabled(final boolean editEnabled) {
+    this.editEnabled = editEnabled;
+  }
 
-    public boolean toggleEditEnabled() {
-        this.editEnabled(!this.editEnabled());
-        return this.editEnabled();
-    }
+  public boolean toggleEditEnabled() {
+    this.editEnabled(!this.editEnabled());
+    return this.editEnabled();
+  }
 
-    public boolean colorEnabled() {
-        return this.colorEnabled;
-    }
+  public boolean colorEnabled() {
+    return this.colorEnabled;
+  }
 
-    public void colorEnabled(final boolean colorEnabled) {
-        this.colorEnabled = colorEnabled;
-    }
+  public void colorEnabled(final boolean colorEnabled) {
+    this.colorEnabled = colorEnabled;
+  }
 
-    public boolean toggleColorEnabled() {
-        this.colorEnabled(!this.colorEnabled());
-        return this.colorEnabled();
-    }
+  public boolean toggleColorEnabled() {
+    this.colorEnabled(!this.colorEnabled());
+    return this.colorEnabled();
+  }
 
-    public User.FormattingType formattingType() {
-        return this.formattingType;
-    }
+  public User.FormattingType formattingType() {
+    return this.formattingType;
+  }
 
-    public void formattingType(final User.FormattingType formattingType) {
-        this.formattingType = formattingType;
-    }
+  public void formattingType(final User.FormattingType formattingType) {
+    this.formattingType = formattingType;
+  }
 
-    public enum FormattingType {
-        LEGACY,
-        MINIMESSAGE
-    }
+  public enum FormattingType {
+    LEGACY,
+    MINIMESSAGE
+  }
 
 }

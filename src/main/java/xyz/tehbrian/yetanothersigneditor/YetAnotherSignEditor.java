@@ -30,107 +30,110 @@ import java.util.List;
  */
 public final class YetAnotherSignEditor extends TehPlugin {
 
-    private @MonotonicNonNull Injector injector;
+  private @MonotonicNonNull Injector injector;
 
-    @Override
-    public void onEnable() {
-        try {
-            this.injector = Guice.createInjector(
-                    new PluginModule(this),
-                    new SingletonModule()
-            );
-        } catch (final Exception e) {
-            this.getSLF4JLogger().error("Something went wrong while creating the Guice injector.");
-            this.getSLF4JLogger().error("Disabling plugin.");
-            this.disableSelf();
-            this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
-            return;
-        }
+  @Override
+  public void onEnable() {
+    try {
+      this.injector = Guice.createInjector(
+          new PluginModule(this),
+          new SingletonModule()
+      );
+    } catch (final Exception e) {
+      this.getSLF4JLogger().error("Something went wrong while creating the Guice injector.");
+      this.getSLF4JLogger().error("Disabling plugin.");
+      this.disableSelf();
+      this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
+      return;
+    }
 
-        if (!this.loadConfiguration()) {
-            this.disableSelf();
-            return;
-        }
-        if (!this.setupCommands()) {
-            this.disableSelf();
-            return;
-        }
+    if (!this.loadConfiguration()) {
+      this.disableSelf();
+      return;
+    }
+    if (!this.setupCommands()) {
+      this.disableSelf();
+      return;
+    }
 
-        this.setupRestrictions();
+    this.setupRestrictions();
 
-        registerListeners(
-                this.injector.getInstance(SignListener.class)
+    registerListeners(
+        this.injector.getInstance(SignListener.class)
+    );
+  }
+
+  /**
+   * Loads the plugin's configuration. If an exception is caught, logs the
+   * error and returns false.
+   *
+   * @return whether it was successful
+   */
+  public boolean loadConfiguration() {
+    this.saveResourceSilently("lang.yml");
+
+    final List<Config> configsToLoad = List.of(
+        this.injector.getInstance(LangConfig.class)
+    );
+
+    for (final Config config : configsToLoad) {
+      try {
+        config.load();
+      } catch (final ConfigurateException e) {
+        this.getSLF4JLogger().error(
+            "Exception caught during config load for {}",
+            config.configurateWrapper().filePath()
         );
+        this.getSLF4JLogger().error("Please check your config.");
+        this.getSLF4JLogger().error("Printing stack trace:", e);
+        return false;
+      }
     }
 
-    /**
-     * Loads the plugin's configuration. If an exception is caught, logs the
-     * error and returns false.
-     *
-     * @return whether it was successful
-     */
-    public boolean loadConfiguration() {
-        this.saveResourceSilently("lang.yml");
+    this.getSLF4JLogger().info("Successfully loaded configuration.");
+    return true;
+  }
 
-        final List<Config> configsToLoad = List.of(
-                this.injector.getInstance(LangConfig.class)
-        );
-
-        for (final Config config : configsToLoad) {
-            try {
-                config.load();
-            } catch (final ConfigurateException e) {
-                this.getSLF4JLogger().error("Exception caught during config load for {}", config.configurateWrapper().filePath());
-                this.getSLF4JLogger().error("Please check your config.");
-                this.getSLF4JLogger().error("Printing stack trace:", e);
-                return false;
-            }
-        }
-
-        this.getSLF4JLogger().info("Successfully loaded configuration.");
-        return true;
+  /**
+   * @return whether it was successful
+   */
+  private boolean setupCommands() {
+    final CommandService commandService = this.injector.getInstance(CommandService.class);
+    try {
+      commandService.init();
+    } catch (final Exception e) {
+      this.getSLF4JLogger().error("Failed to create the CommandManager.");
+      this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
+      return false;
     }
 
-    /**
-     * @return whether it was successful
-     */
-    private boolean setupCommands() {
-        final CommandService commandService = this.injector.getInstance(CommandService.class);
-        try {
-            commandService.init();
-        } catch (final Exception e) {
-            this.getSLF4JLogger().error("Failed to create the CommandManager.");
-            this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
-            return false;
-        }
-
-        final @Nullable PaperCommandManager<CommandSender> commandManager = commandService.get();
-        if (commandManager == null) {
-            this.getSLF4JLogger().error("The CommandService was null after initialization!");
-            return false;
-        }
-
-        new MinecraftExceptionHandler<CommandSender>()
-                .withArgumentParsingHandler()
-                .withInvalidSenderHandler()
-                .withInvalidSyntaxHandler()
-                .withNoPermissionHandler()
-                .withCommandExecutionHandler()
-                .apply(commandManager, AudienceProvider.nativeAudience());
-
-        this.injector.getInstance(MainCommand.class).register(commandManager);
-
-        return true;
+    final @Nullable PaperCommandManager<CommandSender> commandManager = commandService.get();
+    if (commandManager == null) {
+      this.getSLF4JLogger().error("The CommandService was null after initialization!");
+      return false;
     }
 
-    private void setupRestrictions() {
-        final var loader = new SpigotRestrictionLoader(
-                this.getSLF4JLogger(),
-                Arrays.asList(this.getServer().getPluginManager().getPlugins()),
-                List.of(R_PlotSquared_6.class, R_WorldGuard_7.class)
-        );
+    new MinecraftExceptionHandler<CommandSender>()
+        .withArgumentParsingHandler()
+        .withInvalidSenderHandler()
+        .withInvalidSyntaxHandler()
+        .withNoPermissionHandler()
+        .withCommandExecutionHandler()
+        .apply(commandManager, AudienceProvider.nativeAudience());
 
-        loader.load(this.injector.getInstance(SpigotRestrictionHelper.class));
-    }
+    this.injector.getInstance(MainCommand.class).register(commandManager);
+
+    return true;
+  }
+
+  private void setupRestrictions() {
+    final var loader = new SpigotRestrictionLoader(
+        this.getSLF4JLogger(),
+        Arrays.asList(this.getServer().getPluginManager().getPlugins()),
+        List.of(R_PlotSquared_6.class, R_WorldGuard_7.class)
+    );
+
+    loader.load(this.injector.getInstance(SpigotRestrictionHelper.class));
+  }
 
 }
