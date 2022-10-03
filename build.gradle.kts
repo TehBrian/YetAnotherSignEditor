@@ -38,8 +38,11 @@ tasks {
     expand("version" to project.version, "description" to project.description)
   }
 
-  shadowJar {
+  jar {
     archiveBaseName.set("YetAnotherSignEditor")
+  }
+
+  shadowJar {
     archiveClassifier.set("")
 
     val libsPackage = "${project.group}.${project.name}.libs"
