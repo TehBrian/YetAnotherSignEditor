@@ -14,14 +14,14 @@ permissions:
   yase.edit:
     description: Permission to edit sign text.
     default: true
-  yase.color:
-    description: Permission to color sign text.
+  yase.format:
+    description: Permission to format sign text.
     default: true
-  yase.color.minimessage:
-    description: Permission to use the MiniMessage format type.
+  yase.format.minimessage:
+    description: Permission to use the MiniMessage formatting type.
     default: op
-  yase.color.legacy:
-    description: Permission to use the Legacy format type.
+  yase.format.legacy:
+    description: Permission to use the Legacy formatting type.
     default: true
   yase.reload:
     description: Permission to run /yase reload.

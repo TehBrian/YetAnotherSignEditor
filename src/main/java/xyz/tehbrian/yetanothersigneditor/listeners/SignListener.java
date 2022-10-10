@@ -69,34 +69,34 @@ public final class SignListener implements Listener {
 
     final @Nullable Block clickedBlock = event.getClickedBlock();
     if (clickedBlock == null
-        || !(clickedBlock.getState() instanceof final Sign sign)
+        || !(clickedBlock.getState() instanceof final Sign clickedSign)
         || !this.restrictionHelper.checkRestrictions(player, clickedBlock.getLocation(), ActionType.ALL)) {
       return;
     }
 
-    final List<Component> lines = sign.lines();
+    final List<Component> lines = clickedSign.lines();
     for (int i = 0; i < lines.size(); i++) {
       final Component text = lines.get(i);
 
-      Component plainText = Format.plain(text);
-      if (user.colorEnabled() && player.hasPermission(Permissions.COLOR)) {
+      Component formattedText = Format.plain(text);
+      if (user.formatEnabled() && player.hasPermission(Permissions.FORMAT)) {
         if (user.formattingType() == User.FormattingType.LEGACY
             && player.hasPermission(Permissions.LEGACY)) {
-          plainText = Format.reverseLegacy(text);
+          formattedText = Format.reverseLegacy(text);
         } else if (user.formattingType() == User.FormattingType.MINIMESSAGE
             && player.hasPermission(Permissions.MINIMESSAGE)) {
-          plainText = Format.reverseMiniMessage(text);
+          formattedText = Format.reverseMiniMessage(text);
         }
       }
 
-      sign.line(i, plainText);
+      clickedSign.line(i, formattedText);
     }
 
-    sign.update();
+    clickedSign.update();
 
     Bukkit.getScheduler().scheduleSyncDelayedTask(
         this.yetAnotherSignEditor,
-        () -> player.openSign(sign),
+        () -> player.openSign(clickedSign),
         2 // magic number so that bukkit loads the updated sign
     );
 
@@ -104,7 +104,7 @@ public final class SignListener implements Listener {
   }
 
   /**
-   * Colors sign text on sign change.
+   * Formats sign text on sign change.
    *
    * @param event the event
    */
@@ -113,7 +113,7 @@ public final class SignListener implements Listener {
     final Player player = event.getPlayer();
     final User user = this.userService.getUser(player);
 
-    if (!user.colorEnabled() || !player.hasPermission(Permissions.COLOR)) {
+    if (!user.formatEnabled() || !player.hasPermission(Permissions.FORMAT)) {
       return;
     }
 

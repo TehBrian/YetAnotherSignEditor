@@ -11,7 +11,7 @@ Easily edit signs, with support for both MiniMessage and legacy formatting.
 - Toggle sign editing and sign formatting separately and per-player.
 - Use either [MiniMessage][MiniMessage] or legacy formatting to format text.
 - All plugin messages are easily configurable.
-- Separate permissions for sign coloring and sign editing.
+- Separate permissions for sign formatting and sign editing.
 
 Above all, it just feels good to use! No bloat, no extra features.
 

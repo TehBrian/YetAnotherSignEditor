@@ -77,20 +77,20 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
           }
         });
 
-    final var color = main
-        .literal("color", ArgumentDescription.of("Toggle your ability to color sign text."))
-        .permission(Permissions.COLOR)
+    final var format = main
+        .literal("format", ArgumentDescription.of("Toggle your ability to format sign text."))
+        .permission(Permissions.FORMAT)
         .senderType(Player.class)
         .handler(c -> {
           final Player sender = (Player) c.getSender();
-          if (this.userService.getUser(sender).toggleColorEnabled()) {
-            sender.sendMessage(this.langConfig.c(NodePath.path("color", "enabled")));
+          if (this.userService.getUser(sender).toggleFormatEnabled()) {
+            sender.sendMessage(this.langConfig.c(NodePath.path("format", "enabled")));
           } else {
-            sender.sendMessage(this.langConfig.c(NodePath.path("color", "disabled")));
+            sender.sendMessage(this.langConfig.c(NodePath.path("format", "disabled")));
           }
         });
 
-    final var colorFormattingType = color
+    final var formatFormattingType = format
         .argument(EnumArgument
             .<CommandSender, User.FormattingType>newBuilder(User.FormattingType.class, "formatting_type")
             .build())
@@ -100,7 +100,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
 
           this.userService.getUser(player).formattingType(formattingType);
           player.sendMessage(this.langConfig.c(
-              NodePath.path("color", "set"),
+              NodePath.path("format", "set"),
               Placeholder.parsed("formatting_type", formattingType.toString())
           ));
         });
@@ -129,7 +129,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
           final User user = this.userService.getUser(player);
 
           Component formattedText = Format.plain(text);
-          if (user.colorEnabled() && player.hasPermission(Permissions.COLOR)) {
+          if (user.formatEnabled() && player.hasPermission(Permissions.FORMAT)) {
             if (user.formattingType() == User.FormattingType.LEGACY
                 && player.hasPermission(Permissions.LEGACY)) {
               formattedText = Format.legacy(text);
@@ -147,8 +147,8 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
     commandManager.command(help)
         .command(reload)
         .command(edit)
-        .command(color)
-        .command(colorFormattingType)
+        .command(format)
+        .command(formatFormattingType)
         .command(set);
   }
 

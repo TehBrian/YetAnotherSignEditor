@@ -11,9 +11,9 @@ public final class Permissions {
   public static final String EDIT = ROOT + ".edit";
   public static final String RELOAD = ROOT + ".reload";
 
-  public static final String COLOR = ROOT + ".color";
-  public static final String MINIMESSAGE = COLOR + ".minimessage";
-  public static final String LEGACY = COLOR + ".legacy";
+  public static final String FORMAT = ROOT + ".format";
+  public static final String MINIMESSAGE = FORMAT + ".minimessage";
+  public static final String LEGACY = FORMAT + ".legacy";
 
   private Permissions() {
   }

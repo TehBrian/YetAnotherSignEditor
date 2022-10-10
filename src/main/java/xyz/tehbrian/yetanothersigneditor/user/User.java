@@ -12,7 +12,7 @@ import java.util.UUID;
 public final class User extends PaperUser {
 
   private boolean editEnabled;
-  private boolean colorEnabled;
+  private boolean formatEnabled;
   private User.FormattingType formattingType = FormattingType.LEGACY;
 
   /**
@@ -23,7 +23,7 @@ public final class User extends PaperUser {
 
     final Player player = Objects.requireNonNull(this.getPlayer());
     this.editEnabled = player.hasPermission(Permissions.EDIT);
-    this.colorEnabled = player.hasPermission(Permissions.COLOR);
+    this.formatEnabled = player.hasPermission(Permissions.FORMAT);
   }
 
   public @Nullable Player getPlayer() {
@@ -43,17 +43,17 @@ public final class User extends PaperUser {
     return this.editEnabled();
   }
 
-  public boolean colorEnabled() {
-    return this.colorEnabled;
+  public boolean formatEnabled() {
+    return this.formatEnabled;
   }
 
-  public void colorEnabled(final boolean colorEnabled) {
-    this.colorEnabled = colorEnabled;
+  public void formatEnabled(final boolean formatEnabled) {
+    this.formatEnabled = formatEnabled;
   }
 
-  public boolean toggleColorEnabled() {
-    this.colorEnabled(!this.colorEnabled());
-    return this.colorEnabled();
+  public boolean toggleFormatEnabled() {
+    this.formatEnabled(!this.formatEnabled());
+    return this.formatEnabled();
   }
 
   public User.FormattingType formattingType() {
