@@ -20,7 +20,8 @@ import xyz.tehbrian.yetanothersigneditor.command.MainCommand;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
 import xyz.tehbrian.yetanothersigneditor.inject.PluginModule;
 import xyz.tehbrian.yetanothersigneditor.inject.SingletonModule;
-import xyz.tehbrian.yetanothersigneditor.listeners.SignListener;
+import xyz.tehbrian.yetanothersigneditor.listeners.SignEditListener;
+import xyz.tehbrian.yetanothersigneditor.listeners.SignFormatListener;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +60,8 @@ public final class YetAnotherSignEditor extends TehPlugin {
     this.setupRestrictions();
 
     registerListeners(
-        this.injector.getInstance(SignListener.class)
+        this.injector.getInstance(SignEditListener.class),
+        this.injector.getInstance(SignFormatListener.class)
     );
   }
 

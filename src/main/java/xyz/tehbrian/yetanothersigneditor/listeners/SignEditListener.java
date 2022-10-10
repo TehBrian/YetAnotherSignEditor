@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -26,16 +25,16 @@ import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 import java.util.List;
 
 /**
- * Listens for sign-related events.
+ * Allows players to open the sign editor on sign interact.
  */
-public final class SignListener implements Listener {
+public class SignEditListener implements Listener {
 
   private final YetAnotherSignEditor yetAnotherSignEditor;
   private final UserService userService;
   private final SpigotRestrictionHelper restrictionHelper;
 
   @Inject
-  public SignListener(
+  public SignEditListener(
       final YetAnotherSignEditor yetAnotherSignEditor,
       final UserService userService,
       final SpigotRestrictionHelper restrictionHelper
@@ -45,11 +44,6 @@ public final class SignListener implements Listener {
     this.restrictionHelper = restrictionHelper;
   }
 
-  /**
-   * Opens the sign editor on sign interact.
-   *
-   * @param event the event
-   */
   @EventHandler(ignoreCancelled = true)
   public void onSignInteract(final PlayerInteractEvent event) {
     final Player player = event.getPlayer();
@@ -101,30 +95,6 @@ public final class SignListener implements Listener {
     );
 
     event.setCancelled(true);
-  }
-
-  /**
-   * Formats sign text on sign change.
-   *
-   * @param event the event
-   */
-  @EventHandler
-  public void onSignChange(final SignChangeEvent event) {
-    final Player player = event.getPlayer();
-    final User user = this.userService.getUser(player);
-
-    if (!user.formatEnabled() || !player.hasPermission(Permissions.FORMAT)) {
-      return;
-    }
-
-    final List<Component> lines = event.lines();
-    for (int i = 0; i < lines.size(); i++) {
-      if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
-        event.line(i, Format.legacy(lines.get(i)));
-      } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
-        event.line(i, Format.miniMessage(lines.get(i)));
-      }
-    }
   }
 
 }
