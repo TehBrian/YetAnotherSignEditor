@@ -1,4 +1,4 @@
-package xyz.tehbrian.yetanothersigneditor.listeners;
+package xyz.tehbrian.yetanothersigneditor.listener;
 
 import com.google.inject.Inject;
 import net.kyori.adventure.text.Component;

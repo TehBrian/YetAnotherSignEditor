@@ -20,8 +20,8 @@ import xyz.tehbrian.yetanothersigneditor.command.MainCommand;
 import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
 import xyz.tehbrian.yetanothersigneditor.inject.PluginModule;
 import xyz.tehbrian.yetanothersigneditor.inject.SingletonModule;
-import xyz.tehbrian.yetanothersigneditor.listeners.SignEditListener;
-import xyz.tehbrian.yetanothersigneditor.listeners.SignFormatListener;
+import xyz.tehbrian.yetanothersigneditor.listener.SignEditListener;
+import xyz.tehbrian.yetanothersigneditor.listener.SignFormatListener;
 
 import java.util.Arrays;
 import java.util.List;
