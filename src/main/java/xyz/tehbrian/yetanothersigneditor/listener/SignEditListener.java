@@ -29,6 +29,8 @@ import java.util.List;
  */
 public final class SignEditListener implements Listener {
 
+  private static final int MAX_LINE_LENGTH = 384;
+
   private final YetAnotherSignEditor yetAnotherSignEditor;
   private final UserService userService;
   private final SpigotRestrictionHelper restrictionHelper;
@@ -72,18 +74,23 @@ public final class SignEditListener implements Listener {
     for (int i = 0; i < lines.size(); i++) {
       final Component text = lines.get(i);
 
-      Component formattedText = Format.plain(text);
+      String serializedText = Format.serializePlain(text);
       if (user.formatEnabled() && player.hasPermission(Permissions.FORMAT)) {
         if (user.formattingType() == User.FormattingType.LEGACY
             && player.hasPermission(Permissions.LEGACY)) {
-          formattedText = Format.reverseLegacy(text);
+          serializedText = Format.serializeLegacy(text);
         } else if (user.formattingType() == User.FormattingType.MINIMESSAGE
             && player.hasPermission(Permissions.MINIMESSAGE)) {
-          formattedText = Format.reverseMiniMessage(text);
+          serializedText = Format.serializeMiniMessage(text);
         }
       }
 
-      clickedSign.line(i, formattedText);
+      // truncate text if it's too long else the server will kick the player.
+      if (serializedText.length() > MAX_LINE_LENGTH) {
+        serializedText = serializedText.substring(0, MAX_LINE_LENGTH);
+      }
+
+      clickedSign.line(i, Format.plain(serializedText));
     }
 
     clickedSign.update();
@@ -91,7 +98,7 @@ public final class SignEditListener implements Listener {
     Bukkit.getScheduler().scheduleSyncDelayedTask(
         this.yetAnotherSignEditor,
         () -> player.openSign(clickedSign),
-        2 // magic number so that bukkit loads the updated sign
+        2 // magic number so that Bukkit loads the updated sign.
     );
 
     event.setCancelled(true);

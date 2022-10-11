@@ -10,20 +10,20 @@ public final class Format {
   private Format() {
   }
 
-  private static String strippedString(final Component component) {
+  public static String serializePlain(final Component component) {
     return PlainTextComponentSerializer.plainText().serialize(component);
   }
 
-  public static Component reverseLegacy(final Component component) {
-    return plain(LegacyComponentSerializer.legacyAmpersand().serialize(component));
+  public static String serializeLegacy(final Component component) {
+    return LegacyComponentSerializer.legacyAmpersand().serialize(component);
   }
 
-  public static Component reverseMiniMessage(final Component component) {
-    return plain(MiniMessage.miniMessage().serialize(component));
+  public static String serializeMiniMessage(final Component component) {
+    return MiniMessage.miniMessage().serialize(component);
   }
 
   public static Component legacy(final Component component) {
-    return legacy(strippedString(component));
+    return legacy(serializePlain(component));
   }
 
   public static Component legacy(final String string) {
@@ -31,7 +31,7 @@ public final class Format {
   }
 
   public static Component miniMessage(final Component component) {
-    return miniMessage(strippedString(component));
+    return miniMessage(serializePlain(component));
   }
 
   public static Component miniMessage(final String string) {
@@ -39,7 +39,7 @@ public final class Format {
   }
 
   public static Component plain(final Component component) {
-    return plain(strippedString(component));
+    return plain(serializePlain(component));
   }
 
   public static Component plain(final String string) {
