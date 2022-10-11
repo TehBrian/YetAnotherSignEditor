@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Allows players to open the sign editor on sign interact.
  */
-public class SignEditListener implements Listener {
+public final class SignEditListener implements Listener {
 
   private final YetAnotherSignEditor yetAnotherSignEditor;
   private final UserService userService;

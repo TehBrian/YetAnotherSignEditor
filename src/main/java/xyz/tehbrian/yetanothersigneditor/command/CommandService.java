@@ -9,7 +9,7 @@ import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 
 import java.util.function.Function;
 
-public class CommandService extends PaperCloudService<CommandSender> {
+public final class CommandService extends PaperCloudService<CommandSender> {
 
   private final YetAnotherSignEditor yetAnotherSignEditor;
 

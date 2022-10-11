@@ -5,7 +5,7 @@ import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.nio.file.Path;
 
-public class YamlConfigurateWrapper extends ConfigurateWrapper<YamlConfigurationLoader> {
+public final class YamlConfigurateWrapper extends ConfigurateWrapper<YamlConfigurationLoader> {
 
   /**
    * @param filePath the file path for the config

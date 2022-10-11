@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Allows players to format sign text on sign change.
  */
-public class SignFormatListener implements Listener {
+public final class SignFormatListener implements Listener {
 
   private final UserService userService;
 
