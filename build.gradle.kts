@@ -44,6 +44,7 @@ tasks {
 
   shadowJar {
     archiveClassifier.set("")
+    archiveBaseName.set("YetAnotherSignEditor")
 
     val libsPackage = "${project.group}.${project.name}.libs"
     relocate("cloud.commandframework", "$libsPackage.cloud")
