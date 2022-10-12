@@ -5,6 +5,8 @@ Easily edit signs, with support for both MiniMessage and legacy formatting.
 * [Discord](https://thbn.me/discord)
 * [Donate](https://github.com/sponsors/TehBrian) <3
 
+---
+
 ## Features
 
 - Edit signs with a command or directly in the sign interface.
@@ -20,12 +22,6 @@ Above all, it just feels good to use! No bloat, no extra features.
 ## Screenshots
 ![help menu](assets/help-menu.png)
 ![commands](assets/commands.png)
-
-## Permissions
-To see a list of the permissions, head over to the
-[plugin.yml file][plugin.yml].
-
-[plugin.yml]: https://github.com/TehBrian/YetAnotherSignEditor/blob/main/src/main/resources/plugin.yml
 
 ## Building
 This project uses Gradle. To build, run `./gradlew build` in the project's root
