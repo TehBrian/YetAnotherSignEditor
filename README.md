@@ -18,8 +18,8 @@ Above all, it just feels good to use! No bloat, no extra features.
 [MiniMessage]: https://docs.adventure.kyori.net/minimessage/
 
 ## Screenshots
-![help menu](images/help-menu.png)
-![commands](images/commands.png)
+![help menu](assets/help-menu.png)
+![commands](assets/commands.png)
 
 ## Permissions
 To see a list of the permissions, head over to the
