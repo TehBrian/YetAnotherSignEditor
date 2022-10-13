@@ -38,13 +38,12 @@ tasks {
     expand("version" to project.version, "description" to project.description)
   }
 
-  jar {
-    archiveBaseName.set("YetAnotherSignEditor")
+  base {
+    archivesName.set("YetAnotherSignEditor")
   }
 
   shadowJar {
     archiveClassifier.set("")
-    archiveBaseName.set("YetAnotherSignEditor")
 
     val libsPackage = "${project.group}.${project.name}.libs"
     relocate("cloud.commandframework", "$libsPackage.cloud")
