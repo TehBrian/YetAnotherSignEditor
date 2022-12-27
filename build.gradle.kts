@@ -1,8 +1,9 @@
 plugins {
   id("java")
   id("com.github.johnrengelman.shadow") version "7.1.2"
-  id("xyz.jpenilla.run-paper") version "1.0.6"
-  id("net.kyori.indra.checkstyle") version "3.0.0"
+  id("xyz.jpenilla.run-paper") version "2.0.1"
+  id("net.kyori.indra.checkstyle") version "3.0.1"
+  id("com.github.ben-manes.versions") version "0.44.0"
 }
 
 group = "xyz.tehbrian"
@@ -20,11 +21,11 @@ repositories {
 }
 
 dependencies {
-  compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
+  compileOnly("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
 
-  implementation("cloud.commandframework:cloud-minecraft-extras:1.7.1")
+  implementation("cloud.commandframework:cloud-minecraft-extras:1.8.0")
   implementation("com.google.inject:guice:5.1.0")
-  implementation("dev.tehbrian:tehlib-paper:0.3.1")
+  implementation("dev.tehbrian:tehlib-paper:0.4.1")
   implementation("org.spongepowered:configurate-yaml:4.1.2")
   implementation("xyz.tehbrian.restrictionhelper:restrictionhelper-spigot:0.3.2")
 }
@@ -54,6 +55,6 @@ tasks {
   }
 
   runServer {
-    minecraftVersion("1.19.2")
+    minecraftVersion("1.19.3")
   }
 }

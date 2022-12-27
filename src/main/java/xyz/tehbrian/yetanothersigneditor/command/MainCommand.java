@@ -92,7 +92,7 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
 
     final var formatFormattingType = format
         .argument(EnumArgument
-            .<CommandSender, User.FormattingType>newBuilder(User.FormattingType.class, "formatting_type")
+            .<CommandSender, User.FormattingType>builder(User.FormattingType.class, "formatting_type")
             .build())
         .handler(c -> {
           final Player player = (Player) c.getSender();
@@ -109,14 +109,14 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
         .literal("set", ArgumentDescription.of("Set the text of the sign you're looking at."))
         .permission(Permissions.SET)
         .senderType(Player.class)
-        .argument(IntegerArgument.<CommandSender>newBuilder("line").withMin(1).withMax(4).build())
-        .argument(StringArgument.<CommandSender>newBuilder("text").greedy().asOptional().build())
+        .argument(IntegerArgument.<CommandSender>builder("line").withMin(1).withMax(4).build())
+        .argument(StringArgument.<CommandSender>builder("text").greedy().asOptional().build())
         .handler(c -> {
           final Player player = (Player) c.getSender();
           final int line = c.<Integer>get("line") - 1; // arrays are 0-indexed
           final String text = c.<String>getOptional("text").orElse("");
 
-          final @Nullable Block targetedBlock = player.getTargetBlock(6);
+          final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
           if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
             player.sendMessage(this.langConfig.c(NodePath.path("set", "not_a_sign")));
             return;
