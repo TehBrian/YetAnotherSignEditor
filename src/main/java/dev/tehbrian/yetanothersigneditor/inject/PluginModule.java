@@ -1,11 +1,11 @@
-package xyz.tehbrian.yetanothersigneditor.inject;
+package dev.tehbrian.yetanothersigneditor.inject;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
+import dev.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slf4j.Logger;
-import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 
 import java.nio.file.Path;
 

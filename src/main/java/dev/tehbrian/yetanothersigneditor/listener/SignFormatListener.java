@@ -1,15 +1,15 @@
-package xyz.tehbrian.yetanothersigneditor.listener;
+package dev.tehbrian.yetanothersigneditor.listener;
 
 import com.google.inject.Inject;
+import dev.tehbrian.yetanothersigneditor.user.User;
+import dev.tehbrian.yetanothersigneditor.user.UserService;
+import dev.tehbrian.yetanothersigneditor.util.Format;
+import dev.tehbrian.yetanothersigneditor.util.Permissions;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
-import xyz.tehbrian.yetanothersigneditor.user.User;
-import xyz.tehbrian.yetanothersigneditor.user.UserService;
-import xyz.tehbrian.yetanothersigneditor.util.Format;
-import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 
 import java.util.List;
 

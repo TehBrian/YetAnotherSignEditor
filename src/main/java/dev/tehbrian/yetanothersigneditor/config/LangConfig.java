@@ -1,4 +1,4 @@
-package xyz.tehbrian.yetanothersigneditor.config;
+package dev.tehbrian.yetanothersigneditor.config;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;

@@ -1,4 +1,4 @@
-package xyz.tehbrian.yetanothersigneditor.command;
+package dev.tehbrian.yetanothersigneditor.command;
 
 import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.arguments.standard.EnumArgument;
@@ -8,6 +8,12 @@ import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
 import dev.tehbrian.tehlib.paper.cloud.PaperCloudCommand;
+import dev.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
+import dev.tehbrian.yetanothersigneditor.config.LangConfig;
+import dev.tehbrian.yetanothersigneditor.user.User;
+import dev.tehbrian.yetanothersigneditor.user.UserService;
+import dev.tehbrian.yetanothersigneditor.util.Format;
+import dev.tehbrian.yetanothersigneditor.util.Permissions;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.block.Block;
@@ -18,12 +24,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.NodePath;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
-import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
-import xyz.tehbrian.yetanothersigneditor.user.User;
-import xyz.tehbrian.yetanothersigneditor.user.UserService;
-import xyz.tehbrian.yetanothersigneditor.util.Format;
-import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 
 public final class MainCommand extends PaperCloudCommand<CommandSender> {
 

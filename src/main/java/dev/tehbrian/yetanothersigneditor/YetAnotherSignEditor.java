@@ -1,4 +1,4 @@
-package xyz.tehbrian.yetanothersigneditor;
+package dev.tehbrian.yetanothersigneditor;
 
 import cloud.commandframework.minecraft.extras.AudienceProvider;
 import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
@@ -7,6 +7,13 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import dev.tehbrian.tehlib.configurate.Config;
 import dev.tehbrian.tehlib.paper.TehPlugin;
+import dev.tehbrian.yetanothersigneditor.command.CommandService;
+import dev.tehbrian.yetanothersigneditor.command.MainCommand;
+import dev.tehbrian.yetanothersigneditor.config.LangConfig;
+import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
+import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
+import dev.tehbrian.yetanothersigneditor.listener.SignEditListener;
+import dev.tehbrian.yetanothersigneditor.listener.SignFormatListener;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -15,13 +22,6 @@ import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionLoader;
 import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6;
 import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7;
-import xyz.tehbrian.yetanothersigneditor.command.CommandService;
-import xyz.tehbrian.yetanothersigneditor.command.MainCommand;
-import xyz.tehbrian.yetanothersigneditor.config.LangConfig;
-import xyz.tehbrian.yetanothersigneditor.inject.PluginModule;
-import xyz.tehbrian.yetanothersigneditor.inject.SingletonModule;
-import xyz.tehbrian.yetanothersigneditor.listener.SignEditListener;
-import xyz.tehbrian.yetanothersigneditor.listener.SignFormatListener;
 
 import java.util.Arrays;
 import java.util.List;

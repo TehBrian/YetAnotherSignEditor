@@ -1,6 +1,12 @@
-package xyz.tehbrian.yetanothersigneditor.listener;
+package dev.tehbrian.yetanothersigneditor.listener;
 
 import com.google.inject.Inject;
+import dev.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
+import dev.tehbrian.yetanothersigneditor.user.User;
+import dev.tehbrian.yetanothersigneditor.user.UserService;
+import dev.tehbrian.yetanothersigneditor.util.Format;
+import dev.tehbrian.yetanothersigneditor.util.Permissions;
+import io.papermc.paper.event.player.PlayerOpenSignEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -16,11 +22,6 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
-import xyz.tehbrian.yetanothersigneditor.user.User;
-import xyz.tehbrian.yetanothersigneditor.user.UserService;
-import xyz.tehbrian.yetanothersigneditor.util.Format;
-import xyz.tehbrian.yetanothersigneditor.util.Permissions;
 
 import java.util.List;
 
