@@ -2,8 +2,8 @@ plugins {
   id("java")
   id("com.github.johnrengelman.shadow") version "8.1.1"
   id("xyz.jpenilla.run-paper") version "2.1.0"
-  id("net.kyori.indra.checkstyle") version "3.0.1"
-  id("com.github.ben-manes.versions") version "0.46.0"
+  id("net.kyori.indra.checkstyle") version "3.1.3"
+  id("com.github.ben-manes.versions") version "0.47.0"
 }
 
 group = "dev.tehbrian"
@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-  compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+  compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
 
   implementation("cloud.commandframework:cloud-minecraft-extras:1.8.3")
   implementation("com.google.inject:guice:7.0.0")
@@ -55,6 +55,6 @@ tasks {
   }
 
   runServer {
-    minecraftVersion("1.19.4")
+    minecraftVersion("1.20.1")
   }
 }
