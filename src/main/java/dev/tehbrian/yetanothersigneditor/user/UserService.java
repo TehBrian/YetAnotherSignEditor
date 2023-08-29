@@ -1,4 +1,4 @@
-package xyz.tehbrian.yetanothersigneditor.user;
+package dev.tehbrian.yetanothersigneditor.user;
 
 import dev.tehbrian.tehlib.paper.user.PaperUserService;
 

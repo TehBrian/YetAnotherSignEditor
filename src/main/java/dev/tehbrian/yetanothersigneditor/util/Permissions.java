@@ -1,4 +1,4 @@
-package xyz.tehbrian.yetanothersigneditor.util;
+package dev.tehbrian.yetanothersigneditor.util;
 
 /**
  * Holds permission constants.

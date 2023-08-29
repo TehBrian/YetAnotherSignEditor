@@ -1,11 +1,11 @@
-package xyz.tehbrian.yetanothersigneditor.command;
+package dev.tehbrian.yetanothersigneditor.command;
 
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
 import dev.tehbrian.tehlib.paper.cloud.PaperCloudService;
+import dev.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import org.bukkit.command.CommandSender;
-import xyz.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 
 import java.util.function.Function;
 

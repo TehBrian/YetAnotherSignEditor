@@ -1,4 +1,4 @@
-package xyz.tehbrian.yetanothersigneditor.config;
+package dev.tehbrian.yetanothersigneditor.config;
 
 import dev.tehbrian.tehlib.configurate.ConfigurateWrapper;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
