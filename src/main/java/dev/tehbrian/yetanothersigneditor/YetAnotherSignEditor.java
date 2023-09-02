@@ -12,8 +12,7 @@ import dev.tehbrian.yetanothersigneditor.command.MainCommand;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
 import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
-import dev.tehbrian.yetanothersigneditor.listener.SignEditListener;
-import dev.tehbrian.yetanothersigneditor.listener.SignFormatListener;
+import dev.tehbrian.yetanothersigneditor.listener.SignListener;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.spongepowered.configurate.ConfigurateException;
@@ -60,10 +59,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
 
     this.setupRestrictions();
 
-    registerListeners(
-        this.injector.getInstance(SignEditListener.class),
-        this.injector.getInstance(SignFormatListener.class)
-    );
+    registerListeners(this.injector.getInstance(SignListener.class));
   }
 
   /**
