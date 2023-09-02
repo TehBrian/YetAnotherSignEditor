@@ -76,7 +76,7 @@ public final class MainCommand {
           }
 
           if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
-            player.sendMessage(this.langConfig.c(NodePath.path("no-permission")));
+            player.sendMessage(this.langConfig.c(NodePath.path("no-permission-here")));
             return;
           }
 
@@ -146,7 +146,7 @@ public final class MainCommand {
           }
 
           if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
-            player.sendMessage(this.langConfig.c(NodePath.path("no-permission")));
+            player.sendMessage(this.langConfig.c(NodePath.path("no-permission-here")));
             return;
           }
 
