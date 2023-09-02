@@ -1,11 +1,8 @@
-package dev.tehbrian.yetanothersigneditor.listener;
+package dev.tehbrian.yetanothersigneditor;
 
 import com.google.inject.Inject;
-import dev.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import dev.tehbrian.yetanothersigneditor.user.User;
 import dev.tehbrian.yetanothersigneditor.user.UserService;
-import dev.tehbrian.yetanothersigneditor.util.Format;
-import dev.tehbrian.yetanothersigneditor.util.Permissions;
 import io.papermc.paper.event.player.PlayerOpenSignEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.block.Sign;
@@ -78,21 +75,21 @@ public final class SignListener implements Listener {
   private static boolean shouldFormat(final User user, final Player player) {
     return player != null
         && user.formatEnabled()
-        && player.hasPermission(Permissions.FORMAT);
+        && player.hasPermission(Permission.FORMAT);
   }
 
   private static boolean shouldFormatLegacy(final User user) {
     final Player player = user.getPlayer();
     return shouldFormat(user, player)
         && user.formattingType() == User.FormattingType.LEGACY
-        && player.hasPermission(Permissions.LEGACY);
+        && player.hasPermission(Permission.LEGACY);
   }
 
   private static boolean shouldFormatMiniMessage(final User user) {
     final Player player = user.getPlayer();
     return shouldFormat(user, player)
         && user.formattingType() == User.FormattingType.MINIMESSAGE
-        && player.hasPermission(Permissions.MINIMESSAGE);
+        && player.hasPermission(Permission.MINIMESSAGE);
   }
 
   /**
