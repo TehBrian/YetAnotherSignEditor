@@ -14,15 +14,12 @@ import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
+import org.bukkit.event.block.SignChangeEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Allows players to open the sign editor on sign interact.
- */
-public final class SignEditListener implements Listener {
+public final class SignListener implements Listener {
 
   private static final int MAX_LINE_LENGTH = 384;
   /**
@@ -32,17 +29,14 @@ public final class SignEditListener implements Listener {
 
   private final YetAnotherSignEditor yetAnotherSignEditor;
   private final UserService userService;
-  private final SpigotRestrictionHelper restrictionHelper;
 
   @Inject
-  public SignEditListener(
+  public SignListener(
       final YetAnotherSignEditor yetAnotherSignEditor,
-      final UserService userService,
-      final SpigotRestrictionHelper restrictionHelper
+      final UserService userService
   ) {
     this.yetAnotherSignEditor = yetAnotherSignEditor;
     this.userService = userService;
-    this.restrictionHelper = restrictionHelper;
   }
 
   private static List<String> serializeLines(final List<Component> lines, final User user) {
@@ -87,6 +81,9 @@ public final class SignEditListener implements Listener {
         && player.hasPermission(Permissions.MINIMESSAGE);
   }
 
+  /**
+   * De-formats sign text on sign open.
+   */
   @EventHandler(ignoreCancelled = true)
   public void onSignOpen(final PlayerOpenSignEvent event) {
     // if the cause is plugin, assume we initiated the open and that the sign text has been serialized.
@@ -113,6 +110,28 @@ public final class SignEditListener implements Listener {
           () -> player.openSign(sign, side),
           STUPID_MAGIC_NUMBER_OF_TICKS
       );
+    }
+  }
+
+  /**
+   * Formats sign text on sign change.
+   */
+  @EventHandler
+  public void onSignChange(final SignChangeEvent event) {
+    final Player player = event.getPlayer();
+    final User user = this.userService.getUser(player);
+
+    if (!user.formatEnabled() || !player.hasPermission(Permissions.FORMAT)) {
+      return;
+    }
+
+    final List<Component> lines = event.lines();
+    for (int i = 0; i < lines.size(); i++) {
+      if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
+        event.line(i, Format.legacy(lines.get(i)));
+      } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
+        event.line(i, Format.miniMessage(lines.get(i)));
+      }
     }
   }
 
