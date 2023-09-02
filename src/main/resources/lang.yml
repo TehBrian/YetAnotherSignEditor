@@ -8,9 +8,9 @@
 # | Feedback and Support: https://thbn.me/discord
 # |
 
-no_permission: "<red> You don't have permission to do that here."
-not_a_sign: "<red> That's not a sign!"
-not_waxed: "<red> That sign isn't waxed!"
+no-permission: "<red> You don't have permission to do that here."
+not-a-sign: "<red> That's not a sign!"
+not-waxed: "<red> That sign isn't waxed!"
 
 format:
   enabled: "<light_purple> Enabled sign formatting. <gray>(Insert formatting codes into sign text.)"
