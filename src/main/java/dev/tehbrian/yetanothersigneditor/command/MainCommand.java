@@ -13,8 +13,11 @@ import dev.tehbrian.yetanothersigneditor.user.User;
 import dev.tehbrian.yetanothersigneditor.user.UserService;
 import dev.tehbrian.yetanothersigneditor.util.Format;
 import dev.tehbrian.yetanothersigneditor.util.Permissions;
+import net.kyori.adventure.sound.Sound;
+import net.kyori.adventure.sound.Sound.Source;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import org.bukkit.Effect;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
@@ -62,17 +65,42 @@ public final class MainCommand {
           }
         });
 
-    final var edit = main
-        .literal("edit", ArgumentDescription.of("Toggle your ability to edit sign text."))
-        .permission(Permissions.EDIT)
+    final var unwax = main
+        .literal("unwax", ArgumentDescription.of("Unwax the sign you're looking at."))
+        .permission(Permissions.UNWAX)
         .senderType(Player.class)
         .handler(c -> {
           final Player player = (Player) c.getSender();
-          if (this.userService.getUser(player).toggleEditEnabled()) {
-            player.sendMessage(this.langConfig.c(NodePath.path("edit", "enabled")));
-          } else {
-            player.sendMessage(this.langConfig.c(NodePath.path("edit", "disabled")));
+
+          final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
+          if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
+            player.sendMessage(this.langConfig.c(NodePath.path("not_a_sign")));
+            return;
           }
+
+          if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
+            player.sendMessage(this.langConfig.c(NodePath.path("no_permission")));
+            return;
+          }
+
+          if (!sign.isWaxed()) {
+            player.sendMessage(this.langConfig.c(NodePath.path("not_waxed")));
+            return;
+          }
+
+          sign.setWaxed(false);
+          sign.update();
+          sign.getWorld().playEffect(sign.getLocation(), Effect.COPPER_WAX_OFF, 0);
+          sign.getWorld().playSound(Sound.sound(
+              org.bukkit.Sound.ITEM_HONEYCOMB_WAX_ON,
+              Source.BLOCK,
+              1.0F, 1.0F
+          ));
+          sign.getWorld().playSound(Sound.sound(
+              org.bukkit.Sound.ITEM_BOTTLE_EMPTY,
+              Source.BLOCK,
+              1.0F, 0.7F
+          ));
         });
 
     final var format = main
@@ -111,7 +139,7 @@ public final class MainCommand {
         .argument(StringArgument.<CommandSender>builder("text").greedy().asOptional().build())
         .handler(c -> {
           final Player player = (Player) c.getSender();
-          final int line = c.<Integer>get("line") - 1; // arrays are 0-indexed
+          final int line = c.<Integer>get("line") - 1; // signs are 0-indexed.
           final String text = c.<String>getOptional("text").orElse("");
 
           final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
@@ -140,11 +168,16 @@ public final class MainCommand {
 
           sign.line(line, formattedText);
           sign.update();
+          sign.getWorld().playSound(Sound.sound(
+              sign.getBlock().getBlockSoundGroup().getPlaceSound(),
+              Source.BLOCK,
+              1.0F, 0.25F
+          ));
         });
 
     commandManager.command(help)
         .command(reload)
-        .command(edit)
+        .command(unwax)
         .command(format)
         .command(formatFormattingType)
         .command(set);

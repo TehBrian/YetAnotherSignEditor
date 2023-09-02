@@ -11,8 +11,8 @@ permissions:
   yase.set:
     description: Permission to run /yase set.
     default: true
-  yase.edit:
-    description: Permission to edit sign text.
+  yase.unwax:
+    description: Permission to run /yase unwax.
     default: true
   yase.format:
     description: Permission to format sign text.
