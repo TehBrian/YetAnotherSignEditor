@@ -8,21 +8,15 @@ import dev.tehbrian.yetanothersigneditor.util.Format;
 import dev.tehbrian.yetanothersigneditor.util.Permissions;
 import io.papermc.paper.event.player.PlayerOpenSignEvent;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Tag;
-import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +25,10 @@ import java.util.List;
 public final class SignEditListener implements Listener {
 
   private static final int MAX_LINE_LENGTH = 384;
+  /**
+   * Magic number of ticks that need to pass so that the server opens the updated sign.
+   */
+  private static final int STUPID_MAGIC_NUMBER_OF_TICKS = 2;
 
   private final YetAnotherSignEditor yetAnotherSignEditor;
   private final UserService userService;
@@ -47,62 +45,75 @@ public final class SignEditListener implements Listener {
     this.restrictionHelper = restrictionHelper;
   }
 
-  @EventHandler(ignoreCancelled = true)
-  public void onSignInteract(final PlayerInteractEvent event) {
-    final Player player = event.getPlayer();
-    final User user = this.userService.getUser(player);
-
-    if (!user.editEnabled() || !player.hasPermission(Permissions.EDIT)) {
-      return;
-    }
-
-    if (!Tag.SIGNS.isTagged(player.getInventory().getItemInMainHand().getType())
-        || event.getAction() != Action.RIGHT_CLICK_BLOCK
-        || event.getHand() != EquipmentSlot.HAND
-        || player.getGameMode() == GameMode.ADVENTURE
-        || player.isSneaking()) {
-      return;
-    }
-
-    final @Nullable Block clickedBlock = event.getClickedBlock();
-    if (clickedBlock == null
-        || !(clickedBlock.getState() instanceof final Sign clickedSign)
-        || !this.restrictionHelper.checkRestrictions(player, clickedBlock.getLocation(), ActionType.ALL)) {
-      return;
-    }
-
-    final List<Component> lines = clickedSign.lines();
-    for (int i = 0; i < lines.size(); i++) {
-      final Component text = lines.get(i);
-
-      String serializedText = Format.serializePlain(text);
-      if (user.formatEnabled() && player.hasPermission(Permissions.FORMAT)) {
-        if (user.formattingType() == User.FormattingType.LEGACY
-            && player.hasPermission(Permissions.LEGACY)) {
-          serializedText = Format.serializeLegacy(text);
-        } else if (user.formattingType() == User.FormattingType.MINIMESSAGE
-            && player.hasPermission(Permissions.MINIMESSAGE)) {
-          serializedText = Format.serializeMiniMessage(text);
-        }
+  private static List<String> serializeLines(final List<Component> lines, final User user) {
+    final List<String> newLines = new ArrayList<>();
+    for (final Component line : lines) {
+      String newLine;
+      if (shouldFormatLegacy(user)) {
+        newLine = Format.serializeLegacy(line);
+      } else if (shouldFormatMiniMessage(user)) {
+        newLine = Format.serializeMiniMessage(line);
+      } else {
+        newLine = Format.serializePlain(line);
       }
 
       // truncate text if it's too long else the server will kick the player.
-      if (serializedText.length() > MAX_LINE_LENGTH) {
-        serializedText = serializedText.substring(0, MAX_LINE_LENGTH);
+      if (newLine.length() > MAX_LINE_LENGTH) {
+        newLine = newLine.substring(0, MAX_LINE_LENGTH);
       }
 
-      clickedSign.line(i, Format.plain(serializedText));
+      newLines.add(newLine);
     }
+    return newLines;
+  }
 
-    clickedSign.update();
+  private static boolean shouldFormat(final User user, final Player player) {
+    return player != null
+        && user.formatEnabled()
+        && player.hasPermission(Permissions.FORMAT);
+  }
 
-    Bukkit.getScheduler().scheduleSyncDelayedTask(
-        this.yetAnotherSignEditor,
-        () -> player.openSign(clickedSign),
-        2 // magic number so that Bukkit loads the updated sign.
-    );
+  private static boolean shouldFormatLegacy(final User user) {
+    final Player player = user.getPlayer();
+    return shouldFormat(user, player)
+        && user.formattingType() == User.FormattingType.LEGACY
+        && player.hasPermission(Permissions.LEGACY);
+  }
 
-    event.setCancelled(true);
+  private static boolean shouldFormatMiniMessage(final User user) {
+    final Player player = user.getPlayer();
+    return shouldFormat(user, player)
+        && user.formattingType() == User.FormattingType.MINIMESSAGE
+        && player.hasPermission(Permissions.MINIMESSAGE);
+  }
+
+  @EventHandler(ignoreCancelled = true)
+  public void onSignOpen(final PlayerOpenSignEvent event) {
+    // if the cause is plugin, assume we initiated the open and that the sign text has been serialized.
+    // if the cause is interact, serialize the sign text and re-open.
+    if (event.getCause() == PlayerOpenSignEvent.Cause.INTERACT) {
+      event.setCancelled(true);
+
+      final Player player = event.getPlayer();
+      final User user = this.userService.getUser(player);
+
+      final Sign sign = event.getSign();
+      final Side side = event.getSide();
+      final SignSide signSide = sign.getSide(side);
+
+      final List<String> newLines = serializeLines(signSide.lines(), user);
+      for (int i = 0; i < newLines.size(); i++) {
+        signSide.line(i, Format.plain(newLines.get(i)));
+      }
+
+      sign.update();
+
+      this.yetAnotherSignEditor.getServer().getScheduler().runTaskLater(
+          this.yetAnotherSignEditor,
+          () -> player.openSign(sign, side),
+          STUPID_MAGIC_NUMBER_OF_TICKS
+      );
+    }
   }
 
 }
