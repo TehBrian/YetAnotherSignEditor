@@ -8,9 +8,8 @@
 # | Feedback and Support: https://thbn.me/discord
 # |
 
-set:
-  no_permission: "<red> No permission."
-  not_a_sign: "<yellow> That's not a sign!"
+no_permission: "<red> You don't have permission to do that here."
+not_a_sign: "<red> That's not a sign!"
 
 edit:
   enabled: "<aqua> Enabled sign editing. <gray>(Click on a sign while holding a sign.)"
