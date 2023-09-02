@@ -74,17 +74,17 @@ public final class MainCommand {
 
           final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
           if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
-            player.sendMessage(this.langConfig.c(NodePath.path("not_a_sign")));
+            player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
             return;
           }
 
           if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
-            player.sendMessage(this.langConfig.c(NodePath.path("no_permission")));
+            player.sendMessage(this.langConfig.c(NodePath.path("no-permission")));
             return;
           }
 
           if (!sign.isWaxed()) {
-            player.sendMessage(this.langConfig.c(NodePath.path("not_waxed")));
+            player.sendMessage(this.langConfig.c(NodePath.path("not-waxed")));
             return;
           }
 
@@ -144,12 +144,12 @@ public final class MainCommand {
 
           final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
           if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
-            player.sendMessage(this.langConfig.c(NodePath.path("not_a_sign")));
+            player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
             return;
           }
 
           if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
-            player.sendMessage(this.langConfig.c(NodePath.path("no_permission")));
+            player.sendMessage(this.langConfig.c(NodePath.path("no-permission")));
             return;
           }
 
