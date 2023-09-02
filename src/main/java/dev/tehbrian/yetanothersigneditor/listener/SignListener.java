@@ -39,8 +39,22 @@ public final class SignListener implements Listener {
     this.userService = userService;
   }
 
-  private static List<String> serializeLines(final List<Component> lines, final User user) {
-    final List<String> newLines = new ArrayList<>();
+  private static List<Component> format(final List<Component> lines, final User user) {
+    final List<Component> newLines = new ArrayList<>();
+    for (final Component line : lines) {
+      if (shouldFormatLegacy(user)) {
+        newLines.add(Format.legacy(line));
+      } else if (shouldFormatMiniMessage(user)) {
+        newLines.add(Format.miniMessage(line));
+      } else {
+        newLines.add(Format.plain(line));
+      }
+    }
+    return newLines;
+  }
+
+  private static List<Component> unformat(final List<Component> lines, final User user) {
+    final List<Component> newLines = new ArrayList<>();
     for (final Component line : lines) {
       String newLine;
       if (shouldFormatLegacy(user)) {
@@ -56,7 +70,7 @@ public final class SignListener implements Listener {
         newLine = newLine.substring(0, MAX_LINE_LENGTH);
       }
 
-      newLines.add(newLine);
+      newLines.add(Format.plain(newLine));
     }
     return newLines;
   }
@@ -88,29 +102,35 @@ public final class SignListener implements Listener {
   public void onSignOpen(final PlayerOpenSignEvent event) {
     // if the cause is plugin, assume we initiated the open and that the sign text has been serialized.
     // if the cause is interact, serialize the sign text and re-open.
-    if (event.getCause() == PlayerOpenSignEvent.Cause.INTERACT) {
-      event.setCancelled(true);
-
-      final Player player = event.getPlayer();
-      final User user = this.userService.getUser(player);
-
-      final Sign sign = event.getSign();
-      final Side side = event.getSide();
-      final SignSide signSide = sign.getSide(side);
-
-      final List<String> newLines = serializeLines(signSide.lines(), user);
-      for (int i = 0; i < newLines.size(); i++) {
-        signSide.line(i, Format.plain(newLines.get(i)));
-      }
-
-      sign.update();
-
-      this.yetAnotherSignEditor.getServer().getScheduler().runTaskLater(
-          this.yetAnotherSignEditor,
-          () -> player.openSign(sign, side),
-          STUPID_MAGIC_NUMBER_OF_TICKS
-      );
+    if (event.getCause() != PlayerOpenSignEvent.Cause.INTERACT) {
+      return;
     }
+
+    final Player player = event.getPlayer();
+    final User user = this.userService.getUser(player);
+
+    if (!shouldFormat(user, player)) {
+      return;
+    }
+
+    event.setCancelled(true);
+
+    final Sign sign = event.getSign();
+    final Side side = event.getSide();
+    final SignSide signSide = sign.getSide(side);
+
+    final List<Component> newLines = unformat(signSide.lines(), user);
+    for (int i = 0; i < newLines.size(); i++) {
+      signSide.line(i, newLines.get(i));
+    }
+
+    sign.update();
+
+    this.yetAnotherSignEditor.getServer().getScheduler().runTaskLater(
+        this.yetAnotherSignEditor,
+        () -> player.openSign(sign, side),
+        STUPID_MAGIC_NUMBER_OF_TICKS
+    );
   }
 
   /**
@@ -121,17 +141,13 @@ public final class SignListener implements Listener {
     final Player player = event.getPlayer();
     final User user = this.userService.getUser(player);
 
-    if (!user.formatEnabled() || !player.hasPermission(Permissions.FORMAT)) {
+    if (!shouldFormat(user, player)) {
       return;
     }
 
-    final List<Component> lines = event.lines();
-    for (int i = 0; i < lines.size(); i++) {
-      if (user.formattingType() == User.FormattingType.LEGACY && player.hasPermission(Permissions.LEGACY)) {
-        event.line(i, Format.legacy(lines.get(i)));
-      } else if (user.formattingType() == User.FormattingType.MINIMESSAGE && player.hasPermission(Permissions.MINIMESSAGE)) {
-        event.line(i, Format.miniMessage(lines.get(i)));
-      }
+    final List<Component> newLines = format(event.lines(), user);
+    for (int i = 0; i < newLines.size(); i++) {
+      event.line(i, newLines.get(i));
     }
   }
 
