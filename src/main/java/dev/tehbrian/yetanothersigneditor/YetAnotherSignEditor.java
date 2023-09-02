@@ -1,5 +1,6 @@
 package dev.tehbrian.yetanothersigneditor;
 
+import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.minecraft.extras.AudienceProvider;
 import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
@@ -7,7 +8,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import dev.tehbrian.tehlib.configurate.Config;
 import dev.tehbrian.tehlib.paper.TehPlugin;
-import dev.tehbrian.yetanothersigneditor.command.CommandService;
 import dev.tehbrian.yetanothersigneditor.command.MainCommand;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
@@ -16,7 +16,6 @@ import dev.tehbrian.yetanothersigneditor.listener.SignEditListener;
 import dev.tehbrian.yetanothersigneditor.listener.SignFormatListener;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.ConfigurateException;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionLoader;
@@ -25,13 +24,15 @@ import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * The main class for the YetAnotherSignEditor plugin.
  */
 public final class YetAnotherSignEditor extends TehPlugin {
 
-  private @MonotonicNonNull Injector injector;
+  private @MonotonicNonNull PaperCommandManager<CommandSender> commandManager = null;
+  private @MonotonicNonNull Injector injector = null;
 
   @Override
   public void onEnable() {
@@ -100,18 +101,20 @@ public final class YetAnotherSignEditor extends TehPlugin {
    * @return whether it was successful
    */
   private boolean setupCommands() {
-    final CommandService commandService = this.injector.getInstance(CommandService.class);
+    if (this.commandManager != null) {
+      throw new IllegalStateException("The CommandManager is already instantiated.");
+    }
+
     try {
-      commandService.init();
+      this.commandManager = new PaperCommandManager<>(
+          this,
+          CommandExecutionCoordinator.simpleCoordinator(),
+          Function.identity(),
+          Function.identity()
+      );
     } catch (final Exception e) {
       this.getSLF4JLogger().error("Failed to create the CommandManager.");
       this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
-      return false;
-    }
-
-    final @Nullable PaperCommandManager<CommandSender> commandManager = commandService.get();
-    if (commandManager == null) {
-      this.getSLF4JLogger().error("The CommandService was null after initialization!");
       return false;
     }
 
@@ -121,9 +124,9 @@ public final class YetAnotherSignEditor extends TehPlugin {
         .withInvalidSyntaxHandler()
         .withNoPermissionHandler()
         .withCommandExecutionHandler()
-        .apply(commandManager, AudienceProvider.nativeAudience());
+        .apply(this.commandManager, AudienceProvider.nativeAudience());
 
-    this.injector.getInstance(MainCommand.class).register(commandManager);
+    this.injector.getInstance(MainCommand.class).register(this.commandManager);
 
     return true;
   }
