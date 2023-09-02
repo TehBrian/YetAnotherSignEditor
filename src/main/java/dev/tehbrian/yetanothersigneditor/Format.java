@@ -1,4 +1,4 @@
-package dev.tehbrian.yetanothersigneditor.util;
+package dev.tehbrian.yetanothersigneditor;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;

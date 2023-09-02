@@ -1,4 +1,4 @@
-package dev.tehbrian.yetanothersigneditor.command;
+package dev.tehbrian.yetanothersigneditor;
 
 import cloud.commandframework.ArgumentDescription;
 import cloud.commandframework.arguments.standard.EnumArgument;
@@ -7,12 +7,9 @@ import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
-import dev.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.user.User;
 import dev.tehbrian.yetanothersigneditor.user.UserService;
-import dev.tehbrian.yetanothersigneditor.util.Format;
-import dev.tehbrian.yetanothersigneditor.util.Permissions;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.sound.Sound.Source;
 import net.kyori.adventure.text.Component;
@@ -56,7 +53,7 @@ public final class MainCommand {
 
     final var reload = main
         .literal("reload", ArgumentDescription.of("Reload the plugin's config."))
-        .permission(Permissions.RELOAD)
+        .permission(Permission.RELOAD)
         .handler(c -> {
           if (this.yetAnotherSignEditor.loadConfiguration()) {
             c.getSender().sendMessage(this.langConfig.c(NodePath.path("reload", "successful")));
@@ -67,7 +64,7 @@ public final class MainCommand {
 
     final var unwax = main
         .literal("unwax", ArgumentDescription.of("Unwax the sign you're looking at."))
-        .permission(Permissions.UNWAX)
+        .permission(Permission.UNWAX)
         .senderType(Player.class)
         .handler(c -> {
           final Player player = (Player) c.getSender();
@@ -105,7 +102,7 @@ public final class MainCommand {
 
     final var format = main
         .literal("format", ArgumentDescription.of("Toggle your ability to format sign text."))
-        .permission(Permissions.FORMAT)
+        .permission(Permission.FORMAT)
         .senderType(Player.class)
         .handler(c -> {
           final Player sender = (Player) c.getSender();
@@ -133,7 +130,7 @@ public final class MainCommand {
 
     final var set = main
         .literal("set", ArgumentDescription.of("Set the text of the sign you're looking at."))
-        .permission(Permissions.SET)
+        .permission(Permission.SET)
         .senderType(Player.class)
         .argument(IntegerArgument.<CommandSender>builder("line").withMin(1).withMax(4).build())
         .argument(StringArgument.<CommandSender>builder("text").greedy().asOptional().build())
@@ -156,12 +153,12 @@ public final class MainCommand {
           final User user = this.userService.getUser(player);
 
           Component formattedText = Format.plain(text);
-          if (user.formatEnabled() && player.hasPermission(Permissions.FORMAT)) {
+          if (user.formatEnabled() && player.hasPermission(Permission.FORMAT)) {
             if (user.formattingType() == User.FormattingType.LEGACY
-                && player.hasPermission(Permissions.LEGACY)) {
+                && player.hasPermission(Permission.LEGACY)) {
               formattedText = Format.legacy(text);
             } else if (user.formattingType() == User.FormattingType.MINIMESSAGE
-                && player.hasPermission(Permissions.MINIMESSAGE)) {
+                && player.hasPermission(Permission.MINIMESSAGE)) {
               formattedText = Format.miniMessage(text);
             }
           }

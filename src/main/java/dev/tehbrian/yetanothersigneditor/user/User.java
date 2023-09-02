@@ -1,6 +1,6 @@
 package dev.tehbrian.yetanothersigneditor.user;
 
-import dev.tehbrian.yetanothersigneditor.util.Permissions;
+import dev.tehbrian.yetanothersigneditor.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -21,7 +21,7 @@ public final class User {
   public User(final UUID uuid) {
     this.uuid = uuid;
     final Player player = Objects.requireNonNull(this.getPlayer());
-    this.formatEnabled = player.hasPermission(Permissions.FORMAT);
+    this.formatEnabled = player.hasPermission(Permission.FORMAT);
   }
 
   public @Nullable Player getPlayer() {
