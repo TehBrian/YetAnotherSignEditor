@@ -163,7 +163,7 @@ public final class MainCommand {
             }
           }
 
-          sign.line(line, formattedText);
+          sign.getSide(sign.getInteractableSideFor(player)).line(line, formattedText);
           sign.update();
           sign.getWorld().playSound(Sound.sound(
               sign.getBlock().getBlockSoundGroup().getPlaceSound(),
