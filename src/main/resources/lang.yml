@@ -10,10 +10,7 @@
 
 no_permission: "<red> You don't have permission to do that here."
 not_a_sign: "<red> That's not a sign!"
-
-edit:
-  enabled: "<aqua> Enabled sign editing. <gray>(Click on a sign while holding a sign.)"
-  disabled: "<dark_aqua> Disabled sign editing."
+not_waxed: "<red> That sign isn't waxed!"
 
 format:
   enabled: "<light_purple> Enabled sign formatting. <gray>(Insert formatting codes into sign text.)"
@@ -30,8 +27,8 @@ help: |-
   <gray>   Display this help message.
   <yellow>/yase set <line> [text]
   <gray>   Set the text of the sign you're looking at.
-  <aqua>/yase edit
-  <gray>   Toggle your ability to edit sign text.
+  <aqua>/yase unwax
+  <gray>   Unwax the sign you're looking at.
   <light_purple>/yase format [formatting_type]
   <gray>   Toggle your ability to format sign text.
   <red>/yase reload

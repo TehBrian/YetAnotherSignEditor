@@ -12,7 +12,6 @@ public final class User {
 
   private final UUID uuid;
 
-  private boolean editEnabled;
   private boolean formatEnabled;
   private User.FormattingType formattingType = FormattingType.LEGACY;
 
@@ -22,25 +21,11 @@ public final class User {
   public User(final UUID uuid) {
     this.uuid = uuid;
     final Player player = Objects.requireNonNull(this.getPlayer());
-    this.editEnabled = player.hasPermission(Permissions.EDIT);
     this.formatEnabled = player.hasPermission(Permissions.FORMAT);
   }
 
   public @Nullable Player getPlayer() {
     return Bukkit.getPlayer(this.uuid);
-  }
-
-  public boolean editEnabled() {
-    return this.editEnabled;
-  }
-
-  public void editEnabled(final boolean editEnabled) {
-    this.editEnabled = editEnabled;
-  }
-
-  public boolean toggleEditEnabled() {
-    this.editEnabled(!this.editEnabled());
-    return this.editEnabled();
   }
 
   public boolean formatEnabled() {

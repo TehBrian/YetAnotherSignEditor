@@ -8,7 +8,7 @@ public final class Permissions {
   public static final String ROOT = "yase";
 
   public static final String SET = ROOT + ".set";
-  public static final String EDIT = ROOT + ".edit";
+  public static final String UNWAX = ROOT + ".unwax";
   public static final String RELOAD = ROOT + ".reload";
 
   public static final String FORMAT = ROOT + ".format";
