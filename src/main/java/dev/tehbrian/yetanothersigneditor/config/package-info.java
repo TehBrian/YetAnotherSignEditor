@@ -1,4 +1,4 @@
 /**
- * Wrappers for the configuration files.
+ * Wrappers for configuration files.
  */
 package dev.tehbrian.yetanothersigneditor.config;
