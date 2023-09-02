@@ -7,7 +7,6 @@ import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
-import dev.tehbrian.tehlib.paper.cloud.PaperCloudCommand;
 import dev.tehbrian.yetanothersigneditor.YetAnotherSignEditor;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.user.User;
@@ -25,7 +24,7 @@ import org.spongepowered.configurate.NodePath;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 
-public final class MainCommand extends PaperCloudCommand<CommandSender> {
+public final class MainCommand {
 
   private final YetAnotherSignEditor yetAnotherSignEditor;
   private final SpigotRestrictionHelper restrictionHelper;
@@ -45,7 +44,6 @@ public final class MainCommand extends PaperCloudCommand<CommandSender> {
     this.langConfig = langConfig;
   }
 
-  @Override
   public void register(final PaperCommandManager<CommandSender> commandManager) {
     final var main = commandManager.commandBuilder("yase")
         .meta(CommandMeta.DESCRIPTION, "Various commands for YetAnotherSignEditor.");
