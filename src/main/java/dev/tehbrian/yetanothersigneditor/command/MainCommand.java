@@ -116,11 +116,12 @@ public final class MainCommand {
 
           final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
           if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
-            player.sendMessage(this.langConfig.c(NodePath.path("set", "not_a_sign")));
+            player.sendMessage(this.langConfig.c(NodePath.path("not_a_sign")));
             return;
           }
+
           if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
-            player.sendMessage(this.langConfig.c(NodePath.path("set", "no_permission")));
+            player.sendMessage(this.langConfig.c(NodePath.path("no_permission")));
             return;
           }
 
@@ -138,7 +139,6 @@ public final class MainCommand {
           }
 
           sign.line(line, formattedText);
-
           sign.update();
         });
 
