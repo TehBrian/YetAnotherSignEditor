@@ -33,3 +33,4 @@ help: |-
   <gray>   Toggle text formatting or change your formatting type.
   <red>/yase reload
   <gray>   Reload the plugin's config.
+  <gray>--- <white>YetAnotherSignEditor</white> ---
