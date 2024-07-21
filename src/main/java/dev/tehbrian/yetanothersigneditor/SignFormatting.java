@@ -2,32 +2,21 @@ package dev.tehbrian.yetanothersigneditor;
 
 import dev.tehbrian.yetanothersigneditor.user.User;
 import net.kyori.adventure.text.Component;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.persistence.PersistentDataType;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class SignFormatting {
 
-  private static final NamespacedKey FRONT_KEY = Objects.requireNonNull(NamespacedKey.fromString(
-      "yase:native-serialized-mm-front"));
-  private static final NamespacedKey BACK_KEY = Objects.requireNonNull(NamespacedKey.fromString(
-      "yase:native-serialized-mm-back"));
-
-  private static final int MAX_LINE_LENGTH = 384;
   /**
    * Number of ticks before the server opens the updated sign.
    */
   public static final int MAGIC_NUMBER_OF_TICKS = 2;
-
+  private static final int MAX_LINE_LENGTH = 384;
 
   private static Component format(final Component line, final User user) {
     if (shouldFormatLegacy(user)) {
@@ -43,7 +32,7 @@ public class SignFormatting {
     return lines.stream().map(line -> format(line, user)).toList();
   }
 
-  private static Component unformat(final Component line, final User user) {
+  public static String unformatRaw(final Component line, final User user) {
     String newLine;
 
     if (shouldFormatLegacy(user)) {
@@ -59,7 +48,11 @@ public class SignFormatting {
       newLine = newLine.substring(0, MAX_LINE_LENGTH);
     }
 
-    return Format.plain(newLine);
+    return newLine;
+  }
+
+  public static Component unformat(final Component line, final User user) {
+    return Format.plain(unformatRaw(line, user));
   }
 
   public static List<Component> unformat(final List<Component> lines, final User user) {
@@ -68,7 +61,7 @@ public class SignFormatting {
 
   public static List<Component> unformatLines(final Sign sign, final Side side, final User user) {
     if (shouldFormatMiniMessage(user)) { // try pdc.
-      final List<Component> mm = SignFormatting.mmFromPdc(sign, side);
+      final List<Component> mm = NativePersistence.mmFromPdc(sign, side);
       if (mm != null) {
         return mm;
       }
@@ -100,36 +93,6 @@ public class SignFormatting {
     return shouldFormat(user, player)
         && user.formattingType() == User.FormattingType.MINIMESSAGE
         && player.hasPermission(Permission.MINIMESSAGE);
-  }
-
-  public static @Nullable List<Component> mmFromPdc(final Sign sign, final Side side) {
-    final var pdc = sign.getPersistentDataContainer();
-    final @Nullable String data;
-
-    if (side == Side.FRONT && pdc.has(FRONT_KEY)) {
-      data = pdc.get(FRONT_KEY, PersistentDataType.STRING);
-    } else if (side == Side.BACK && pdc.has(BACK_KEY)) {
-      data = pdc.get(BACK_KEY, PersistentDataType.STRING);
-    } else {
-      return null;
-    }
-
-    if (data == null) {
-      return null;
-    }
-
-    return data.lines().map(Format::plain).toList();
-  }
-
-  public static void mmToPdc(final Sign sign, final Side side, final List<Component> lines) {
-    final var pdc = sign.getPersistentDataContainer();
-    final String data = lines.stream().map(Format::serializePlain).collect(Collectors.joining("\n"));
-
-    if (side == Side.FRONT) {
-      pdc.set(FRONT_KEY, PersistentDataType.STRING, data);
-    } else {
-      pdc.set(BACK_KEY, PersistentDataType.STRING, data);
-    }
   }
 
   public static void lines(final SignChangeEvent event, final List<Component> lines) {
