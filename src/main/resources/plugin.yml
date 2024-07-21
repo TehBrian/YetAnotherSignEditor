@@ -21,7 +21,7 @@ permissions:
     description: Permission to use the MiniMessage formatting type.
     default: op
   yase.format.legacy:
-    description: Permission to use the Legacy formatting type.
+    description: Permission to use the legacy formatting type.
     default: true
   yase.reload:
     description: Permission to run /yase reload.
