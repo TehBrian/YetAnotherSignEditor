@@ -23,9 +23,10 @@ reload:
 
 help: |-
   <gray>--- <white>YetAnotherSignEditor</white> ---
-
-  <yellow>/yase set <line> [text]
-  <gray>   Set the text of the sign you're looking at.
+  <gold>/yase set <line> [text]
+  <gray>   Set the text of the targeted sign.
+  <yellow>/yase open
+  <gray>   Open the targeted sign.
   <aqua>/yase unwax
   <gray>   Unwax the sign you're looking at.
   <light_purple>/yase format [formatting_type]

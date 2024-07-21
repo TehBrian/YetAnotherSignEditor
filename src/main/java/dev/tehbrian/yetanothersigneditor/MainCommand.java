@@ -100,6 +100,44 @@ public final class MainCommand {
           ));
         });
 
+    final var open = main
+        .literal("open", ArgumentDescription.of("Forcibly open the targeted sign for editing."))
+        .senderType(Player.class)
+        .handler(c -> {
+          final Player player = (Player) c.getSender();
+          final User user = this.userService.getUser(player);
+
+          final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
+          if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
+            player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
+            return;
+          }
+
+          if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
+            player.sendMessage(this.langConfig.c(NodePath.path("no-permission-here")));
+            return;
+          }
+
+          final Side side = sign.getInteractableSideFor(player);
+          final SignSide signSide = sign.getSide(side);
+
+          if (shouldFormat(user)) {
+            final List<Component> newLines = unformatLines(sign, side, user);
+            for (int i = 0; i < newLines.size(); i++) {
+              signSide.line(i, newLines.get(i));
+            }
+            sign.update();
+
+            this.yetAnotherSignEditor.getServer().getScheduler().runTaskLater(
+                this.yetAnotherSignEditor,
+                () -> player.openSign(sign, side),
+                MAGIC_NUMBER_OF_TICKS
+            );
+          } else {
+            player.openSign(sign, side);
+          }
+        });
+
     final var format = main
         .literal("format", ArgumentDescription.of("Toggle your ability to format sign text."))
         .permission(Permission.FORMAT)
