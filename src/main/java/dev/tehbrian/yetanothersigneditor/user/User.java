@@ -50,8 +50,18 @@ public final class User {
   }
 
   public enum FormattingType {
-    LEGACY,
-    MINIMESSAGE
+    LEGACY("legacy"),
+    MINIMESSAGE("MiniMessage");
+
+    final String pretty;
+
+    FormattingType(final String pretty) {
+      this.pretty = pretty;
+    }
+
+    public String pretty() {
+      return this.pretty;
+    }
   }
 
 }

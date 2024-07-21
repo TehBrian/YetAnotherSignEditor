@@ -124,7 +124,7 @@ public final class MainCommand {
           this.userService.getUser(player).formattingType(formattingType);
           player.sendMessage(this.langConfig.c(
               NodePath.path("format", "set"),
-              Placeholder.parsed("formatting_type", formattingType.toString())
+              Placeholder.parsed("formatting_type", formattingType.pretty())
           ));
         });
 
