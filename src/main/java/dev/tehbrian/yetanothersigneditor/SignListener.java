@@ -4,7 +4,6 @@ import com.google.inject.Inject;
 import dev.tehbrian.yetanothersigneditor.user.User;
 import dev.tehbrian.yetanothersigneditor.user.UserService;
 import io.papermc.paper.event.player.PlayerOpenSignEvent;
-import net.kyori.adventure.text.Component;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
@@ -13,11 +12,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
-import java.util.List;
-
+import static dev.tehbrian.yetanothersigneditor.NativePersistence.invalidateMmInPdc;
+import static dev.tehbrian.yetanothersigneditor.NativePersistence.mmToPdc;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.MAGIC_NUMBER_OF_TICKS;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.format;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.mmToPdc;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.lines;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.shouldFormat;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.shouldFormatMiniMessage;
@@ -79,16 +77,18 @@ public final class SignListener implements Listener {
     final Player player = event.getPlayer();
     final User user = this.userService.getUser(player);
 
+    // deal with mm persistence.
+    final Sign sign = (Sign) event.getBlock().getState();
+    if (shouldFormatMiniMessage(user)) { // store mm to pdc.
+      mmToPdc(sign, event.getSide(), event.lines());
+    } else { // if contents have changed, invalidate previously stored mm.
+      invalidateMmInPdc(sign, event.getSide(), event.lines(), user);
+    }
+    sign.update(); // important! pdc is only stored to snapshot of state.
+
     if (!shouldFormat(user)) {
       return;
     }
-
-    if (shouldFormatMiniMessage(user)) { // store mm to pdc.
-      final Sign sign = (Sign) event.getBlock().getState();
-      mmToPdc(sign, event.getSide(), event.lines());
-      sign.update(); // important! pdc is only stored to snapshot of state.
-    }
-
 
     lines(event, format(event.lines(), user));
   }
