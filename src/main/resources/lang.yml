@@ -21,12 +21,26 @@ reload:
   successful: "<red>The configuration has been successfully reloaded."
   unsuccessful: "<red>Failed to load configuration; please check the console."
 
+copy:
+  message: |-
+    <green>Sign at <dark_green><x></dark_green>, <dark_green><y></dark_green>, <dark_green><z></dark_green>.
+    <reset>  <line_1>
+    <reset>  <line_2>
+    <reset>  <line_3>
+    <reset>  <line_4>
+  hover: |-
+    <reset><line>
+
+    <white>Click to copy to clipboard.
+
 help: |-
   <gray>--- <white>YetAnotherSignEditor</white> ---
   <gold>/yase set <line> [text]
   <gray>   Set the text of the targeted sign.
   <yellow>/yase open
   <gray>   Open the targeted sign.
+  <green>/yase copy
+  <gray>   Copy the text of the targeted sign.
   <aqua>/yase unwax
   <gray>   Unwax the targeted sign.
   <light_purple>/yase format [formatting-type]

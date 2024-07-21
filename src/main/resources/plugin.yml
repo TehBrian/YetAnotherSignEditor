@@ -14,6 +14,9 @@ permissions:
   yase.open:
     description: Permission to run /yase open.
     default: true
+  yase.copy:
+    description: Permission to run /yase copy.
+    default: true
   yase.unwax:
     description: Permission to run /yase unwax.
     default: true

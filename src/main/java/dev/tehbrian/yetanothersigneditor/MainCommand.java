@@ -13,6 +13,7 @@ import dev.tehbrian.yetanothersigneditor.user.UserService;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.sound.Sound.Source;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Effect;
 import org.bukkit.block.Block;
@@ -31,8 +32,11 @@ import java.util.List;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.MAGIC_NUMBER_OF_TICKS;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.shouldFormat;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.unformatLines;
+import static net.kyori.adventure.text.minimessage.tag.resolver.TagResolver.resolver;
 
 public final class MainCommand {
+
+  public static final int MAX_DISTANCE = 6;
 
   private final YetAnotherSignEditor yetAnotherSignEditor;
   private final SpigotRestrictionHelper restrictionHelper;
@@ -70,7 +74,7 @@ public final class MainCommand {
           final int line = c.<Integer>get("line") - 1; // signs are 0-indexed.
           final String text = c.<String>getOptional("text").orElse("");
 
-          final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
+          final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
           if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
             player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
             return;
@@ -111,7 +115,7 @@ public final class MainCommand {
           final Player player = (Player) c.getSender();
           final User user = this.userService.getUser(player);
 
-          final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
+          final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
           if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
             player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
             return;
@@ -142,6 +146,37 @@ public final class MainCommand {
           }
         });
 
+    final var copy = main
+        .literal("copy", ArgumentDescription.of("Copy the text of the targeted sign."))
+        .permission(Permission.COPY)
+        .senderType(Player.class)
+        .handler(c -> {
+          final Player player = (Player) c.getSender();
+          final User user = this.userService.getUser(player);
+
+          final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
+          if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
+            player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
+            return;
+          }
+
+          final Side side = sign.getInteractableSideFor(player);
+          final SignSide signSide = sign.getSide(side);
+
+          player.sendMessage(this.langConfig.c(
+              NodePath.path("copy", "message"),
+              resolver(
+                  Placeholder.parsed("x", Integer.toString(targetedBlock.getX())),
+                  Placeholder.parsed("y", Integer.toString(targetedBlock.getY())),
+                  Placeholder.parsed("z", Integer.toString(targetedBlock.getZ())),
+                  Placeholder.component("line_1", hoverLine(signSide.line(0), user)),
+                  Placeholder.component("line_2", hoverLine(signSide.line(1), user)),
+                  Placeholder.component("line_3", hoverLine(signSide.line(2), user)),
+                  Placeholder.component("line_4", hoverLine(signSide.line(3), user))
+              )
+          ));
+        });
+
     final var unwax = main
         .literal("unwax", ArgumentDescription.of("Unwax the targeted sign."))
         .permission(Permission.UNWAX)
@@ -149,7 +184,7 @@ public final class MainCommand {
         .handler(c -> {
           final Player player = (Player) c.getSender();
 
-          final @Nullable Block targetedBlock = player.getTargetBlockExact(6);
+          final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
           if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
             player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
             return;
@@ -222,10 +257,18 @@ public final class MainCommand {
     commandManager.command(help)
         .command(set)
         .command(open)
+        .command(copy)
         .command(unwax)
         .command(format)
         .command(formatFormattingType)
         .command(reload);
+  }
+
+  private Component hoverLine(final Component component, final User user) {
+    final String raw = SignFormatting.unformatRaw(component, user);
+    return component
+        .hoverEvent(this.langConfig.c(NodePath.path("copy", "hover"), Placeholder.unparsed("line", raw)))
+        .clickEvent(ClickEvent.copyToClipboard(raw));
   }
 
 }
