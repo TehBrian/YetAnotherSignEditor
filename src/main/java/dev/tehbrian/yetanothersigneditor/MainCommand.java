@@ -105,6 +105,7 @@ public final class MainCommand {
 
     final var open = main
         .literal("open", ArgumentDescription.of("Open the targeted sign."))
+        .permission(Permission.OPEN)
         .senderType(Player.class)
         .handler(c -> {
           final Player player = (Player) c.getSender();
