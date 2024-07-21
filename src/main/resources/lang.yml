@@ -28,8 +28,8 @@ help: |-
   <yellow>/yase open
   <gray>   Open the targeted sign.
   <aqua>/yase unwax
-  <gray>   Unwax the sign you're looking at.
-  <light_purple>/yase format [formatting_type]
-  <gray>   Toggle your ability to format sign text.
+  <gray>   Unwax the targeted sign.
+  <light_purple>/yase format [formatting-type]
+  <gray>   Toggle text formatting or change your formatting type.
   <red>/yase reload
   <gray>   Reload the plugin's config.
