@@ -9,6 +9,7 @@ public final class Permission {
 
   public static final String SET = ROOT + ".set";
   public static final String OPEN = ROOT + ".open";
+  public static final String COPY = ROOT + ".copy";
   public static final String UNWAX = ROOT + ".unwax";
   public static final String RELOAD = ROOT + ".reload";
 
