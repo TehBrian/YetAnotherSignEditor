@@ -8,18 +8,18 @@
 # | Feedback and Support: https://thbn.me/discord
 # |
 
-no-permission-here: "<red> You don't have permission to do that here."
-not-a-sign: "<red> That's not a sign!"
-not-waxed: "<red> That sign isn't waxed!"
+no-permission-here: "<red>You don't have permission to do that here."
+not-a-sign: "<red>That's not a sign!"
+not-waxed: "<red>That sign isn't waxed!"
 
 format:
-  enabled: "<light_purple> Enabled sign formatting. <gray>(Insert formatting codes into text.)"
-  disabled: "<dark_purple> Disabled sign formatting."
-  set: "<light_purple> Set your formatting type to <dark_purple><formatting_type></dark_purple>!"
+  enabled: "<light_purple>Enabled sign formatting. <gray>(Insert formatting codes into text.)"
+  disabled: "<dark_purple>Disabled sign formatting."
+  set: "<light_purple>Set your formatting type to <dark_purple><formatting_type></dark_purple>!"
 
 reload:
-  successful: "<red> The configuration has been successfully reloaded."
-  unsuccessful: "<red> Failed to load configuration; please check the console."
+  successful: "<red>The configuration has been successfully reloaded."
+  unsuccessful: "<red>Failed to load configuration; please check the console."
 
 help: |-
   <gray>--- <white>YetAnotherSignEditor</white> ---
