@@ -46,7 +46,7 @@ public final class MainCommand {
 
   public void register(final PaperCommandManager<CommandSender> commandManager) {
     final var main = commandManager.commandBuilder("yase")
-        .meta(CommandMeta.DESCRIPTION, "Various commands for YetAnotherSignEditor.");
+        .meta(CommandMeta.DESCRIPTION, "Commands from YetAnotherSignEditor.");
 
     final var help = main
         .handler(c -> c.getSender().sendMessage(this.langConfig.c(NodePath.path("help"))));
