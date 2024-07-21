@@ -11,6 +11,9 @@ permissions:
   yase.set:
     description: Permission to run /yase set.
     default: true
+  yase.open:
+    description: Permission to run /yase open.
+    default: true
   yase.unwax:
     description: Permission to run /yase unwax.
     default: true
