@@ -5,7 +5,9 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
+import org.bukkit.block.sign.SignSide;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -127,6 +129,18 @@ public class SignFormatting {
       pdc.set(FRONT_KEY, PersistentDataType.STRING, data);
     } else {
       pdc.set(BACK_KEY, PersistentDataType.STRING, data);
+    }
+  }
+
+  public static void lines(final SignChangeEvent event, final List<Component> lines) {
+    for (int i = 0; i < lines.size(); i++) {
+      event.line(i, lines.get(i));
+    }
+  }
+
+  public static void lines(final SignSide signSide, final List<Component> lines) {
+    for (int i = 0; i < lines.size(); i++) {
+      signSide.line(i, lines.get(i));
     }
   }
 

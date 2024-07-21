@@ -27,9 +27,8 @@ import org.spongepowered.configurate.NodePath;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 
-import java.util.List;
-
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.MAGIC_NUMBER_OF_TICKS;
+import static dev.tehbrian.yetanothersigneditor.SignFormatting.lines;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.shouldFormat;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.unformatLines;
 import static net.kyori.adventure.text.minimessage.tag.resolver.TagResolver.resolver;
@@ -130,10 +129,7 @@ public final class MainCommand {
           final SignSide signSide = sign.getSide(side);
 
           if (shouldFormat(user)) {
-            final List<Component> newLines = unformatLines(sign, side, user);
-            for (int i = 0; i < newLines.size(); i++) {
-              signSide.line(i, newLines.get(i));
-            }
+            lines(signSide, unformatLines(sign, side, user));
             sign.update();
 
             this.yetAnotherSignEditor.getServer().getScheduler().runTaskLater(
