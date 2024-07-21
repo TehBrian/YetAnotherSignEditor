@@ -18,6 +18,7 @@ import java.util.List;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.MAGIC_NUMBER_OF_TICKS;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.format;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.mmToPdc;
+import static dev.tehbrian.yetanothersigneditor.SignFormatting.lines;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.shouldFormat;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.shouldFormatMiniMessage;
 import static dev.tehbrian.yetanothersigneditor.SignFormatting.unformatLines;
@@ -60,10 +61,7 @@ public final class SignListener implements Listener {
     final Side side = event.getSide();
     final SignSide signSide = sign.getSide(side);
 
-    final List<Component> newLines = unformatLines(sign, side, user);
-    for (int i = 0; i < newLines.size(); i++) {
-      signSide.line(i, newLines.get(i));
-    }
+    lines(signSide, unformatLines(sign, side, user));
     sign.update();
 
     this.yetAnotherSignEditor.getServer().getScheduler().runTaskLater(
@@ -91,10 +89,8 @@ public final class SignListener implements Listener {
       sign.update(); // important! pdc is only stored to snapshot of state.
     }
 
-    final List<Component> newLines = format(event.lines(), user);
-    for (int i = 0; i < newLines.size(); i++) {
-      event.line(i, newLines.get(i));
-    }
+
+    lines(event, format(event.lines(), user));
   }
 
 }
