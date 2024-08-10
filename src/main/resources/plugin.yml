@@ -5,7 +5,7 @@ website: https://github.com/TehBrian/YetAnotherSignEditor
 
 version: ${version}
 main: dev.tehbrian.yetanothersigneditor.YetAnotherSignEditor
-api-version: 1.20
+api-version: 1.21
 
 permissions:
   yase.set:
