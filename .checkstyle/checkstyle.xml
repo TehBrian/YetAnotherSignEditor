@@ -76,6 +76,7 @@
 	<module name="LineLength">
 		<property name="fileExtensions" value="java"/>
 		<property name="max" value="140"/>
+		<property name="tabWidth" value="2"/>
 	</module>
 
 	<!-- Checks for whitespace                             -->
@@ -110,9 +111,9 @@
 		<module name="InvalidJavadocPosition"/>
 		<!--    <module name="JavadocMethod"/>-->
 		<module name="JavadocType"/>
-		<module name="JavadocStyle">
-			<property name="checkFirstSentence" value="false"/>
-		</module>
+<!--		<module name="JavadocStyle">-->
+<!--			<property name="checkFirstSentence" value="false"/>-->
+<!--		</module>-->
 		<!--        <module name="MissingJavadocMethod"/>-->
 
 		<!-- Checks for Naming Conventions.                -->

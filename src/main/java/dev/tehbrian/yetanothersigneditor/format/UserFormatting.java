@@ -3,12 +3,13 @@ package dev.tehbrian.yetanothersigneditor.format;
 import dev.tehbrian.yetanothersigneditor.Permission;
 import dev.tehbrian.yetanothersigneditor.user.User;
 import org.bukkit.entity.Player;
+import org.jspecify.annotations.Nullable;
 
 public final class UserFormatting {
 	private UserFormatting() {
 	}
 
-	private static boolean shouldFormat(final User user, final Player player) {
+	private static boolean shouldFormat(final User user, final @Nullable Player player) {
 		return player != null
 				&& user.formattingEnabled()
 				&& player.hasPermission(Permission.FORMAT);

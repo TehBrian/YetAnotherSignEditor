@@ -9,7 +9,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
-import java.util.Objects;
 
 import static dev.tehbrian.yetanothersigneditor.format.UserFormatting.shouldFormatMiniMessage;
 import static java.util.stream.IntStream.range;

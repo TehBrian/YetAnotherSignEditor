@@ -23,6 +23,7 @@ repositories {
 dependencies {
 	compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
 
+	implementation("org.jspecify:jspecify:1.0.0")
 	implementation("cloud.commandframework:cloud-paper:1.8.4")
 	implementation("cloud.commandframework:cloud-minecraft-extras:1.8.4")
 	implementation("com.google.inject:guice:7.0.0")

@@ -7,6 +7,8 @@ import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
+import dev.tehbrian.restrictionhelper.core.ActionType;
+import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.format.Format;
 import dev.tehbrian.yetanothersigneditor.format.SignFormatting;
@@ -26,8 +28,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.NodePath;
-import dev.tehbrian.restrictionhelper.core.ActionType;
-import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 
 import java.util.List;
 
