@@ -13,6 +13,7 @@ import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.format.Format;
 import dev.tehbrian.yetanothersigneditor.format.SignFormatting;
 import dev.tehbrian.yetanothersigneditor.user.User;
+import dev.tehbrian.yetanothersigneditor.user.UserPersistence;
 import dev.tehbrian.yetanothersigneditor.user.UserService;
 import net.kyori.adventure.sound.Sound.Source;
 import net.kyori.adventure.text.Component;
@@ -219,11 +220,14 @@ public final class MainCommand {
 				.senderType(Player.class)
 				.handler(c -> {
 					final Player sender = (Player) c.getSender();
-					if (this.userService.getUser(sender).toggleFormattingEnabled()) {
+					final User user = this.userService.getUser(sender);
+
+					if (user.toggleFormattingEnabled()) {
 						sender.sendMessage(this.langConfig.c(NodePath.path("format", "enabled")));
 					} else {
 						sender.sendMessage(this.langConfig.c(NodePath.path("format", "disabled")));
 					}
+					UserPersistence.save(user);
 				});
 
 		final var formatFormattingType = format
@@ -233,12 +237,14 @@ public final class MainCommand {
 				.handler(c -> {
 					final Player player = (Player) c.getSender();
 					final User.FormattingType formattingType = c.get("formatting_type");
+					final User user = this.userService.getUser(player);
 
-					this.userService.getUser(player).formattingType(formattingType);
+					user.formattingType(formattingType);
 					player.sendMessage(this.langConfig.c(
 							NodePath.path("format", "set"),
 							Placeholder.parsed("formatting_type", formattingType.pretty())
 					));
+					UserPersistence.save(user);
 				});
 
 		final var reload = main

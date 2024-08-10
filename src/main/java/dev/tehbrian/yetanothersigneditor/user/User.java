@@ -32,7 +32,6 @@ public final class User {
 
 	public void formattingEnabled(final boolean formatEnabled) {
 		this.formattingEnabled = formatEnabled;
-		UserPersistence.save(this);
 	}
 
 	public boolean toggleFormattingEnabled() {
@@ -46,7 +45,6 @@ public final class User {
 
 	public void formattingType(final User.FormattingType formattingType) {
 		this.formattingType = formattingType;
-		UserPersistence.save(this);
 	}
 
 	public enum FormattingType {
