@@ -28,7 +28,7 @@ dependencies {
 	implementation("com.google.inject:guice:7.0.0")
 	implementation("dev.tehbrian:tehlib-paper:0.5.0")
 	implementation("org.spongepowered:configurate-yaml:4.1.2")
-	implementation("xyz.tehbrian.restrictionhelper:restrictionhelper-spigot:0.3.2")
+	implementation("dev.tehbrian.restrictionhelper:restrictionhelper-spigot:0.4.0")
 }
 
 tasks {
@@ -52,7 +52,7 @@ tasks {
 		relocate("com.google.inject", "$libsPackage.guice")
 		relocate("dev.tehbrian.tehlib", "$libsPackage.tehlib")
 		relocate("org.spongepowered.configurate", "$libsPackage.configurate")
-		relocate("xyz.tehbrian.restrictionhelper", "$libsPackage.restrictionhelper")
+		relocate("dev.tehbrian.restrictionhelper", "$libsPackage.restrictionhelper")
 	}
 
 	runServer {

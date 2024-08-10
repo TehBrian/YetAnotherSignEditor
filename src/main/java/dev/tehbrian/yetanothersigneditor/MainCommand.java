@@ -26,8 +26,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.configurate.NodePath;
-import xyz.tehbrian.restrictionhelper.core.ActionType;
-import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
+import dev.tehbrian.restrictionhelper.core.ActionType;
+import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 
 import java.util.List;
 

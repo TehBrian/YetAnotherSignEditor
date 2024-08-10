@@ -14,10 +14,10 @@ import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.spongepowered.configurate.ConfigurateException;
-import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionLoader;
-import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6;
-import xyz.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7;
+import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
+import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionLoader;
+import dev.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6_7;
+import dev.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7;
 
 import java.util.Arrays;
 import java.util.List;
@@ -129,7 +129,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
 		final var loader = new SpigotRestrictionLoader(
 				this.getSLF4JLogger(),
 				Arrays.asList(this.getServer().getPluginManager().getPlugins()),
-				List.of(R_PlotSquared_6.class, R_WorldGuard_7.class)
+				List.of(R_PlotSquared_6_7.class, R_WorldGuard_7.class)
 		);
 
 		loader.load(this.injector.getInstance(SpigotRestrictionHelper.class));
