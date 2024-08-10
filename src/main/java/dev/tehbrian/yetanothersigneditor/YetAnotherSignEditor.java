@@ -28,111 +28,111 @@ import java.util.function.Function;
  */
 public final class YetAnotherSignEditor extends TehPlugin {
 
-  private @MonotonicNonNull PaperCommandManager<CommandSender> commandManager = null;
-  private @MonotonicNonNull Injector injector = null;
+	private @MonotonicNonNull PaperCommandManager<CommandSender> commandManager = null;
+	private @MonotonicNonNull Injector injector = null;
 
-  @Override
-  public void onEnable() {
-    try {
-      this.injector = Guice.createInjector(
-          new PluginModule(this),
-          new SingletonModule()
-      );
-    } catch (final Exception e) {
-      this.getSLF4JLogger().error("Something went wrong while creating the Guice injector.");
-      this.getSLF4JLogger().error("Disabling plugin.");
-      this.disableSelf();
-      this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
-      return;
-    }
+	@Override
+	public void onEnable() {
+		try {
+			this.injector = Guice.createInjector(
+					new PluginModule(this),
+					new SingletonModule()
+			);
+		} catch (final Exception e) {
+			this.getSLF4JLogger().error("Something went wrong while creating the Guice injector.");
+			this.getSLF4JLogger().error("Disabling plugin.");
+			this.disableSelf();
+			this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
+			return;
+		}
 
-    if (!this.loadConfiguration()) {
-      this.disableSelf();
-      return;
-    }
-    if (!this.setupCommands()) {
-      this.disableSelf();
-      return;
-    }
+		if (!this.loadConfiguration()) {
+			this.disableSelf();
+			return;
+		}
+		if (!this.setupCommands()) {
+			this.disableSelf();
+			return;
+		}
 
-    this.setupRestrictions();
+		this.setupRestrictions();
 
-    registerListeners(this.injector.getInstance(SignListener.class));
-  }
+		registerListeners(this.injector.getInstance(SignListener.class));
+	}
 
-  /**
-   * Loads the plugin's configuration. If an exception is caught, logs the
-   * error and returns false.
-   *
-   * @return whether it was successful
-   */
-  public boolean loadConfiguration() {
-    this.saveResourceSilently("lang.yml");
+	/**
+	 * Loads the plugin's configuration. If an exception is caught, logs the
+	 * error and returns false.
+	 *
+	 * @return whether it was successful
+	 */
+	public boolean loadConfiguration() {
+		this.saveResourceSilently("lang.yml");
 
-    final List<Config> configsToLoad = List.of(
-        this.injector.getInstance(LangConfig.class)
-    );
+		final List<Config> configsToLoad = List.of(
+				this.injector.getInstance(LangConfig.class)
+		);
 
-    for (final Config config : configsToLoad) {
-      try {
-        config.load();
-      } catch (final ConfigurateException e) {
-        this.getSLF4JLogger().error(
-            "Exception caught during config load for {}",
-            config.configurateWrapper().filePath()
-        );
-        this.getSLF4JLogger().error("Please check your config.");
-        this.getSLF4JLogger().error("Printing stack trace:", e);
-        return false;
-      }
-    }
+		for (final Config config : configsToLoad) {
+			try {
+				config.load();
+			} catch (final ConfigurateException e) {
+				this.getSLF4JLogger().error(
+						"Exception caught during config load for {}",
+						config.configurateWrapper().filePath()
+				);
+				this.getSLF4JLogger().error("Please check your config.");
+				this.getSLF4JLogger().error("Printing stack trace:", e);
+				return false;
+			}
+		}
 
-    this.getSLF4JLogger().info("Successfully loaded configuration.");
-    return true;
-  }
+		this.getSLF4JLogger().info("Successfully loaded configuration.");
+		return true;
+	}
 
-  /**
-   * @return whether it was successful
-   */
-  private boolean setupCommands() {
-    if (this.commandManager != null) {
-      throw new IllegalStateException("The CommandManager is already instantiated.");
-    }
+	/**
+	 * @return whether it was successful
+	 */
+	private boolean setupCommands() {
+		if (this.commandManager != null) {
+			throw new IllegalStateException("The CommandManager is already instantiated.");
+		}
 
-    try {
-      this.commandManager = new PaperCommandManager<>(
-          this,
-          CommandExecutionCoordinator.simpleCoordinator(),
-          Function.identity(),
-          Function.identity()
-      );
-    } catch (final Exception e) {
-      this.getSLF4JLogger().error("Failed to create the CommandManager.");
-      this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
-      return false;
-    }
+		try {
+			this.commandManager = new PaperCommandManager<>(
+					this,
+					CommandExecutionCoordinator.simpleCoordinator(),
+					Function.identity(),
+					Function.identity()
+			);
+		} catch (final Exception e) {
+			this.getSLF4JLogger().error("Failed to create the CommandManager.");
+			this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
+			return false;
+		}
 
-    new MinecraftExceptionHandler<CommandSender>()
-        .withArgumentParsingHandler()
-        .withInvalidSenderHandler()
-        .withInvalidSyntaxHandler()
-        .withNoPermissionHandler()
-        .withCommandExecutionHandler()
-        .apply(this.commandManager, AudienceProvider.nativeAudience());
+		new MinecraftExceptionHandler<CommandSender>()
+				.withArgumentParsingHandler()
+				.withInvalidSenderHandler()
+				.withInvalidSyntaxHandler()
+				.withNoPermissionHandler()
+				.withCommandExecutionHandler()
+				.apply(this.commandManager, AudienceProvider.nativeAudience());
 
-    this.injector.getInstance(MainCommand.class).register(this.commandManager);
+		this.injector.getInstance(MainCommand.class).register(this.commandManager);
 
-    return true;
-  }
+		return true;
+	}
 
-  private void setupRestrictions() {
-    final var loader = new SpigotRestrictionLoader(
-        this.getSLF4JLogger(),
-        Arrays.asList(this.getServer().getPluginManager().getPlugins()),
-        List.of(R_PlotSquared_6.class, R_WorldGuard_7.class)
-    );
+	private void setupRestrictions() {
+		final var loader = new SpigotRestrictionLoader(
+				this.getSLF4JLogger(),
+				Arrays.asList(this.getServer().getPluginManager().getPlugins()),
+				List.of(R_PlotSquared_6.class, R_WorldGuard_7.class)
+		);
 
-    loader.load(this.injector.getInstance(SpigotRestrictionHelper.class));
-  }
+		loader.load(this.injector.getInstance(SpigotRestrictionHelper.class));
+	}
 
 }
