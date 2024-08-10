@@ -8,14 +8,16 @@ import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
+import dev.tehbrian.yetanothersigneditor.format.Format;
+import dev.tehbrian.yetanothersigneditor.format.SignFormatting;
 import dev.tehbrian.yetanothersigneditor.user.User;
 import dev.tehbrian.yetanothersigneditor.user.UserService;
-import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.sound.Sound.Source;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Effect;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
@@ -27,10 +29,15 @@ import org.spongepowered.configurate.NodePath;
 import xyz.tehbrian.restrictionhelper.core.ActionType;
 import xyz.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.MAGIC_NUMBER_OF_TICKS;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.lines;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.shouldFormat;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.unformatLines;
+import java.util.List;
+
+import static dev.tehbrian.yetanothersigneditor.format.NativePersistence.handlePersistence;
+import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.MAGIC_NUMBER_OF_TICKS;
+import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.format;
+import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.lines;
+import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.unformatSignLines;
+import static dev.tehbrian.yetanothersigneditor.format.UserFormatting.shouldFormat;
+import static net.kyori.adventure.sound.Sound.sound;
 import static net.kyori.adventure.text.minimessage.tag.resolver.TagResolver.resolver;
 
 public final class MainCommand {
@@ -85,24 +92,18 @@ public final class MainCommand {
 					}
 
 					final User user = this.userService.getUser(player);
+					final Side side = sign.getInteractableSideFor(player);
 
-					Component formattedText = Format.plain(text);
-					if (user.formatEnabled() && player.hasPermission(Permission.FORMAT)) {
-						if (user.formattingType() == User.FormattingType.LEGACY
-								&& player.hasPermission(Permission.LEGACY)) {
-							formattedText = Format.legacy(text);
-						} else if (user.formattingType() == User.FormattingType.MINIMESSAGE
-								&& player.hasPermission(Permission.MINIMESSAGE)) {
-							formattedText = Format.miniMessage(text);
-						}
-					}
+					handlePersistence(sign, side, line, Format.plain(text), user);
 
-					sign.getSide(sign.getInteractableSideFor(player)).line(line, formattedText);
+					final Component formattedText = format(text, user);
+
+					sign.getSide(side).line(line, formattedText);
 					sign.update();
-					sign.getWorld().playSound(Sound.sound(
+
+					sign.getWorld().playSound(sound(
 							sign.getBlock().getBlockSoundGroup().getPlaceSound(),
-							Source.BLOCK,
-							1.0F, 0.25F
+							Source.BLOCK, 1.0F, 0.25F
 					));
 				});
 
@@ -129,7 +130,7 @@ public final class MainCommand {
 					final SignSide signSide = sign.getSide(side);
 
 					if (shouldFormat(user)) {
-						lines(signSide, unformatLines(sign, side, user));
+						lines(signSide, unformatSignLines(sign, side, user));
 						sign.update();
 
 						this.yetAnotherSignEditor.getServer().getScheduler().runTaskLater(
@@ -158,6 +159,8 @@ public final class MainCommand {
 
 					final Side side = sign.getInteractableSideFor(player);
 					final SignSide signSide = sign.getSide(side);
+					final List<String> raw = SignFormatting.unformatSignLines(sign, side, user)
+							.stream().map(Format::serializePlain).toList();
 
 					player.sendMessage(this.langConfig.c(
 							NodePath.path("copy", "message"),
@@ -165,10 +168,10 @@ public final class MainCommand {
 									Placeholder.parsed("x", Integer.toString(targetedBlock.getX())),
 									Placeholder.parsed("y", Integer.toString(targetedBlock.getY())),
 									Placeholder.parsed("z", Integer.toString(targetedBlock.getZ())),
-									Placeholder.component("line_1", this.hoverLine(signSide.line(0), user)),
-									Placeholder.component("line_2", this.hoverLine(signSide.line(1), user)),
-									Placeholder.component("line_3", this.hoverLine(signSide.line(2), user)),
-									Placeholder.component("line_4", this.hoverLine(signSide.line(3), user))
+									Placeholder.component("line_0", this.hoverLine(signSide.line(0), raw.get(0))),
+									Placeholder.component("line_1", this.hoverLine(signSide.line(1), raw.get(1))),
+									Placeholder.component("line_2", this.hoverLine(signSide.line(2), raw.get(2))),
+									Placeholder.component("line_3", this.hoverLine(signSide.line(3), raw.get(3)))
 							)
 					));
 				});
@@ -198,16 +201,15 @@ public final class MainCommand {
 
 					sign.setWaxed(false);
 					sign.update();
+
 					sign.getWorld().playEffect(sign.getLocation(), Effect.COPPER_WAX_OFF, 0);
-					sign.getWorld().playSound(Sound.sound(
-							org.bukkit.Sound.ITEM_HONEYCOMB_WAX_ON,
-							Source.BLOCK,
-							1.0F, 1.0F
+					sign.getWorld().playSound(sound(
+							Sound.ITEM_HONEYCOMB_WAX_ON,
+							Source.BLOCK, 1.0F, 1.0F
 					));
-					sign.getWorld().playSound(Sound.sound(
-							org.bukkit.Sound.ITEM_BOTTLE_EMPTY,
-							Source.BLOCK,
-							1.0F, 0.7F
+					sign.getWorld().playSound(sound(
+							Sound.ITEM_BOTTLE_EMPTY,
+							Source.BLOCK, 1.0F, 0.7F
 					));
 				});
 
@@ -260,8 +262,7 @@ public final class MainCommand {
 				.command(reload);
 	}
 
-	private Component hoverLine(final Component component, final User user) {
-		final String raw = SignFormatting.unformatRaw(component, user);
+	private Component hoverLine(final Component component, final String raw) {
 		return component
 				.hoverEvent(this.langConfig.c(NodePath.path("copy", "hover"), Placeholder.unparsed("line", raw)))
 				.clickEvent(ClickEvent.copyToClipboard(raw));

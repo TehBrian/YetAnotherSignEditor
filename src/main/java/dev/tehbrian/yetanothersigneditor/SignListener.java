@@ -12,14 +12,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
-import static dev.tehbrian.yetanothersigneditor.NativePersistence.invalidateMmInPdc;
-import static dev.tehbrian.yetanothersigneditor.NativePersistence.mmToPdc;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.MAGIC_NUMBER_OF_TICKS;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.format;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.lines;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.shouldFormat;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.shouldFormatMiniMessage;
-import static dev.tehbrian.yetanothersigneditor.SignFormatting.unformatLines;
+import static dev.tehbrian.yetanothersigneditor.format.NativePersistence.handlePersistence;
+import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.MAGIC_NUMBER_OF_TICKS;
+import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.format;
+import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.lines;
+import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.unformatSignLines;
+import static dev.tehbrian.yetanothersigneditor.format.UserFormatting.shouldFormat;
 
 public final class SignListener implements Listener {
 
@@ -59,7 +57,7 @@ public final class SignListener implements Listener {
 		final Side side = event.getSide();
 		final SignSide signSide = sign.getSide(side);
 
-		lines(signSide, unformatLines(sign, side, user));
+		lines(signSide, unformatSignLines(sign, side, user));
 		sign.update();
 
 		this.yetAnotherSignEditor.getServer().getScheduler().runTaskLater(
@@ -76,21 +74,13 @@ public final class SignListener implements Listener {
 	public void onSignChange(final SignChangeEvent event) {
 		final Player player = event.getPlayer();
 		final User user = this.userService.getUser(player);
-
-		// deal with mm persistence.
 		final Sign sign = (Sign) event.getBlock().getState();
-		if (shouldFormatMiniMessage(user)) { // store mm to pdc.
-			mmToPdc(sign, event.getSide(), event.lines());
-		} else { // if contents have changed, invalidate previously stored mm.
-			invalidateMmInPdc(sign, event.getSide(), event.lines(), user);
-		}
-		sign.update(); // important! pdc is only stored to snapshot of state.
 
-		if (!shouldFormat(user)) {
-			return;
-		}
+		handlePersistence(sign, event.getSide(), event.lines(), user);
 
-		lines(event, format(event.lines(), user));
+		if (shouldFormat(user)) {
+			lines(event, format(event.lines(), user));
+		}
 	}
 
 }

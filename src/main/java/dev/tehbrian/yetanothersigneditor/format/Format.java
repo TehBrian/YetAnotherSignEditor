@@ -1,4 +1,4 @@
-package dev.tehbrian.yetanothersigneditor;
+package dev.tehbrian.yetanothersigneditor.format;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -22,6 +22,14 @@ public final class Format {
 		return MiniMessage.miniMessage().serialize(component);
 	}
 
+	public static Component plain(final Component component) {
+		return plain(serializePlain(component));
+	}
+
+	public static Component plain(final String string) {
+		return PlainTextComponentSerializer.plainText().deserialize(string);
+	}
+
 	public static Component legacy(final Component component) {
 		return legacy(serializePlain(component));
 	}
@@ -36,14 +44,6 @@ public final class Format {
 
 	public static Component miniMessage(final String string) {
 		return MiniMessage.miniMessage().deserialize(string);
-	}
-
-	public static Component plain(final Component component) {
-		return plain(serializePlain(component));
-	}
-
-	public static Component plain(final String string) {
-		return PlainTextComponentSerializer.plainText().deserialize(string);
 	}
 
 }
