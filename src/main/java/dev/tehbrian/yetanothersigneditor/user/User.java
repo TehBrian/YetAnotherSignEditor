@@ -12,33 +12,33 @@ public final class User {
 
 	private final UUID uuid;
 
-	private boolean formatEnabled;
+	private boolean formattingEnabled;
 	private User.FormattingType formattingType = FormattingType.LEGACY;
 
-	/**
-	 * @param uuid the unique identifier of the user
-	 */
 	public User(final UUID uuid) {
 		this.uuid = uuid;
-		final Player player = Objects.requireNonNull(this.getPlayer());
-		this.formatEnabled = player.hasPermission(Permission.FORMAT);
+
+		final @Nullable Player player = this.getPlayer();
+		if (player != null) {
+			this.formattingEnabled = player.hasPermission(Permission.FORMAT);
+		}
 	}
 
 	public @Nullable Player getPlayer() {
 		return Bukkit.getPlayer(this.uuid);
 	}
 
-	public boolean formatEnabled() {
-		return this.formatEnabled;
+	public boolean formattingEnabled() {
+		return this.formattingEnabled;
 	}
 
-	public void formatEnabled(final boolean formatEnabled) {
-		this.formatEnabled = formatEnabled;
+	public void formattingEnabled(final boolean formatEnabled) {
+		this.formattingEnabled = formatEnabled;
 	}
 
-	public boolean toggleFormatEnabled() {
-		this.formatEnabled(!this.formatEnabled());
-		return this.formatEnabled();
+	public boolean toggleFormattingEnabled() {
+		this.formattingEnabled(!this.formattingEnabled());
+		return this.formattingEnabled();
 	}
 
 	public User.FormattingType formattingType() {

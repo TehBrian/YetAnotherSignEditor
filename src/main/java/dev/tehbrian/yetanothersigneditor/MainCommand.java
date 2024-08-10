@@ -219,7 +219,7 @@ public final class MainCommand {
 				.senderType(Player.class)
 				.handler(c -> {
 					final Player sender = (Player) c.getSender();
-					if (this.userService.getUser(sender).toggleFormatEnabled()) {
+					if (this.userService.getUser(sender).toggleFormattingEnabled()) {
 						sender.sendMessage(this.langConfig.c(NodePath.path("format", "enabled")));
 					} else {
 						sender.sendMessage(this.langConfig.c(NodePath.path("format", "disabled")));

@@ -11,6 +11,7 @@ import dev.tehbrian.tehlib.paper.TehPlugin;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
 import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
+import dev.tehbrian.yetanothersigneditor.user.UserService;
 import org.bukkit.command.CommandSender;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.spongepowered.configurate.ConfigurateException;
@@ -58,6 +59,11 @@ public final class YetAnotherSignEditor extends TehPlugin {
 		this.setupRestrictions();
 
 		registerListeners(this.injector.getInstance(SignListener.class));
+	}
+
+	@Override
+	public void onDisable() {
+		this.injector.getInstance(UserService.class).save();
 	}
 
 	/**

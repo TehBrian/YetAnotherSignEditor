@@ -10,7 +10,7 @@ public final class UserFormatting {
 
 	private static boolean shouldFormat(final User user, final Player player) {
 		return player != null
-				&& user.formatEnabled()
+				&& user.formattingEnabled()
 				&& player.hasPermission(Permission.FORMAT);
 	}
 

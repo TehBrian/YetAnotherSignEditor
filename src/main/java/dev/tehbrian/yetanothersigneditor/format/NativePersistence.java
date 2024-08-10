@@ -47,7 +47,7 @@ public final class NativePersistence {
 	}
 
 	private static NamespacedKey pdcKey(final String area) {
-		return Objects.requireNonNull(NamespacedKey.fromString("yase:native-mm-" + area));
+		return new NamespacedKey("yase", "native-mm-" + area);
 	}
 
 	/**
