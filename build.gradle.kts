@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-	compileOnly("io.papermc.paper:paper-api:1.21-R0.1-SNAPSHOT")
+	compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
 
 	implementation("cloud.commandframework:cloud-paper:1.8.4")
 	implementation("cloud.commandframework:cloud-minecraft-extras:1.8.4")
@@ -56,6 +56,6 @@ tasks {
 	}
 
 	runServer {
-		minecraftVersion("1.21")
+		minecraftVersion("1.21.1")
 	}
 }
