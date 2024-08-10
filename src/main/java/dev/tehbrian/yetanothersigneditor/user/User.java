@@ -8,7 +8,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.UUID;
 
 public final class User {
-
 	private final UUID uuid;
 
 	private boolean formattingEnabled;
@@ -33,6 +32,7 @@ public final class User {
 
 	public void formattingEnabled(final boolean formatEnabled) {
 		this.formattingEnabled = formatEnabled;
+		UserPersistence.save(this);
 	}
 
 	public boolean toggleFormattingEnabled() {
@@ -46,6 +46,7 @@ public final class User {
 
 	public void formattingType(final User.FormattingType formattingType) {
 		this.formattingType = formattingType;
+		UserPersistence.save(this);
 	}
 
 	public enum FormattingType {
@@ -62,5 +63,4 @@ public final class User {
 			return this.pretty;
 		}
 	}
-
 }

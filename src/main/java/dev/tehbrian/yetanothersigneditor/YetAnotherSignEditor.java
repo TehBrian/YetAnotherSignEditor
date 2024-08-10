@@ -61,11 +61,6 @@ public final class YetAnotherSignEditor extends TehPlugin {
 		registerListeners(this.injector.getInstance(SignListener.class));
 	}
 
-	@Override
-	public void onDisable() {
-		this.injector.getInstance(UserService.class).save();
-	}
-
 	/**
 	 * Loads the plugin's configuration. If an exception is caught, logs the
 	 * error and returns false.
