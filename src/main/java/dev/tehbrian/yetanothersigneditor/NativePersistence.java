@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class NativePersistence {
+public final class NativePersistence {
+
+  private NativePersistence() {
+  }
 
   private static final NamespacedKey FRONT_KEY = Objects.requireNonNull(NamespacedKey.fromString(
       "yase:native-serialized-mm-front"));

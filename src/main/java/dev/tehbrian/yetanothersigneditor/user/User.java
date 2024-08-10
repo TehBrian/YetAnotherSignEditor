@@ -53,7 +53,7 @@ public final class User {
     LEGACY("legacy"),
     MINIMESSAGE("MiniMessage");
 
-    final String pretty;
+    private final String pretty;
 
     FormattingType(final String pretty) {
       this.pretty = pretty;

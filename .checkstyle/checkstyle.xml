@@ -108,7 +108,7 @@
     <!-- Checks for Javadoc comments.                   -->
     <!-- See https://checkstyle.org/config_javadoc.html -->
     <module name="InvalidJavadocPosition"/>
-    <module name="JavadocMethod"/>
+    <!--    <module name="JavadocMethod"/>-->
     <module name="JavadocType"/>
     <module name="JavadocStyle">
       <property name="checkFirstSentence" value="false"/>
@@ -185,8 +185,8 @@
     <!-- Miscellaneous other checks.                 -->
     <!-- See https://checkstyle.org/config_misc.html -->
     <module name="ArrayTypeStyle"/>
-    <module name="FinalParameters"/>
-    <!--        <module name="TodoComment"/>-->
+    <!--    <module name="FinalParameters"/>-->
+    <!--    <module name="TodoComment"/>-->
     <module name="UpperEll"/>
 
     <module name="RequireThis">

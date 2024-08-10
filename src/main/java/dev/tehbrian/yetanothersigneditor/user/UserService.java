@@ -15,7 +15,7 @@ public final class UserService {
   }
 
   public User getUser(final Player player) {
-    return getUser(player.getUniqueId());
+    return this.getUser(player.getUniqueId());
   }
 
 }

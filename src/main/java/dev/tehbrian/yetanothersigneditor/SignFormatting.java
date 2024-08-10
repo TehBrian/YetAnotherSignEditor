@@ -10,7 +10,10 @@ import org.bukkit.event.block.SignChangeEvent;
 
 import java.util.List;
 
-public class SignFormatting {
+public final class SignFormatting {
+
+  private SignFormatting() {
+  }
 
   /**
    * Number of ticks before the server opens the updated sign.

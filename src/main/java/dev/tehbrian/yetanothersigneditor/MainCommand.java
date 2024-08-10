@@ -165,10 +165,10 @@ public final class MainCommand {
                   Placeholder.parsed("x", Integer.toString(targetedBlock.getX())),
                   Placeholder.parsed("y", Integer.toString(targetedBlock.getY())),
                   Placeholder.parsed("z", Integer.toString(targetedBlock.getZ())),
-                  Placeholder.component("line_1", hoverLine(signSide.line(0), user)),
-                  Placeholder.component("line_2", hoverLine(signSide.line(1), user)),
-                  Placeholder.component("line_3", hoverLine(signSide.line(2), user)),
-                  Placeholder.component("line_4", hoverLine(signSide.line(3), user))
+                  Placeholder.component("line_1", this.hoverLine(signSide.line(0), user)),
+                  Placeholder.component("line_2", this.hoverLine(signSide.line(1), user)),
+                  Placeholder.component("line_3", this.hoverLine(signSide.line(2), user)),
+                  Placeholder.component("line_4", this.hoverLine(signSide.line(3), user))
               )
           ));
         });
