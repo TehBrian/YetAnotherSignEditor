@@ -8,6 +8,8 @@
 # | Feedback and Support: https://thbn.me/discord
 # |
 
+version: 1
+
 no-permission-here: "<red>You don't have permission to do that here."
 not-a-sign: "<red>That's not a sign!"
 not-waxed: "<red>That sign isn't waxed!"

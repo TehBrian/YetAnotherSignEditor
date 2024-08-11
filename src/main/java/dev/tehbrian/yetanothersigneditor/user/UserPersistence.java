@@ -6,7 +6,10 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-public class UserPersistence {
+public final class UserPersistence {
+	private UserPersistence() {
+	}
+
 	private static final NamespacedKey FORMATTING_ENABLED = new NamespacedKey("yase", "formatting-enabled");
 	private static final NamespacedKey FORMATTING_TYPE = new NamespacedKey("yase", "formatting-type");
 

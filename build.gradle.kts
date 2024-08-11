@@ -18,6 +18,7 @@ repositories {
 	mavenCentral()
 	maven("https://papermc.io/repo/repository/maven-public/")
 	maven("https://repo.thbn.me/releases/")
+	maven("https://repo.thbn.me/snapshots/")
 }
 
 dependencies {
@@ -27,7 +28,7 @@ dependencies {
 	implementation("cloud.commandframework:cloud-paper:1.8.4")
 	implementation("cloud.commandframework:cloud-minecraft-extras:1.8.4")
 	implementation("com.google.inject:guice:7.0.0")
-	implementation("dev.tehbrian:tehlib-paper:0.5.0")
+	implementation("dev.tehbrian:tehlib-paper:0.6.0-SNAPSHOT")
 	implementation("org.spongepowered:configurate-yaml:4.1.2")
 	implementation("dev.tehbrian.restrictionhelper:restrictionhelper-spigot:0.4.1")
 }

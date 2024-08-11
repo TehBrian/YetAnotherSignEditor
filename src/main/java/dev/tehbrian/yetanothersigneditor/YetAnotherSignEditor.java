@@ -6,19 +6,17 @@ import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import dev.tehbrian.tehlib.configurate.Config;
-import dev.tehbrian.tehlib.paper.TehPlugin;
-import dev.tehbrian.yetanothersigneditor.config.LangConfig;
-import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
-import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
-import dev.tehbrian.yetanothersigneditor.user.UserService;
-import org.bukkit.command.CommandSender;
-import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
-import org.spongepowered.configurate.ConfigurateException;
 import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
 import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionLoader;
 import dev.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6_7;
 import dev.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7;
+import dev.tehbrian.tehlib.paper.TehPlugin;
+import dev.tehbrian.tehlib.paper.configurate.ConfigLoader;
+import dev.tehbrian.yetanothersigneditor.config.LangConfig;
+import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
+import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
+import org.bukkit.command.CommandSender;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -68,28 +66,9 @@ public final class YetAnotherSignEditor extends TehPlugin {
 	 * @return whether it was successful
 	 */
 	public boolean loadConfiguration() {
-		this.saveResourceSilently("lang.yml");
-
-		final List<Config> configsToLoad = List.of(
-				this.injector.getInstance(LangConfig.class)
-		);
-
-		for (final Config config : configsToLoad) {
-			try {
-				config.load();
-			} catch (final ConfigurateException e) {
-				this.getSLF4JLogger().error(
-						"Exception caught during config load for {}",
-						config.configurateWrapper().filePath()
-				);
-				this.getSLF4JLogger().error("Please check your config.");
-				this.getSLF4JLogger().error("Printing stack trace:", e);
-				return false;
-			}
-		}
-
-		this.getSLF4JLogger().info("Successfully loaded configuration.");
-		return true;
+		return new ConfigLoader(this).load(List.of(
+				ConfigLoader.Loadable.of("lang.yml", this.injector.getInstance(LangConfig.class), 1)
+		));
 	}
 
 	/**
