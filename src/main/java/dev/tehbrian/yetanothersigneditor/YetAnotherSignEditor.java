@@ -12,6 +12,7 @@ import dev.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6_7;
 import dev.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7;
 import dev.tehbrian.tehlib.paper.TehPlugin;
 import dev.tehbrian.tehlib.paper.configurate.ConfigLoader;
+import dev.tehbrian.tehlib.paper.configurate.ConfigLoader.Loadable;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
 import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
@@ -67,7 +68,7 @@ public final class YetAnotherSignEditor extends TehPlugin {
 	 */
 	public boolean loadConfiguration() {
 		return new ConfigLoader(this).load(List.of(
-				ConfigLoader.Loadable.of("lang.yml", this.injector.getInstance(LangConfig.class), 1)
+				Loadable.ofVersioned("lang.yml", this.injector.getInstance(LangConfig.class), 1)
 		));
 	}
 
