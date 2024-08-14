@@ -8,8 +8,6 @@
 # | Feedback and Support: https://thbn.me/discord
 # |
 
-version: 1
-
 no-permission-here: "<red>You don't have permission to do that here."
 not-a-sign: "<red>That's not a sign!"
 not-waxed: "<red>That sign isn't waxed!"
@@ -26,10 +24,10 @@ reload:
 copy:
   message: |-
     <green>Sign at <dark_green><x></dark_green>, <dark_green><y></dark_green>, <dark_green><z></dark_green>.
-    <reset>  <line_0>
-    <reset>  <line_1>
-    <reset>  <line_2>
-    <reset>  <line_3>
+    <reset>   <line_0>
+    <reset>   <line_1>
+    <reset>   <line_2>
+    <reset>   <line_3>
   hover: |-
     <reset><line>
 
@@ -50,3 +48,6 @@ help: |-
   <red>/yase reload
   <gray>   Reload the plugin's config.
   <gray>--- <white>YetAnotherSignEditor</white> ---
+
+# No touch!
+version: 1
