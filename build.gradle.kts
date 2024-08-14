@@ -59,19 +59,19 @@ tasks {
 		}
 
 		moveToLibs(
-			"love.broccolai.corn",
-			"cloud.commandframework",
-			"com.google",
-			"dev.tehbrian.restrictionhelper",
-			"dev.tehbrian.tehlib",
-			"io.leangen",
-			"jakarta.inject",
-			"javax.annotation",
-			"net.kyori.examination",
-			"org.aopalliance",
-			"org.checkerframework",
-			"org.spongepowered",
-			"org.yaml",
+				"love.broccolai.corn",
+				"cloud.commandframework",
+				"com.google",
+				"dev.tehbrian.restrictionhelper",
+				"dev.tehbrian.tehlib",
+				"io.leangen",
+				"jakarta.inject",
+				"javax.annotation",
+				"net.kyori.examination",
+				"org.aopalliance",
+				"org.checkerframework",
+				"org.spongepowered",
+				"org.yaml",
 		)
 	}
 

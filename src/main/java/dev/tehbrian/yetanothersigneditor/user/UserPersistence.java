@@ -7,11 +7,11 @@ import org.bukkit.persistence.PersistentDataType;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 public final class UserPersistence {
-	private UserPersistence() {
-	}
-
 	private static final NamespacedKey FORMATTING_ENABLED = new NamespacedKey("yase", "formatting-enabled");
 	private static final NamespacedKey FORMATTING_TYPE = new NamespacedKey("yase", "formatting-type");
+
+	private UserPersistence() {
+	}
 
 	public static void load(final User user) {
 		final @Nullable Player player = user.getPlayer();
