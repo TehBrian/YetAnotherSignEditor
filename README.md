@@ -1,9 +1,9 @@
 # YetAnotherSignEditor
 
-Easily edit signs, with support for both MiniMessage and legacy formatting.
+Easily edit and format signs with both MiniMessage and legacy formatting.
 
 * [Download](https://modrinth.com/plugin/yetanothersigneditor)
-* [Discord](https://thbn.me/discord)
+* [Discord](https://tehbrian.dev/discord)
 * [Donate](https://github.com/sponsors/TehBrian) <3
 
 ---
@@ -16,9 +16,9 @@ Easily edit signs, with support for both MiniMessage and legacy formatting.
 - All plugin messages are easily configurable.
 - Separate permissions for sign formatting and sign editing.
 
-Above all, it just feels good to use! No bloat, no extra features.
+Above all, it just feels good to use! No bloat; no fluff.
 
-[MiniMessage]: https://docs.adventure.kyori.net/minimessage/
+[MiniMessage]: https://docs.papermc.io/adventure/minimessage/
 
 ## Screenshots
 
@@ -29,8 +29,3 @@ Above all, it just feels good to use! No bloat, no extra features.
 
 This project uses Gradle. To build, run `./gradlew build` in the project's root
 directory. The built jar can be found in `build/libs`.
-
-## Contributing
-
-Feel free to submit a pull request or file an issue! All changes are welcome. If
-you're contributing code, please follow the project's code style.
