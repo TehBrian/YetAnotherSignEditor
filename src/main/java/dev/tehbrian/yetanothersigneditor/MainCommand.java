@@ -28,11 +28,7 @@ import org.spongepowered.configurate.NodePath;
 import java.util.List;
 
 import static dev.tehbrian.yetanothersigneditor.format.NativePersistence.handlePersistence;
-import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.MAGIC_NUMBER_OF_TICKS;
 import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.format;
-import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.lines;
-import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.unformatSignLines;
-import static dev.tehbrian.yetanothersigneditor.format.UserFormatting.shouldFormat;
 import static net.kyori.adventure.sound.Sound.sound;
 import static net.kyori.adventure.text.minimessage.tag.resolver.TagResolver.resolver;
 import static org.incendo.cloud.component.CommandComponent.builder;
