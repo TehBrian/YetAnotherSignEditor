@@ -18,7 +18,7 @@ Easily edit and format signs with both MiniMessage and legacy formatting.
 - Player settings are persisted across sessions.
 - Need more space for formatting? Set sign text with `/yase set`.
 - Copy sign text (with or without formatting) to your clipboard with `/yase copy`.
-- Unwax signs with `/yase unwax`, or simply bypass the wax with `/yase open`.
+- Unwax signs with `/yase unwax`.
 - All plugin messages are configurable.
 
 Put simply, this plugin *makes editing signs fun*.

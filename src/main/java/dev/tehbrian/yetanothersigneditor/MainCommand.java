@@ -108,42 +108,6 @@ public final class MainCommand {
 					));
 				});
 
-		final var open = main
-				.literal("open", description("Open the targeted sign."))
-				.permission(Permission.OPEN)
-				.senderType(PlayerSource.class)
-				.handler(c -> {
-					final Player player = c.sender().source();
-					final User user = this.userService.getUser(player);
-
-					final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
-					if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
-						player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
-						return;
-					}
-
-					if (!this.mayi.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
-						player.sendMessage(this.langConfig.c(NodePath.path("no-permission-here")));
-						return;
-					}
-
-					final Side side = sign.getInteractableSideFor(player);
-					final SignSide signSide = sign.getSide(side);
-
-					if (shouldFormat(user)) {
-						lines(signSide, unformatSignLines(sign, side, user));
-						sign.update();
-
-						this.yetAnotherSignEditor.getServer().getScheduler().runTaskLater(
-								this.yetAnotherSignEditor,
-								() -> player.openSign(sign, side),
-								MAGIC_NUMBER_OF_TICKS
-						);
-					} else {
-						player.openSign(sign, side);
-					}
-				});
-
 		final var copy = main
 				.literal("copy", description("Copy the text of the targeted sign."))
 				.permission(Permission.COPY)
@@ -258,7 +222,6 @@ public final class MainCommand {
 
 		commandManager.command(help)
 				.command(set)
-				.command(open)
 				.command(copy)
 				.command(unwax)
 				.command(format)

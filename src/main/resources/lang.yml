@@ -37,8 +37,6 @@ help: |-
   <gray>--- <white>YetAnotherSignEditor</white> ---
   <gold>/yase set <line> [<text>]
   <gray>   Set the text of the targeted sign.
-  <yellow>/yase open
-  <gray>   Open the targeted sign.
   <green>/yase copy
   <gray>   Copy the text of the targeted sign.
   <aqua>/yase unwax
