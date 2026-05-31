@@ -31,7 +31,6 @@ import static dev.tehbrian.yetanothersigneditor.format.NativePersistence.handleP
 import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.format;
 import static net.kyori.adventure.sound.Sound.sound;
 import static net.kyori.adventure.text.minimessage.tag.resolver.TagResolver.resolver;
-import static org.incendo.cloud.component.CommandComponent.builder;
 import static org.incendo.cloud.description.Description.description;
 import static org.incendo.cloud.parser.standard.EnumParser.enumParser;
 import static org.incendo.cloud.parser.standard.IntegerParser.integerParser;
