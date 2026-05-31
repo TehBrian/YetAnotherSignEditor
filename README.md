@@ -36,7 +36,8 @@ Above all, it just feels good to use! No bloat; no fluff.
 ## Screenshots
 
 ![help menu](assets/help-menu.png)
-![commands](assets/commands.png)
+![copy command](assets/copy-command.png)
+![some other commands](assets/some-other-commands.png)
 
 ## Building
 
