@@ -8,9 +8,10 @@
 # | Feedback and Support: https://tehbrian.dev/discord
 # |
 
-no-permission-here: "<red>You don't have permission to do that here."
-not-a-sign: "<red>That's not a sign!"
-not-waxed: "<red>That sign isn't waxed!"
+unwax:
+  not-a-sign: "<dark_aqua>That's not a sign!"
+  not-waxed: "<dark_aqua>That sign isn't waxed!"
+  no-permission-here: "<dark_aqua>You don't have permission to do that here."
 
 format:
   enabled: "<light_purple>Enabled sign formatting. <gray>(Insert formatting codes into text.)"
@@ -18,24 +19,30 @@ format:
   set: "<light_purple>Set your formatting type to <dark_purple><formatting_type></dark_purple>!"
 
 reload:
-  successful: "<red>The configuration has been successfully reloaded."
-  unsuccessful: "<dark_red>Failed to load configuration; please check the console."
+  success: "<red>The configuration has been successfully reloaded."
+  failure: "<dark_red>Failed to load configuration; please check the console."
+
+
+set:
+  not-a-sign: "<gold>That's not a sign!"
+  no-permission-here: "<gold>You don't have permission to do that here."
 
 copy:
   message: |-
     <green>Sign at <dark_green><x></dark_green>, <dark_green><y></dark_green>, <dark_green><z></dark_green>. <gray>(Click on a line to copy it.)
-    <reset>   <line_0>
-    <reset>   <line_1>
-    <reset>   <line_2>
-    <reset>   <line_3>
+    <reset><line_0>
+    <reset><line_1>
+    <reset><line_2>
+    <reset><line_3>
   hover: |-
     <reset><line>
 
     <white>Click to copy to clipboard.
+  not-a-sign: "<dark_green>That's not a sign!"
 
 help: |-
   <gray>--- <white>YetAnotherSignEditor</white> ---
-  <gold>/yase set <line> [<text>]
+  <yellow>/yase set <line> [<text>]
   <gray>   Set the text of the targeted sign.
   <green>/yase copy
   <gray>   Copy the text of the targeted sign.
@@ -45,7 +52,6 @@ help: |-
   <gray>   Toggle text formatting, or change your formatting type.
   <red>/yase reload
   <gray>   Reload the plugin's config.
-  <gray>--- <white>YetAnotherSignEditor</white> ---
 
 # No touch!
 version: 1

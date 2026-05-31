@@ -83,12 +83,12 @@ public final class MainCommand {
 
 					final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
 					if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
-						player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
+						player.sendMessage(this.langConfig.c(NodePath.path("set", "not-a-sign")));
 						return;
 					}
 
 					if (!this.mayi.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
-						player.sendMessage(this.langConfig.c(NodePath.path("no-permission-here")));
+						player.sendMessage(this.langConfig.c(NodePath.path("set", "no-permission-here")));
 						return;
 					}
 
@@ -118,7 +118,7 @@ public final class MainCommand {
 
 					final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
 					if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
-						player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
+						player.sendMessage(this.langConfig.c(NodePath.path("copy", "not-a-sign")));
 						return;
 					}
 
@@ -150,17 +150,17 @@ public final class MainCommand {
 
 					final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
 					if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
-						player.sendMessage(this.langConfig.c(NodePath.path("not-a-sign")));
+						player.sendMessage(this.langConfig.c(NodePath.path("unwax", "not-a-sign")));
 						return;
 					}
 
 					if (!this.mayi.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
-						player.sendMessage(this.langConfig.c(NodePath.path("no-permission-here")));
+						player.sendMessage(this.langConfig.c(NodePath.path("unwax", "no-permission-here")));
 						return;
 					}
 
 					if (!sign.isWaxed()) {
-						player.sendMessage(this.langConfig.c(NodePath.path("not-waxed")));
+						player.sendMessage(this.langConfig.c(NodePath.path("unwax", "not-waxed")));
 						return;
 					}
 
@@ -214,9 +214,9 @@ public final class MainCommand {
 				.permission(Permission.RELOAD)
 				.handler(c -> {
 					if (this.yetAnotherSignEditor.loadConfiguration()) {
-						c.sender().source().sendMessage(this.langConfig.c(NodePath.path("reload", "successful")));
+						c.sender().source().sendMessage(this.langConfig.c(NodePath.path("reload", "success")));
 					} else {
-						c.sender().source().sendMessage(this.langConfig.c(NodePath.path("reload", "unsuccessful")));
+						c.sender().source().sendMessage(this.langConfig.c(NodePath.path("reload", "failure")));
 					}
 				});
 
