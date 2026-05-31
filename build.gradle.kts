@@ -23,6 +23,7 @@ repositories {
 dependencies {
 	compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
 	compileOnly("org.jspecify:jspecify:1.0.0")
+	implementation("org.bstats:bstats-bukkit:3.2.1")
 	implementation("cloud.commandframework:cloud-paper:1.8.4")
 	implementation("cloud.commandframework:cloud-minecraft-extras:1.8.4") {
 		exclude("net.kyori", "adventure-api")

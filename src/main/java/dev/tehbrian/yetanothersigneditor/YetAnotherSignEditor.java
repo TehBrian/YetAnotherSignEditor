@@ -31,6 +31,8 @@ import static dev.tehbrian.agna.paper.PluginUtils.registerListeners;
  */
 public final class YetAnotherSignEditor extends JavaPlugin {
 
+	private static final int BSTATS_PLUGIN_ID = 31709;
+
 	private @MonotonicNonNull PaperCommandManager<CommandSender> commandManager = null;
 	private @MonotonicNonNull Injector injector = null;
 
@@ -61,6 +63,9 @@ public final class YetAnotherSignEditor extends JavaPlugin {
 		this.setupRestrictions();
 
 		registerListeners(this, this.injector.getInstance(SignListener.class));
+
+		// initialize bStats.
+		Metrics _ = new Metrics(this, BSTATS_PLUGIN_ID);
 	}
 
 	/**
