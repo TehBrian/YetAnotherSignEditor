@@ -45,10 +45,9 @@ public final class YetAnotherSignEditor extends JavaPlugin {
 					new SingletonModule()
 			);
 		} catch (final Exception e) {
-			this.getSLF4JLogger().error("Something went wrong while creating the Guice injector.");
-			this.getSLF4JLogger().error("Disabling plugin.");
+			this.getSLF4JLogger().error("Something went wrong while creating the injector. Disabling plugin");
 			disableSelf(this);
-			this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
+			this.getSLF4JLogger().error("Printing stack trace. Please send this to the developers", e);
 			return;
 		}
 
@@ -97,8 +96,8 @@ public final class YetAnotherSignEditor extends JavaPlugin {
 					.executionCoordinator(simpleCoordinator())
 					.buildOnEnable(this);
 		} catch (final Exception e) {
-			this.getSLF4JLogger().error("Failed to create the CommandManager.");
-			this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
+			this.getSLF4JLogger().error("Failed to create the CommandManager");
+			this.getSLF4JLogger().error("Printing stack trace, please send this to the developers", e);
 			return false;
 		}
 
