@@ -35,7 +35,7 @@ copy:
 
 help: |-
   <gray>--- <white>YetAnotherSignEditor</white> ---
-  <gold>/yase set <line> [text]
+  <gold>/yase set <line> [<text>]
   <gray>   Set the text of the targeted sign.
   <yellow>/yase open
   <gray>   Open the targeted sign.
@@ -43,7 +43,7 @@ help: |-
   <gray>   Copy the text of the targeted sign.
   <aqua>/yase unwax
   <gray>   Unwax the targeted sign.
-  <light_purple>/yase format [formatting-type]
+  <light_purple>/yase format [<formatting-type>]
   <gray>   Toggle text formatting, or change your formatting type.
   <red>/yase reload
   <gray>   Reload the plugin's config.
