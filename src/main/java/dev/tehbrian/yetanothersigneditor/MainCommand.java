@@ -46,19 +46,19 @@ public final class MainCommand {
 	public static final int MAX_DISTANCE = 6;
 
 	private final YetAnotherSignEditor yetAnotherSignEditor;
-	private final PaperMayi restrictionHelper;
+	private final PaperMayi mayi;
 	private final UserService userService;
 	private final LangConfig langConfig;
 
 	@Inject
 	public MainCommand(
 			final YetAnotherSignEditor yetAnotherSignEditor,
-			final PaperMayi restrictionHelper,
+			final PaperMayi mayi,
 			final UserService userService,
 			final LangConfig langConfig
 	) {
 		this.yetAnotherSignEditor = yetAnotherSignEditor;
-		this.restrictionHelper = restrictionHelper;
+		this.mayi = mayi;
 		this.userService = userService;
 		this.langConfig = langConfig;
 	}
@@ -87,7 +87,7 @@ public final class MainCommand {
 						return;
 					}
 
-					if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
+					if (!this.mayi.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
 						player.sendMessage(this.langConfig.c(NodePath.path("no-permission-here")));
 						return;
 					}
@@ -122,7 +122,7 @@ public final class MainCommand {
 						return;
 					}
 
-					if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
+					if (!this.mayi.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
 						player.sendMessage(this.langConfig.c(NodePath.path("no-permission-here")));
 						return;
 					}
@@ -190,7 +190,7 @@ public final class MainCommand {
 						return;
 					}
 
-					if (!this.restrictionHelper.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
+					if (!this.mayi.checkRestrictions(player, targetedBlock.getLocation(), ActionType.ALL)) {
 						player.sendMessage(this.langConfig.c(NodePath.path("no-permission-here")));
 						return;
 					}
