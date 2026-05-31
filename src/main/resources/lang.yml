@@ -19,11 +19,11 @@ format:
 
 reload:
   successful: "<red>The configuration has been successfully reloaded."
-  unsuccessful: "<red>Failed to load configuration; please check the console."
+  unsuccessful: "<dark_red>Failed to load configuration; please check the console."
 
 copy:
   message: |-
-    <green>Sign at <dark_green><x></dark_green>, <dark_green><y></dark_green>, <dark_green><z></dark_green>.
+    <green>Sign at <dark_green><x></dark_green>, <dark_green><y></dark_green>, <dark_green><z></dark_green>. <gray>(Click on a line to copy it.)
     <reset>   <line_0>
     <reset>   <line_1>
     <reset>   <line_2>
