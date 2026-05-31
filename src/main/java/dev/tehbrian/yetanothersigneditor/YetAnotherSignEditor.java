@@ -6,6 +6,7 @@ import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import dev.tehbrian.agna.paper.UpdateChecker;
 import dev.tehbrian.agna.paper.configurate.ConfigLoader;
 import dev.tehbrian.agna.paper.configurate.ConfigLoader.Loadable;
 import dev.tehbrian.mayi.paper.PaperMayi;
@@ -15,6 +16,7 @@ import dev.tehbrian.mayi.paper.restrictions.R_WorldGuard_7;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
 import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
@@ -66,6 +68,8 @@ public final class YetAnotherSignEditor extends JavaPlugin {
 
 		// initialize bStats.
 		Metrics _ = new Metrics(this, BSTATS_PLUGIN_ID);
+
+		new UpdateChecker(this, "yetanothersigneditor").checkForUpdates();
 	}
 
 	/**
