@@ -1,9 +1,9 @@
 plugins {
 	id("java")
-	id("com.gradleup.shadow") version "8.3.3"
-	id("xyz.jpenilla.run-paper") version "2.3.1"
-	id("net.kyori.indra.checkstyle") version "3.1.3"
-	id("com.github.ben-manes.versions") version "0.51.0"
+	id("com.gradleup.shadow") version "9.4.2"
+	id("xyz.jpenilla.run-paper") version "3.0.2"
+	id("net.kyori.indra.checkstyle") version "4.0.0"
+	id("com.github.ben-manes.versions") version "0.54.0"
 }
 
 group = "dev.tehbrian"
@@ -11,18 +11,17 @@ version = "3.0.0-SNAPSHOT"
 description = "Easily edit and format signs with both MiniMessage and legacy formatting."
 
 java {
-	toolchain.languageVersion.set(JavaLanguageVersion.of(21))
+	toolchain.languageVersion.set(JavaLanguageVersion.of(25))
 }
 
 repositories {
 	mavenCentral()
-	maven("https://papermc.io/repo/repository/maven-public/")
-	maven("https://repo.thbn.me/releases/")
+	maven("https://repo.papermc.io/repository/maven-public/")
+	maven("https://repo.tehbrian.dev/releases/")
 }
 
 dependencies {
-	compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
-
+	compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
 	compileOnly("org.jspecify:jspecify:1.0.0")
 	implementation("cloud.commandframework:cloud-paper:1.8.4")
 	implementation("cloud.commandframework:cloud-minecraft-extras:1.8.4") {
@@ -30,9 +29,9 @@ dependencies {
 		exclude("net.kyori", "adventure-text-serializer-plain")
 	}
 	implementation("com.google.inject:guice:7.0.0")
-	implementation("org.spongepowered:configurate-yaml:4.1.2")
-	implementation("dev.tehbrian:tehlib-paper:0.6.0")
-	implementation("dev.tehbrian:restrictionhelper-spigot:0.5.0")
+	implementation("org.spongepowered:configurate-yaml:4.2.0")
+	implementation("dev.tehbrian:agna-paper:1.0.1")
+	implementation("dev.tehbrian:mayi-paper:1.0.0")
 }
 
 tasks {
@@ -41,7 +40,11 @@ tasks {
 	}
 
 	processResources {
-		expand("version" to project.version, "description" to project.description)
+		expand(
+				mapOf(
+						"version" to project.version, "description" to project.description
+				)
+		)
 	}
 
 	base {
@@ -63,7 +66,7 @@ tasks {
 				"cloud.commandframework",
 				"com.google",
 				"dev.tehbrian.restrictionhelper",
-				"dev.tehbrian.tehlib",
+				"dev.tehbrian.agna",
 				"io.leangen",
 				"jakarta.inject",
 				"javax.annotation",
@@ -76,6 +79,6 @@ tasks {
 	}
 
 	runServer {
-		minecraftVersion("1.21.1")
+		minecraftVersion("26.1.2")
 	}
 }

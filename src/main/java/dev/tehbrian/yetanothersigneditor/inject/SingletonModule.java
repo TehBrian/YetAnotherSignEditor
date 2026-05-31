@@ -1,7 +1,7 @@
 package dev.tehbrian.yetanothersigneditor.inject;
 
 import com.google.inject.AbstractModule;
-import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
+import dev.tehbrian.mayi.paper.PaperMayi;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.user.UserService;
 
@@ -11,7 +11,7 @@ public final class SingletonModule extends AbstractModule {
 	protected void configure() {
 		this.bind(UserService.class).asEagerSingleton();
 		this.bind(LangConfig.class).asEagerSingleton();
-		this.bind(SpigotRestrictionHelper.class).asEagerSingleton();
+		this.bind(PaperMayi.class).asEagerSingleton();
 	}
 
 }

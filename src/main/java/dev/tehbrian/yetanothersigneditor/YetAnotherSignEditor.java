@@ -6,27 +6,30 @@ import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
-import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionLoader;
-import dev.tehbrian.restrictionhelper.spigot.restrictions.R_PlotSquared_6_7;
-import dev.tehbrian.restrictionhelper.spigot.restrictions.R_WorldGuard_7;
-import dev.tehbrian.tehlib.paper.TehPlugin;
-import dev.tehbrian.tehlib.paper.configurate.ConfigLoader;
-import dev.tehbrian.tehlib.paper.configurate.ConfigLoader.Loadable;
+import dev.tehbrian.agna.paper.configurate.ConfigLoader;
+import dev.tehbrian.agna.paper.configurate.ConfigLoader.Loadable;
+import dev.tehbrian.mayi.paper.PaperMayi;
+import dev.tehbrian.mayi.paper.PaperRestrictionLoader;
+import dev.tehbrian.mayi.paper.restrictions.R_PlotSquared_6_7;
+import dev.tehbrian.mayi.paper.restrictions.R_WorldGuard_7;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
 import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+import static dev.tehbrian.agna.paper.PluginUtils.disableSelf;
+import static dev.tehbrian.agna.paper.PluginUtils.registerListeners;
+
 /**
  * The main class for the YetAnotherSignEditor plugin.
  */
-public final class YetAnotherSignEditor extends TehPlugin {
+public final class YetAnotherSignEditor extends JavaPlugin {
 
 	private @MonotonicNonNull PaperCommandManager<CommandSender> commandManager = null;
 	private @MonotonicNonNull Injector injector = null;
@@ -41,23 +44,23 @@ public final class YetAnotherSignEditor extends TehPlugin {
 		} catch (final Exception e) {
 			this.getSLF4JLogger().error("Something went wrong while creating the Guice injector.");
 			this.getSLF4JLogger().error("Disabling plugin.");
-			this.disableSelf();
+			disableSelf(this);
 			this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
 			return;
 		}
 
 		if (!this.loadConfiguration()) {
-			this.disableSelf();
+			disableSelf(this);
 			return;
 		}
 		if (!this.setupCommands()) {
-			this.disableSelf();
+			disableSelf(this);
 			return;
 		}
 
 		this.setupRestrictions();
 
-		registerListeners(this.injector.getInstance(SignListener.class));
+		registerListeners(this, this.injector.getInstance(SignListener.class));
 	}
 
 	/**
@@ -107,13 +110,13 @@ public final class YetAnotherSignEditor extends TehPlugin {
 	}
 
 	private void setupRestrictions() {
-		final var loader = new SpigotRestrictionLoader(
+		final var loader = new PaperRestrictionLoader(
 				this.getSLF4JLogger(),
 				Arrays.asList(this.getServer().getPluginManager().getPlugins()),
 				List.of(R_PlotSquared_6_7.class, R_WorldGuard_7.class)
 		);
 
-		loader.load(this.injector.getInstance(SpigotRestrictionHelper.class));
+		loader.load(this.injector.getInstance(PaperMayi.class));
 	}
 
 }

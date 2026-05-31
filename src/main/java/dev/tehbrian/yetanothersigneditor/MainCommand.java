@@ -7,8 +7,8 @@ import cloud.commandframework.arguments.standard.StringArgument;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
-import dev.tehbrian.restrictionhelper.core.ActionType;
-import dev.tehbrian.restrictionhelper.spigot.SpigotRestrictionHelper;
+import dev.tehbrian.mayi.core.ActionType;
+import dev.tehbrian.mayi.paper.PaperMayi;
 import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.format.Format;
 import dev.tehbrian.yetanothersigneditor.format.SignFormatting;
@@ -46,14 +46,14 @@ public final class MainCommand {
 	public static final int MAX_DISTANCE = 6;
 
 	private final YetAnotherSignEditor yetAnotherSignEditor;
-	private final SpigotRestrictionHelper restrictionHelper;
+	private final PaperMayi restrictionHelper;
 	private final UserService userService;
 	private final LangConfig langConfig;
 
 	@Inject
 	public MainCommand(
 			final YetAnotherSignEditor yetAnotherSignEditor,
-			final SpigotRestrictionHelper restrictionHelper,
+			final PaperMayi restrictionHelper,
 			final UserService userService,
 			final LangConfig langConfig
 	) {
