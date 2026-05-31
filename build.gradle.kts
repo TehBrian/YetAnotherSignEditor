@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "dev.tehbrian"
-version = "3.0.0-SNAPSHOT"
+version = "3.0.0"
 description = "Easily edit and format signs with both MiniMessage and legacy formatting."
 
 java {
