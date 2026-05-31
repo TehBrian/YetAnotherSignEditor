@@ -22,12 +22,12 @@ help: |-
   <gray>   Reload the plugin's config.
 
 set:
-  not-a-sign: "<gold>That's not a sign!"
+  not-a-sign: "<gold>That's not a sign."
   no-permission-here: "<gold>You don't have permission to do that here."
 
 copy:
   message: |-
-    <green>Sign at <dark_green><x></dark_green>, <dark_green><y></dark_green>, <dark_green><z></dark_green>. <gray>(Click on a line to copy it.)
+    <green>Sign at <dark_green><x></dark_green>, <dark_green><y></dark_green>, <dark_green><z></dark_green>. <gray>(Click a line to copy it.)
     <reset><line_0>
     <reset><line_1>
     <reset><line_2>
@@ -35,18 +35,18 @@ copy:
   hover: |-
     <reset><line>
 
-    <white>Click to copy to clipboard.
-  not-a-sign: "<green>That's not a sign!"
+    <gray>Click to copy to clipboard.
+  not-a-sign: "<dark_green>That's not a sign."
 
 unwax:
-  not-a-sign: "<dark_aqua>That's not a sign!"
-  not-waxed: "<dark_aqua>That sign isn't waxed!"
+  not-a-sign: "<dark_aqua>That's not a sign."
+  not-waxed: "<dark_aqua>That sign isn't waxed."
   no-permission-here: "<dark_aqua>You don't have permission to do that here."
 
 format:
   enabled: "<light_purple>Enabled sign formatting. <gray>(Insert formatting codes into text.)"
   disabled: "<dark_purple>Disabled sign formatting."
-  set: "<light_purple>Set your formatting type to <dark_purple><formatting_type></dark_purple>!"
+  set: "<light_purple>Set your formatting type to <dark_purple><formatting_type></dark_purple>."
 
 reload:
   success: "<red>The configuration has been successfully reloaded."
