@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2021 TehBrian
+Copyright (c) 2026 TehBrian
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
