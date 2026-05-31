@@ -1,9 +1,5 @@
 package dev.tehbrian.yetanothersigneditor;
 
-import cloud.commandframework.execution.CommandExecutionCoordinator;
-import cloud.commandframework.minecraft.extras.AudienceProvider;
-import cloud.commandframework.minecraft.extras.MinecraftExceptionHandler;
-import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import dev.tehbrian.agna.paper.UpdateChecker;
@@ -17,16 +13,19 @@ import dev.tehbrian.yetanothersigneditor.config.LangConfig;
 import dev.tehbrian.yetanothersigneditor.inject.PluginModule;
 import dev.tehbrian.yetanothersigneditor.inject.SingletonModule;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.incendo.cloud.minecraft.extras.MinecraftExceptionHandler;
+import org.incendo.cloud.paper.PaperCommandManager;
+import org.incendo.cloud.paper.util.sender.Source;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 
 import static dev.tehbrian.agna.paper.PluginUtils.disableSelf;
 import static dev.tehbrian.agna.paper.PluginUtils.registerListeners;
+import static org.incendo.cloud.execution.ExecutionCoordinator.simpleCoordinator;
+import static org.incendo.cloud.paper.util.sender.PaperSimpleSenderMapper.simpleSenderMapper;
 
 /**
  * The main class for the YetAnotherSignEditor plugin.
@@ -35,7 +34,7 @@ public final class YetAnotherSignEditor extends JavaPlugin {
 
 	private static final int BSTATS_PLUGIN_ID = 31709;
 
-	private @MonotonicNonNull PaperCommandManager<CommandSender> commandManager = null;
+	private @MonotonicNonNull PaperCommandManager<Source> commandManager = null;
 	private @MonotonicNonNull Injector injector = null;
 
 	@Override
@@ -93,25 +92,23 @@ public final class YetAnotherSignEditor extends JavaPlugin {
 		}
 
 		try {
-			this.commandManager = new PaperCommandManager<>(
-					this,
-					CommandExecutionCoordinator.simpleCoordinator(),
-					Function.identity(),
-					Function.identity()
-			);
+			this.commandManager = PaperCommandManager
+					.builder(simpleSenderMapper())
+					.executionCoordinator(simpleCoordinator())
+					.buildOnEnable(this);
 		} catch (final Exception e) {
 			this.getSLF4JLogger().error("Failed to create the CommandManager.");
 			this.getSLF4JLogger().error("Printing stack trace, please send this to the developers:", e);
 			return false;
 		}
 
-		new MinecraftExceptionHandler<CommandSender>()
-				.withArgumentParsingHandler()
-				.withInvalidSenderHandler()
-				.withInvalidSyntaxHandler()
-				.withNoPermissionHandler()
-				.withCommandExecutionHandler()
-				.apply(this.commandManager, AudienceProvider.nativeAudience());
+		MinecraftExceptionHandler.create(Source::source)
+				.defaultArgumentParsingHandler()
+				.defaultInvalidSenderHandler()
+				.defaultInvalidSyntaxHandler()
+				.defaultNoPermissionHandler()
+				.defaultCommandExecutionHandler()
+				.registerTo(this.commandManager);
 
 		this.injector.getInstance(MainCommand.class).register(this.commandManager);
 

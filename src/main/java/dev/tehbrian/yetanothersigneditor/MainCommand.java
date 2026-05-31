@@ -1,11 +1,5 @@
 package dev.tehbrian.yetanothersigneditor;
 
-import cloud.commandframework.ArgumentDescription;
-import cloud.commandframework.arguments.standard.EnumArgument;
-import cloud.commandframework.arguments.standard.IntegerArgument;
-import cloud.commandframework.arguments.standard.StringArgument;
-import cloud.commandframework.meta.CommandMeta;
-import cloud.commandframework.paper.PaperCommandManager;
 import com.google.inject.Inject;
 import dev.tehbrian.mayi.core.ActionType;
 import dev.tehbrian.mayi.paper.PaperMayi;
@@ -15,19 +9,20 @@ import dev.tehbrian.yetanothersigneditor.format.SignFormatting;
 import dev.tehbrian.yetanothersigneditor.user.User;
 import dev.tehbrian.yetanothersigneditor.user.UserPersistence;
 import dev.tehbrian.yetanothersigneditor.user.UserService;
-import net.kyori.adventure.sound.Sound.Source;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Effect;
-import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.sign.Side;
 import org.bukkit.block.sign.SignSide;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.incendo.cloud.paper.PaperCommandManager;
+import org.incendo.cloud.paper.util.sender.PlayerSource;
+import org.incendo.cloud.paper.util.sender.Source;
 import org.spongepowered.configurate.NodePath;
 
 import java.util.List;
@@ -40,6 +35,11 @@ import static dev.tehbrian.yetanothersigneditor.format.SignFormatting.unformatSi
 import static dev.tehbrian.yetanothersigneditor.format.UserFormatting.shouldFormat;
 import static net.kyori.adventure.sound.Sound.sound;
 import static net.kyori.adventure.text.minimessage.tag.resolver.TagResolver.resolver;
+import static org.incendo.cloud.component.CommandComponent.builder;
+import static org.incendo.cloud.description.Description.description;
+import static org.incendo.cloud.parser.standard.EnumParser.enumParser;
+import static org.incendo.cloud.parser.standard.IntegerParser.integerParser;
+import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
 
 public final class MainCommand {
 
@@ -63,23 +63,23 @@ public final class MainCommand {
 		this.langConfig = langConfig;
 	}
 
-	public void register(final PaperCommandManager<CommandSender> commandManager) {
+	public void register(final PaperCommandManager<Source> commandManager) {
 		final var main = commandManager.commandBuilder("yase")
-				.meta(CommandMeta.DESCRIPTION, "Commands from YetAnotherSignEditor.");
+				.commandDescription(description("Commands from YetAnotherSignEditor."));
 
 		final var help = main
-				.handler(c -> c.getSender().sendMessage(this.langConfig.c(NodePath.path("help"))));
+				.handler(c -> c.sender().source().sendMessage(this.langConfig.c(NodePath.path("help"))));
 
 		final var set = main
-				.literal("set", ArgumentDescription.of("Set the text of the targeted sign."))
+				.literal("set", description("Set the text of the targeted sign."))
 				.permission(Permission.SET)
-				.senderType(Player.class)
-				.argument(IntegerArgument.<CommandSender>builder("line").withMin(1).withMax(4).build())
-				.argument(StringArgument.<CommandSender>builder("text").greedy().asOptional().build())
+				.senderType(PlayerSource.class)
+				.argument(builder("line", integerParser(1, 4)))
+				.argument(builder("text", greedyStringParser()).optional())
 				.handler(c -> {
-					final Player player = (Player) c.getSender();
+					final Player player = c.sender().source();
 					final int line = c.<Integer>get("line") - 1; // signs are 0-indexed.
-					final String text = c.<String>getOptional("text").orElse("");
+					final String text = c.<String>optional("text").orElse("");
 
 					final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
 					if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
@@ -104,16 +104,16 @@ public final class MainCommand {
 
 					sign.getWorld().playSound(sound(
 							sign.getBlock().getBlockSoundGroup().getPlaceSound(),
-							Source.BLOCK, 1.0F, 0.25F
+							Sound.Source.BLOCK, 1.0F, 0.25F
 					));
 				});
 
 		final var open = main
-				.literal("open", ArgumentDescription.of("Open the targeted sign."))
+				.literal("open", description("Open the targeted sign."))
 				.permission(Permission.OPEN)
-				.senderType(Player.class)
+				.senderType(PlayerSource.class)
 				.handler(c -> {
-					final Player player = (Player) c.getSender();
+					final Player player = c.sender().source();
 					final User user = this.userService.getUser(player);
 
 					final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
@@ -145,11 +145,11 @@ public final class MainCommand {
 				});
 
 		final var copy = main
-				.literal("copy", ArgumentDescription.of("Copy the text of the targeted sign."))
+				.literal("copy", description("Copy the text of the targeted sign."))
 				.permission(Permission.COPY)
-				.senderType(Player.class)
+				.senderType(PlayerSource.class)
 				.handler(c -> {
-					final Player player = (Player) c.getSender();
+					final Player player = c.sender().source();
 					final User user = this.userService.getUser(player);
 
 					final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
@@ -178,11 +178,11 @@ public final class MainCommand {
 				});
 
 		final var unwax = main
-				.literal("unwax", ArgumentDescription.of("Unwax the targeted sign."))
+				.literal("unwax", description("Unwax the targeted sign."))
 				.permission(Permission.UNWAX)
-				.senderType(Player.class)
+				.senderType(PlayerSource.class)
 				.handler(c -> {
-					final Player player = (Player) c.getSender();
+					final Player player = c.sender().source();
 
 					final @Nullable Block targetedBlock = player.getTargetBlockExact(MAX_DISTANCE);
 					if (targetedBlock == null || !(targetedBlock.getState() instanceof final Sign sign)) {
@@ -205,21 +205,21 @@ public final class MainCommand {
 
 					sign.getWorld().playEffect(sign.getLocation(), Effect.COPPER_WAX_OFF, 0);
 					sign.getWorld().playSound(sound(
-							Sound.ITEM_HONEYCOMB_WAX_ON,
-							Source.BLOCK, 1.0F, 1.0F
+							org.bukkit.Sound.ITEM_HONEYCOMB_WAX_ON,
+							Sound.Source.BLOCK, 1.0F, 1.0F
 					));
 					sign.getWorld().playSound(sound(
-							Sound.ITEM_BOTTLE_EMPTY,
-							Source.BLOCK, 1.0F, 0.7F
+							org.bukkit.Sound.ITEM_BOTTLE_EMPTY,
+							Sound.Source.BLOCK, 1.0F, 0.7F
 					));
 				});
 
 		final var format = main
-				.literal("format", ArgumentDescription.of("Toggle text formatting or change your formatting type."))
+				.literal("format", description("Toggle text formatting or change your formatting type."))
 				.permission(Permission.FORMAT)
-				.senderType(Player.class)
+				.senderType(PlayerSource.class)
 				.handler(c -> {
-					final Player sender = (Player) c.getSender();
+					final Player sender = c.sender().source();
 					final User user = this.userService.getUser(sender);
 
 					if (user.toggleFormattingEnabled()) {
@@ -231,11 +231,9 @@ public final class MainCommand {
 				});
 
 		final var formatFormattingType = format
-				.argument(EnumArgument
-						.<CommandSender, User.FormattingType>builder(User.FormattingType.class, "formatting_type")
-						.build())
+				.argument(builder("formatting_type", enumParser(User.FormattingType.class)))
 				.handler(c -> {
-					final Player player = (Player) c.getSender();
+					final Player player = c.sender().source();
 					final User.FormattingType formattingType = c.get("formatting_type");
 					final User user = this.userService.getUser(player);
 
@@ -248,13 +246,13 @@ public final class MainCommand {
 				});
 
 		final var reload = main
-				.literal("reload", ArgumentDescription.of("Reload the plugin's config."))
+				.literal("reload", description("Reload the plugin's config."))
 				.permission(Permission.RELOAD)
 				.handler(c -> {
 					if (this.yetAnotherSignEditor.loadConfiguration()) {
-						c.getSender().sendMessage(this.langConfig.c(NodePath.path("reload", "successful")));
+						c.sender().source().sendMessage(this.langConfig.c(NodePath.path("reload", "successful")));
 					} else {
-						c.getSender().sendMessage(this.langConfig.c(NodePath.path("reload", "unsuccessful")));
+						c.sender().source().sendMessage(this.langConfig.c(NodePath.path("reload", "unsuccessful")));
 					}
 				});
 

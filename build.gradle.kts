@@ -24,11 +24,8 @@ dependencies {
 	compileOnly("io.papermc.paper:paper-api:26.1.2.build.+")
 	compileOnly("org.jspecify:jspecify:1.0.0")
 	implementation("org.bstats:bstats-bukkit:3.2.1")
-	implementation("cloud.commandframework:cloud-paper:1.8.4")
-	implementation("cloud.commandframework:cloud-minecraft-extras:1.8.4") {
-		exclude("net.kyori", "adventure-api")
-		exclude("net.kyori", "adventure-text-serializer-plain")
-	}
+	implementation("org.incendo:cloud-paper:2.0.0-beta.15")
+	implementation("org.incendo:cloud-minecraft-extras:2.0.0-beta.15")
 	implementation("com.google.inject:guice:7.0.0")
 	implementation("org.spongepowered:configurate-yaml:4.2.0")
 	implementation("dev.tehbrian:agna-paper:1.0.1")
@@ -43,7 +40,8 @@ tasks {
 	processResources {
 		expand(
 				mapOf(
-						"version" to project.version, "description" to project.description
+						"version" to project.version,
+						"description" to project.description
 				)
 		)
 	}
@@ -63,19 +61,23 @@ tasks {
 		}
 
 		moveToLibs(
-				"love.broccolai.corn",
-				"cloud.commandframework",
-				"com.google",
-				"dev.tehbrian.restrictionhelper",
+				"com.google.common",
+				"com.google.errorprone",
+				"com.google.inject",
+				"com.google.j2objc",
+				"com.google.thirdparty",
 				"dev.tehbrian.agna",
+				"dev.tehbrian.mayi",
 				"io.leangen",
 				"jakarta.inject",
 				"javax.annotation",
-				"net.kyori.examination",
+				"net.kyori.option",
+				"love.broccolai.corn",
 				"org.aopalliance",
+				"org.bstats",
 				"org.checkerframework",
+				"org.incendo.cloud",
 				"org.spongepowered",
-				"org.yaml",
 		)
 	}
 
