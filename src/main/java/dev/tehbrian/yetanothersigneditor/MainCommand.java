@@ -70,8 +70,8 @@ public final class MainCommand {
 				.literal("set", description("Set the text of the targeted sign."))
 				.permission(Permission.SET)
 				.senderType(PlayerSource.class)
-				.argument(builder("line", integerParser(1, 4)))
-				.argument(builder("text", greedyStringParser()).optional())
+				.required("line", integerParser(1, 4))
+				.optional("text", greedyStringParser())
 				.handler(c -> {
 					final Player player = c.sender().source();
 					final int line = c.<Integer>get("line") - 1; // signs are 0-indexed.
@@ -191,7 +191,7 @@ public final class MainCommand {
 				});
 
 		final var formatFormattingType = format
-				.argument(builder("formatting_type", enumParser(User.FormattingType.class)))
+				.required("formatting_type", enumParser(User.FormattingType.class))
 				.handler(c -> {
 					final Player player = c.sender().source();
 					final User.FormattingType formattingType = c.get("formatting_type");
