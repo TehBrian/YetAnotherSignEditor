@@ -8,20 +8,18 @@
 # | Feedback and Support: https://tehbrian.dev/discord
 # |
 
-unwax:
-  not-a-sign: "<dark_aqua>That's not a sign!"
-  not-waxed: "<dark_aqua>That sign isn't waxed!"
-  no-permission-here: "<dark_aqua>You don't have permission to do that here."
-
-format:
-  enabled: "<light_purple>Enabled sign formatting. <gray>(Insert formatting codes into text.)"
-  disabled: "<dark_purple>Disabled sign formatting."
-  set: "<light_purple>Set your formatting type to <dark_purple><formatting_type></dark_purple>!"
-
-reload:
-  success: "<red>The configuration has been successfully reloaded."
-  failure: "<dark_red>Failed to load configuration; please check the console."
-
+help: |-
+  <gray>--- <white>YetAnotherSignEditor</white> ---
+  <yellow>/yase set <line> [<text>]
+  <gray>   Set the text of the targeted sign.
+  <green>/yase copy
+  <gray>   Copy the text of the targeted sign.
+  <aqua>/yase unwax
+  <gray>   Unwax the targeted sign.
+  <light_purple>/yase format [<formatting-type>]
+  <gray>   Toggle text formatting, or change your formatting type.
+  <red>/yase reload
+  <gray>   Reload the plugin's config.
 
 set:
   not-a-sign: "<gold>That's not a sign!"
@@ -38,20 +36,21 @@ copy:
     <reset><line>
 
     <white>Click to copy to clipboard.
-  not-a-sign: "<dark_green>That's not a sign!"
+  not-a-sign: "<green>That's not a sign!"
 
-help: |-
-  <gray>--- <white>YetAnotherSignEditor</white> ---
-  <yellow>/yase set <line> [<text>]
-  <gray>   Set the text of the targeted sign.
-  <green>/yase copy
-  <gray>   Copy the text of the targeted sign.
-  <aqua>/yase unwax
-  <gray>   Unwax the targeted sign.
-  <light_purple>/yase format [<formatting-type>]
-  <gray>   Toggle text formatting, or change your formatting type.
-  <red>/yase reload
-  <gray>   Reload the plugin's config.
+unwax:
+  not-a-sign: "<dark_aqua>That's not a sign!"
+  not-waxed: "<dark_aqua>That sign isn't waxed!"
+  no-permission-here: "<dark_aqua>You don't have permission to do that here."
+
+format:
+  enabled: "<light_purple>Enabled sign formatting. <gray>(Insert formatting codes into text.)"
+  disabled: "<dark_purple>Disabled sign formatting."
+  set: "<light_purple>Set your formatting type to <dark_purple><formatting_type></dark_purple>!"
+
+reload:
+  success: "<red>The configuration has been successfully reloaded."
+  failure: "<dark_red>Failed to load configuration; please check the console."
 
 # No touch!
 version: 1
