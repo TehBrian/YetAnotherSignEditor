@@ -1,5 +1,8 @@
 # YetAnotherSignEditor
 
+[![License](https://img.shields.io/github/license/TehBrian/YetAnotherSignEditor)](LICENSE.md)
+[![Chat](https://img.shields.io/discord/791861916314239006)](https://tehbrian.dev/discord)
+
 Easily edit and format signs with both MiniMessage and legacy formatting.
 
 * [Download](https://modrinth.com/plugin/yetanothersigneditor)
