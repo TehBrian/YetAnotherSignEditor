@@ -28,7 +28,7 @@ dependencies {
 	implementation("org.incendo:cloud-minecraft-extras:2.0.0-beta.15")
 	implementation("com.google.inject:guice:7.0.0")
 	implementation("org.spongepowered:configurate-yaml:4.2.0")
-	implementation("dev.tehbrian:agna-paper:1.0.1")
+	implementation("dev.tehbrian:agna-paper:1.0.6")
 	implementation("dev.tehbrian:mayi-paper:1.0.0")
 }
 
