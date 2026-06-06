@@ -32,7 +32,7 @@ import static org.incendo.cloud.paper.util.sender.PaperSimpleSenderMapper.simple
  */
 public final class YetAnotherSignEditor extends JavaPlugin {
 
-	private static final int BSTATS_PLUGIN_ID = 31709;
+	private static final int BSTATS_PLUGIN_ID = 31832;
 
 	private @MonotonicNonNull PaperCommandManager<Source> commandManager = null;
 	private @MonotonicNonNull Injector injector = null;
